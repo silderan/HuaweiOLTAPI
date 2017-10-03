@@ -8,16 +8,26 @@
  * @param promtp The prompt to wait to for a succesfull command.
  * @param errors Lists of paired texts for errors and their explanation text.
  */
-void QTelnetInterface::addCommand(const QString &label, const QString &cmd, const QString &promtp, const QStringList &errors)
+void QTelnetInterface::addCommand(const QString &label, const QString &cmd, const QString &promtp, const QStringList &errors, OLTState okState)
 {
 	CommandControl newCmd;
 	newCmd.label = label;
 	newCmd.cmd = cmd;
 	newCmd.promtp = promtp;
+	newCmd.state = okState;
 	for( int i = 0; i < errors.count(); i+=2 )
 		newCmd.errorStrings.insert(errors[i+0], errors[i+1]);
 	m_commands.append( newCmd );
 	playQueue();
+}
+
+void QTelnetInterface::setOltState(QTelnetInterface::OLTState newState)
+{
+	if( m_OLTState != newState )
+	{
+		m_OLTState = newState;
+		emit oltStateChanged( m_OLTState );
+	}
 }
 
 QTelnetInterface::QTelnetInterface()
@@ -32,9 +42,9 @@ void QTelnetInterface::connectToOLT(const QString &host, quint16 port, const QSt
 			<< "Reenter times have reached the upper limit." << tr("User %1 is already loged and cannot log again more times")
 			<< "Username or password invalid." << tr("Invalid username or password")
 			<< "Username or Domain invalid!" << tr("Invalid username");
-	addCommand("InitialWelcome", "", "User name:", loginErrors);
-	addCommand("UsernameLogin", uname, "User password:", loginErrors );
-	addCommand("PasswordLogin", upass, "\nMA5683T", loginErrors);
+	addCommand( "InitialWelcome", "", "User name:", loginErrors, OltLogging );
+	addCommand( "UsernameLogin", uname, "User password:", loginErrors, OltLogging );
+	addCommand( "PasswordLogin", upass, "\nMA5683T", loginErrors, OltLogged );
 	QTelnet::connectToHost(host, port);
 }
 
@@ -46,8 +56,8 @@ void QTelnetInterface::playQueue()
 		m_dataBuffer.clear();
 		if( !m_currentCommand.cmd.isEmpty() )
 		{
-			sendData(m_currentCommand.cmd.toLatin1());
-			sendData("\n");
+			sendData( m_currentCommand.cmd.toLatin1() );
+			sendData( "\n" );
 		}
 	}
 }
@@ -56,7 +66,10 @@ void QTelnetInterface::onDataFromOLT(const char *data, int length)
 {
 	m_dataBuffer.append( QByteArray(data, length) );
 	if( m_dataBuffer.contains(m_currentCommand.promtp) )
+	{
+		setOltState(m_currentCommand.state);
 		emit newResponce(m_currentCommand.label, m_currentCommand.cmd, m_dataBuffer);
+	}
 	else
 	{
 		QMap<QString, QString>::const_iterator i = m_currentCommand.errorStrings.constBegin();

@@ -19,6 +19,7 @@ Q_OBJECT
 public:
 	enum OLTState
 	{
+		OltUnknownSate = -1,
 		OltUnconnected,
 		OltConnected,
 		OltLogging,
@@ -30,15 +31,17 @@ public:
 		QString cmd;
 		QMap<QString, QString> errorStrings;
 		QString promtp;
+		OLTState state;	// State on succefull command (on prompt match)
 	};
 
 	QString m_dataBuffer;
 	CommandControl m_currentCommand;
 	QQueue<CommandControl> m_commands;
 
-	void addCommand(const QString &label, const QString &cmd, const QString &promtp, const QStringList &errors = QStringList());
+	void addCommand( const QString &label, const QString &cmd, const QString &promtp, const QStringList &errors = QStringList(), OLTState okState = OltUnknownSate );
 private:
 	OLTState m_OLTState;
+	void setOltState(OLTState newState);
 
 public:
 	QTelnetInterface();
@@ -53,6 +56,7 @@ protected:
 	void playQueue();
 
 signals:
+	void oltStateChanged(OLTState s);
 	void newResponce(const QString &label, const QString &cmd, const QString &responce);
 	void errorResponce(const QString &label, const QString &cmd, const QString &error);
 };
