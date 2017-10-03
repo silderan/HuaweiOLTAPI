@@ -45,7 +45,10 @@ void QTelnetInterface::playQueue()
 		m_currentCommand = m_commands.takeFirst();
 		m_dataBuffer.clear();
 		if( !m_currentCommand.cmd.isEmpty() )
+		{
 			sendData(m_currentCommand.cmd.toLatin1());
+			sendData("\n");
+		}
 	}
 }
 
@@ -61,6 +64,7 @@ void QTelnetInterface::onDataFromOLT(const char *data, int length)
 		{
 			if( m_dataBuffer.contains(i.key()) )
 				emit errorResponce(m_currentCommand.label, m_currentCommand.cmd, i.value());
+			i++;
 		}
 	}
 	playQueue();
