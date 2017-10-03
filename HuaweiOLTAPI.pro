@@ -13,10 +13,16 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        QFrontend.cpp \
-    ../QTelnet/QTelnet.cpp
+		QFrontend.cpp \
+    ../QTelnet/QTelnet.cpp \
+    QIniFile.cpp \
+    GlobalConfig.cpp \
+    QTelnetInterface.cpp
 
 HEADERS  += QFrontend.h \
-    ../QTelnet/QTelnet.h
+    ../QTelnet/QTelnet.h \
+    QIniFile.h \
+    GlobalConfig.h \
+    QTelnetInterface.h
 
 FORMS    += QFrontend.ui

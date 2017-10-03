@@ -3,20 +3,30 @@
 
 #include <QMainWindow>
 
-namespace Ui {
-class QFrontend;
+#include "QTelnetInterface.h"
+
+namespace Ui
+{
+	class QFrontend;
 }
 
 class QFrontend : public QMainWindow
 {
-	Q_OBJECT
+Q_OBJECT
+	Ui::QFrontend *ui;
+	QTelnetInterface huaweiOLT;
 
 public:
 	explicit QFrontend(QWidget *parent = 0);
 	~QFrontend();
 
-private:
-	Ui::QFrontend *ui;
+protected:
+	void addViewerText(const QString &text);
+private slots:
+	void oltTelnetIncommings(const char *data, int length);
+	void oltTelnetStatusChanged(QAbstractSocket::SocketState state);
+	void on_btLogin_clicked();
+	void on_btNewOLTs_clicked();
 };
 
 #endif // QFRONTEND_H
