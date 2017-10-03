@@ -18,6 +18,8 @@ QFrontend::QFrontend(QWidget *parent) :
 	connect( &huaweiOLT, SIGNAL(newData(const char*,int)), this, SLOT(oltTelnetIncommings(const char*,int)) );
 	// TO see telnet status.
 	connect( &huaweiOLT, SIGNAL(stateChanged(QAbstractSocket::SocketState)), SLOT(oltTelnetStatusChanged(QAbstractSocket::SocketState)) );
+	connect( &huaweiOLT, SIGNAL(oltStateChanged(QTelnetInterface::OLTState)), this, SLOT(oltStatusChanged(QTelnetInterface::OLTState)) );
+	connect( &huaweiOLT, SIGNAL(errorResponse(QString,QString,QString)), this, SLOT(oltErrorResponse(QString,QString,QString)) );
 }
 
 QFrontend::~QFrontend()
@@ -75,6 +77,39 @@ void QFrontend::oltTelnetStatusChanged(QAbstractSocket::SocketState state)
 		ui->btLogin->setText( tr("Forzar") );
 		break;
 	}
+}
+
+void QFrontend::oltStatusChanged(QTelnetInterface::OLTState state)
+{
+	switch( state )
+	{
+	case QTelnetInterface::OltUnknownSate:
+		break;
+	case QTelnetInterface::OltUnconnected:
+		break;
+	case QTelnetInterface::OltConnected:
+		break;
+	case QTelnetInterface::OltLogging:
+		break;
+	case QTelnetInterface::OltLogged:
+//		huaweiOLT.enableAdminMode();
+		huaweiOLT.enterConfigMode();
+		break;
+	case QTelnetInterface::OltAdminMode:
+		break;
+	case QTelnetInterface::OltConfigMode:
+		break;
+	}
+}
+
+void QFrontend::oltErrorResponse(const QString &tag, const QString &cmd, const QString &err)
+{
+	addViewerText(tr("Error on command [%1] %2; %3").arg(tag, cmd, err));
+}
+
+void QFrontend::oltCommandResponse(const QString &tag, const QString &cmd, const QString &response)
+{
+
 }
 
 void QFrontend::on_btLogin_clicked()

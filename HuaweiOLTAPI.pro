@@ -17,12 +17,14 @@ SOURCES += main.cpp\
     ../QTelnet/QTelnet.cpp \
     QIniFile.cpp \
     GlobalConfig.cpp \
-    QTelnetInterface.cpp
+    QTelnetInterface.cpp \
+    QHuaweiCommands.cpp
 
 HEADERS  += QFrontend.h \
     ../QTelnet/QTelnet.h \
     QIniFile.h \
     GlobalConfig.h \
-    QTelnetInterface.h
+    QTelnetInterface.h \
+    QHuaweiCommands.h
 
 FORMS    += QFrontend.ui

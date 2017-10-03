@@ -16,6 +16,14 @@ class QTelnetInterface : public QTelnet
 {
 Q_OBJECT
 
+protected:
+	class ErrorStrings : public QMap<QString, QString>
+	{
+	public:
+		void addErrorString(const QString &match, const QString &explain);
+		QString errorString(const QString &text) const;
+	};
+
 public:
 	enum OLTState
 	{
@@ -23,25 +31,32 @@ public:
 		OltUnconnected,
 		OltConnected,
 		OltLogging,
-		OltLogged
+		OltLogged,
+		OltAdminMode,
+		OltConfigMode
 	};
+
+private:
 	struct CommandControl
 	{
 		QString label;
 		QString cmd;
-		QMap<QString, QString> errorStrings;
-		QString promtp;
+		ErrorStrings errorStrings;
+		QString prompt;
 		OLTState state;	// State on succefull command (on prompt match)
 	};
 
+	ErrorStrings m_loginErrors;
+	OLTState m_OLTState;
 	QString m_dataBuffer;
 	CommandControl m_currentCommand;
 	QQueue<CommandControl> m_commands;
 
-	void addCommand( const QString &label, const QString &cmd, const QString &promtp, const QStringList &errors = QStringList(), OLTState okState = OltUnknownSate );
-private:
-	OLTState m_OLTState;
 	void setOltState(OLTState newState);
+	void playQueue();
+
+protected:
+	void addCommand( const QString &label, const QString &cmd, const QString &promtp, const ErrorStrings &errors, OLTState okState = OltUnknownSate );
 
 public:
 	QTelnetInterface();
@@ -52,13 +67,10 @@ private slots:
 	void onDataFromOLT(const char *data, int length);
 	void onTelnetStateChange(QAbstractSocket::SocketState st);
 
-protected:
-	void playQueue();
-
 signals:
-	void oltStateChanged(OLTState s);
-	void newResponce(const QString &label, const QString &cmd, const QString &responce);
-	void errorResponce(const QString &label, const QString &cmd, const QString &error);
+	void oltStateChanged(QTelnetInterface::OLTState s);
+	void newResponse(const QString &label, const QString &cmd, const QString &response);
+	void errorResponse(const QString &label, const QString &cmd, const QString &error);
 };
 
 #endif // QTELNETINTERFACE_H

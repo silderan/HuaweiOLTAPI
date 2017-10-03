@@ -1,6 +1,24 @@
 #include "QTelnetInterface.h"
 
 
+void QTelnetInterface::ErrorStrings::addErrorString(const QString &match, const QString &explain)
+{
+	insert(match, explain);
+}
+
+QString QTelnetInterface::ErrorStrings::errorString(const QString &text) const
+{
+	QTelnetInterface::ErrorStrings::const_iterator i = constBegin();
+	while( i != constEnd() )
+	{
+		if( text.contains(i.key()) )
+			return i.value();
+		i++;
+	}
+	// No error.
+	return QString();
+}
+
 /**
  * @brief QTelnetInterface::addCommand
  * Adds a new command to the queue.
@@ -8,15 +26,14 @@
  * @param promtp The prompt to wait to for a succesfull command.
  * @param errors Lists of paired texts for errors and their explanation text.
  */
-void QTelnetInterface::addCommand(const QString &label, const QString &cmd, const QString &promtp, const QStringList &errors, OLTState okState)
+void QTelnetInterface::addCommand(const QString &label, const QString &cmd, const QString &prompt, const ErrorStrings &errors, OLTState okState)
 {
 	CommandControl newCmd;
 	newCmd.label = label;
 	newCmd.cmd = cmd;
-	newCmd.promtp = promtp;
+	newCmd.prompt = prompt;
+	newCmd.errorStrings = errors;
 	newCmd.state = okState;
-	for( int i = 0; i < errors.count(); i+=2 )
-		newCmd.errorStrings.insert(errors[i+0], errors[i+1]);
 	m_commands.append( newCmd );
 	playQueue();
 }
@@ -32,25 +49,25 @@ void QTelnetInterface::setOltState(QTelnetInterface::OLTState newState)
 
 QTelnetInterface::QTelnetInterface()
 {
+	m_loginErrors.addErrorString( "Reenter times have reached the upper limit.", tr("User %1 is already loged and cannot log again more times") );
+	m_loginErrors.addErrorString( "Username or password invalid.", tr("Invalid username or password") );
+	m_loginErrors.addErrorString( "Username or Domain invalid!", tr("Invalid username") );
+
 	connect( this, SIGNAL(newData(const char*,int)), this, SLOT(onDataFromOLT(const char*,int)) );
 	connect( this, SIGNAL(stateChanged(QAbstractSocket::SocketState)), this, SLOT(onTelnetStateChange(QAbstractSocket::SocketState)) );
 }
 
 void QTelnetInterface::connectToOLT(const QString &host, quint16 port, const QString &uname, const QString &upass)
 {
-	QStringList loginErrors = QStringList()
-			<< "Reenter times have reached the upper limit." << tr("User %1 is already loged and cannot log again more times")
-			<< "Username or password invalid." << tr("Invalid username or password")
-			<< "Username or Domain invalid!" << tr("Invalid username");
-	addCommand( "InitialWelcome", "", "User name:", loginErrors, OltLogging );
-	addCommand( "UsernameLogin", uname, "User password:", loginErrors, OltLogging );
-	addCommand( "PasswordLogin", upass, "\nMA5683T", loginErrors, OltLogged );
+	addCommand( "InitialWelcome", "", "User name:", m_loginErrors, OltLogging );
+	addCommand( "UsernameLogin", uname, "User password:", m_loginErrors, OltLogging );
+	addCommand( "PasswordLogin", upass, "\nMA5683T>", m_loginErrors, OltLogged );
 	QTelnet::connectToHost(host, port);
 }
 
 void QTelnetInterface::playQueue()
 {
-	if( (oltState() == OltConnected) && m_commands.count() )
+	if( (state() == QAbstractSocket::ConnectedState) && m_commands.count() )
 	{
 		m_currentCommand = m_commands.takeFirst();
 		m_dataBuffer.clear();
@@ -65,20 +82,18 @@ void QTelnetInterface::playQueue()
 void QTelnetInterface::onDataFromOLT(const char *data, int length)
 {
 	m_dataBuffer.append( QByteArray(data, length) );
-	if( m_dataBuffer.contains(m_currentCommand.promtp) )
+	QString err = m_currentCommand.errorStrings.errorString(m_dataBuffer);
+	if( !err.isEmpty() )
 	{
-		setOltState(m_currentCommand.state);
-		emit newResponce(m_currentCommand.label, m_currentCommand.cmd, m_dataBuffer);
+		emit errorResponse(m_currentCommand.label, m_currentCommand.cmd, err);
+		m_dataBuffer.clear();
 	}
-	else
+	else if( m_dataBuffer.contains(m_currentCommand.prompt) )
 	{
-		QMap<QString, QString>::const_iterator i = m_currentCommand.errorStrings.constBegin();
-		while( i != m_currentCommand.errorStrings.constEnd() )
-		{
-			if( m_dataBuffer.contains(i.key()) )
-				emit errorResponce(m_currentCommand.label, m_currentCommand.cmd, i.value());
-			i++;
-		}
+		if( m_currentCommand.state != OltUnknownSate )
+			setOltState(m_currentCommand.state);
+		emit newResponse(m_currentCommand.label, m_currentCommand.cmd, m_dataBuffer);
+		m_dataBuffer.clear();
 	}
 	playQueue();
 }
