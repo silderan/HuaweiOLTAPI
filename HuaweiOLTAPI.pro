@@ -18,13 +18,18 @@ SOURCES += main.cpp\
     QIniFile.cpp \
     GlobalConfig.cpp \
     QTelnetInterface.cpp \
-    QHuaweiCommands.cpp
+    QHuaweiCommands.cpp \
+    QOLTCommands.cpp
 
 HEADERS  += QFrontend.h \
     ../QTelnet/QTelnet.h \
     QIniFile.h \
     GlobalConfig.h \
     QTelnetInterface.h \
-    QHuaweiCommands.h
+    QHuaweiCommands.h \
+    QOLTCommands.h
 
 FORMS    += QFrontend.ui
+
+RESOURCES += \
+    resources.qrc

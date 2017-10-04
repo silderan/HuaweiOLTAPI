@@ -6,6 +6,7 @@
 #include <QQueue>
 
 #include "../QTelnet/QTelnet.h"
+#include "QOLTCommands.h"
 
 /**
  * @brief The QTelnetInterface class
@@ -15,14 +16,6 @@
 class QTelnetInterface : public QTelnet
 {
 Q_OBJECT
-
-protected:
-	class ErrorStrings : public QMap<QString, QString>
-	{
-	public:
-		void addErrorString(const QString &match, const QString &explain);
-		QString errorString(const QString &text) const;
-	};
 
 public:
 	enum OLTState
@@ -41,22 +34,27 @@ private:
 	{
 		QString label;
 		QString cmd;
-		ErrorStrings errorStrings;
+		QOLTCommands::ErrorStrings errorStrings;
 		QString prompt;
 		OLTState state;	// State on succefull command (on prompt match)
 	};
 
-	ErrorStrings m_loginErrors;
+	QOLTCommands m_oltCommands;
 	OLTState m_OLTState;
 	QString m_dataBuffer;
 	CommandControl m_currentCommand;
-	QQueue<CommandControl> m_commands;
+	QQueue<CommandControl> m_commandsQueue;
 
 	void setOltState(OLTState newState);
 	void playQueue();
 
 protected:
-	void addCommand( const QString &label, const QString &cmd, const QString &promtp, const ErrorStrings &errors, OLTState okState = OltUnknownSate );
+	const QOLTCommands &oltCommands() { return m_oltCommands; }
+	void addCommand( const QString &label, const QString &cmd, const QString &promtp, const QOLTCommands::ErrorStrings &errors, OLTState okState = OltUnknownSate );
+	void addLoginCommand( const QString &label, const QString &cmd, const QString &promtp, OLTState okState = OltUnknownSate )
+	{ addCommand(label, cmd, promtp, m_oltCommands.loginErrors(), okState ); }
+	void addCommand( const QString &label, const QString &cmd, const QString &promtp, OLTState okState = OltUnknownSate )
+	{ addCommand(label, cmd, promtp, m_oltCommands.commandErrors(), okState ); }
 
 public:
 	QTelnetInterface();

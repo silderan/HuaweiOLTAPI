@@ -5,8 +5,6 @@
 
 class QHuaweiCommands : public QTelnetInterface
 {
-	ErrorStrings m_comandErrors;
-
 public:
 	QHuaweiCommands();
 	void enableAdminMode();
