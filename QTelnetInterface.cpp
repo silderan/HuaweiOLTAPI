@@ -17,7 +17,6 @@ void QTelnetInterface::addCommand(const QString &label, const QString &cmd, cons
 	newCmd.errorStrings = errors;
 	newCmd.state = okState;
 	m_commandsQueue.append( newCmd );
-	if( m_commandsQueue.count() == 1 )
 		playQueue();
 }
 
@@ -32,10 +31,6 @@ void QTelnetInterface::setOltState(QTelnetInterface::OLTState newState)
 
 QTelnetInterface::QTelnetInterface()
 {
-//	m_loginErrors.addErrorString( "Reenter times have reached the upper limit.", tr("User %1 is already loged and cannot log again more times") );
-//	m_loginErrors.addErrorString( "Username or password invalid.", tr("Invalid username or password") );
-//	m_loginErrors.addErrorString( "Username or Domain invalid!", tr("Invalid username") );
-
 	connect( this, SIGNAL(newData(const char*,int)), this, SLOT(onDataFromOLT(const char*,int)) );
 	connect( this, SIGNAL(stateChanged(QAbstractSocket::SocketState)), this, SLOT(onTelnetStateChange(QAbstractSocket::SocketState)) );
 }
@@ -50,7 +45,7 @@ void QTelnetInterface::connectToOLT(const QString &host, quint16 port, const QSt
 
 void QTelnetInterface::playQueue()
 {
-	if( (state() == QAbstractSocket::ConnectedState) && m_commandsQueue.count() )
+	if( (state() == QAbstractSocket::ConnectedState) && m_commandsQueue.count() && m_currentCommand.isCleared() )
 	{
 		m_currentCommand = m_commandsQueue.takeFirst();
 		m_dataBuffer.clear();

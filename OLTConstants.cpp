@@ -95,7 +95,8 @@ void OLTConstants::loadOLTConstantsFile()
 			if( linea.startsWith("CONSTANT:") )
 				m_constants.fromFileLine( linea.mid(9) );
 			else
-				m_oltCommands.fromFileLine( linea );
+			if( linea.startsWith("COMMAND:") )
+				m_oltCommands.fromFileLine( linea.mid(8) );
 		}
 	f.close();
 }

@@ -9,6 +9,7 @@ public:
 	OLTCommands();
 	void enableAdminMode();
 	void enterConfigMode();
+	void scroll(int lines);
 };
 
 #endif // OLTCOMMANDS_H

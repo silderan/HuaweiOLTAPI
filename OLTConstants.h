@@ -64,6 +64,11 @@ public:
 	// Constants.
 	QString constantUName() const { return m_constants.askForUsername(); }
 	QString constantUPass() const { return m_constants.askForPassword(); }
+
+	// Commands.
+	QString commandEnableAdmin() const { return m_oltCommands.value("EnableAdmin"); }
+	QString commandEnterConfigMode() const { return m_oltCommands.value("EnterConfig"); }
+	QString scroll(quint16 lines) const { return QString(m_oltCommands.value("scroll")).replace("{lines}", QString::number(lines)); }
 };
 
 extern OLTConstants oltConstants;

@@ -8,7 +8,7 @@ OLTCommands::OLTCommands()
 void OLTCommands::enableAdminMode()
 {
 	if( oltState() < QTelnetInterface::OltAdminMode )
-		addCommand( "EnablingAdmin", "enablse", oltConstants.promptAdmin(), OltLogging );
+		addCommand( "EnablingAdmin", oltConstants.commandEnableAdmin(), oltConstants.promptAdmin(), OltAdminMode );
 }
 
 void OLTCommands::enterConfigMode()
@@ -16,6 +16,11 @@ void OLTCommands::enterConfigMode()
 	if( oltState() < QTelnetInterface::OltConfigMode )
 	{
 		enableAdminMode();
-		addCommand( "ConfigMode", "config", oltConstants.promptConfig(), OltLogged );
+		addCommand( "ConfigMode", oltConstants.commandEnterConfigMode(), oltConstants.promptConfig(), OltConfigMode );
 	}
+}
+
+void OLTCommands::scroll(int lines)
+{
+	addCommand("Scroll", oltConstants.scroll(lines), oltConstants.promptConfig());
 }

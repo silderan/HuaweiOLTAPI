@@ -44,6 +44,10 @@ private:
 			prompt.clear();
 			state = OltUnknownSate;
 		}
+		bool isCleared()
+		{
+			return prompt.isEmpty();
+		}
 	};
 
 	OLTState m_OLTState;

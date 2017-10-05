@@ -117,7 +117,7 @@ void QFrontend::oltCommandResponse(const QString &tag, const QString &cmd, const
 
 void QFrontend::on_btLogin_clicked()
 {
-	switch(huaweiOLT.state())
+	switch( huaweiOLT.state() )
 	{
 	case QAbstractSocket::UnconnectedState:
 		huaweiOLT.connectToOLT(ui->leFQDN->text(),
@@ -149,4 +149,9 @@ void QFrontend::on_btLogin_clicked()
 void QFrontend::on_btNewOLTs_clicked()
 {
 
+}
+
+void QFrontend::on_btScroll_clicked()
+{
+	huaweiOLT.scroll(ui->sbScroll->value());
 }

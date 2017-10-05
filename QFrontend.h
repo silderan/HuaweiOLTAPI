@@ -31,6 +31,7 @@ private slots:
 	void oltCommandResponse(const QString &tag, const QString &cmd, const QString &responce);
 	void on_btLogin_clicked();
 	void on_btNewOLTs_clicked();
+	void on_btScroll_clicked();
 };
 
 #endif // QFRONTEND_H
