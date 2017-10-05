@@ -18,7 +18,7 @@ SOURCES += main.cpp\
     QIniFile.cpp \
     GlobalConfig.cpp \
     QTelnetInterface.cpp \
-    QHuaweiCommands.cpp \
+    OLTConstants.cpp \
     QOLTCommands.cpp
 
 HEADERS  += QFrontend.h \
@@ -26,7 +26,7 @@ HEADERS  += QFrontend.h \
     QIniFile.h \
     GlobalConfig.h \
     QTelnetInterface.h \
-    QHuaweiCommands.h \
+    OLTConstants.h \
     QOLTCommands.h
 
 FORMS    += QFrontend.ui

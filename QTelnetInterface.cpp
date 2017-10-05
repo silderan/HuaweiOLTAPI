@@ -8,7 +8,7 @@
  * @param promtp The prompt to wait to for a succesfull command.
  * @param errors Lists of paired texts for errors and their explanation text.
  */
-void QTelnetInterface::addCommand(const QString &label, const QString &cmd, const QString &prompt, const QOLTCommands::ErrorStrings &errors, OLTState okState)
+void QTelnetInterface::addCommand(const QString &label, const QString &cmd, const QString &prompt, const OLTConstants::ErrorStrings &errors, OLTState okState)
 {
 	CommandControl newCmd;
 	newCmd.label = label;
@@ -17,7 +17,8 @@ void QTelnetInterface::addCommand(const QString &label, const QString &cmd, cons
 	newCmd.errorStrings = errors;
 	newCmd.state = okState;
 	m_commandsQueue.append( newCmd );
-	playQueue();
+	if( m_commandsQueue.count() == 1 )
+		playQueue();
 }
 
 void QTelnetInterface::setOltState(QTelnetInterface::OLTState newState)
@@ -41,9 +42,9 @@ QTelnetInterface::QTelnetInterface()
 
 void QTelnetInterface::connectToOLT(const QString &host, quint16 port, const QString &uname, const QString &upass)
 {
-	addLoginCommand( "InitialWelcome", "", "User name:", OltLogging );
-	addLoginCommand( "UsernameLogin", uname, "User password:", OltLogging );
-	addLoginCommand( "PasswordLogin", upass, "\nMA5683T>", OltLogged );
+	addLoginCommand( "InitialWelcome", "", oltConstants.constantUName(), OltLogging );
+	addLoginCommand( "UsernameLogin", uname, oltConstants.constantUPass(), OltLogging );
+	addLoginCommand( "PasswordLogin", upass, oltConstants.promptInitial(), OltLogged );
 	QTelnet::connectToHost(host, port);
 }
 
@@ -69,6 +70,8 @@ void QTelnetInterface::onDataFromOLT(const char *data, int length)
 	{
 		emit errorResponse(m_currentCommand.label, m_currentCommand.cmd, err);
 		m_dataBuffer.clear();
+		m_currentCommand.clear();
+		playQueue();
 	}
 	else if( m_dataBuffer.contains(m_currentCommand.prompt) )
 	{
@@ -76,8 +79,9 @@ void QTelnetInterface::onDataFromOLT(const char *data, int length)
 			setOltState(m_currentCommand.state);
 		emit newResponse(m_currentCommand.label, m_currentCommand.cmd, m_dataBuffer);
 		m_dataBuffer.clear();
+		m_currentCommand.clear();
+		playQueue();
 	}
-	playQueue();
 }
 
 void QTelnetInterface::onTelnetStateChange(QAbstractSocket::SocketState st)

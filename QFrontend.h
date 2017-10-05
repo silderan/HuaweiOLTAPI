@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 
-#include "QHuaweiCommands.h"
+#include "QOLTCommands.h"
 
 namespace Ui
 {
@@ -14,7 +14,7 @@ class QFrontend : public QMainWindow
 {
 Q_OBJECT
 	Ui::QFrontend *ui;
-	QHuaweiCommands huaweiOLT;
+	OLTCommands huaweiOLT;
 
 public:
 	explicit QFrontend(QWidget *parent = 0);

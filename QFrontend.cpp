@@ -1,6 +1,8 @@
 #include "QFrontend.h"
 #include "ui_QFrontend.h"
 
+#include <QMessageBox>
+
 #include "GlobalConfig.h"
 
 QFrontend::QFrontend(QWidget *parent) :
@@ -92,7 +94,6 @@ void QFrontend::oltStatusChanged(QTelnetInterface::OLTState state)
 	case QTelnetInterface::OltLogging:
 		break;
 	case QTelnetInterface::OltLogged:
-//		huaweiOLT.enableAdminMode();
 		huaweiOLT.enterConfigMode();
 		break;
 	case QTelnetInterface::OltAdminMode:
@@ -104,6 +105,8 @@ void QFrontend::oltStatusChanged(QTelnetInterface::OLTState state)
 
 void QFrontend::oltErrorResponse(const QString &tag, const QString &cmd, const QString &err)
 {
+	QMessageBox::warning(this, this->windowTitle(),
+						 tr("Error reported from OLT while processing cmd \"%1\" Tag=\"%2\": \n%3").arg(cmd, tag, err));
 	addViewerText(tr("Error on command [%1] %2; %3").arg(tag, cmd, err));
 }
 

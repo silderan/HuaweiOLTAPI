@@ -1,5 +1,5 @@
 <RCC>
     <qresource prefix="/files" lang="ES">
-        <file>huaweilib/oltCommands.cnf</file>
+        <file alias="oltConstants">oltConstants.cnf</file>
     </qresource>
 </RCC>
