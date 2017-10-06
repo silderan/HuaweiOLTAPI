@@ -101,4 +101,12 @@ void OLTConstants::loadOLTConstantsFile()
 	f.close();
 }
 
+QString OLTConstants::parseCommand(QString command, const QStringList data) const
+{
+
+	for( int i = 0; i < data.count(); i+=2 )
+		command.replace(data[i+0], data[i+1]);
+	return command;
+}
+
 OLTConstants oltConstants;

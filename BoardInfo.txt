@@ -1,0 +1,420 @@
+  ---------------------------------------
+  Board Name          : H805GPFD
+  Board Status        : Normal
+  ---------------------------------------
+
+  ------------------------------------------------------------------------------
+  Power Status      Power-off cause                    Power-off Time
+
+  ------------------------------------------------------------------------------
+  POWER-ON          -                                  -
+
+  ------------------------------------------------------------------------------
+
+  -------------------------------------------------------------
+	Port   Port   min-distance   max-distance   Optical-module
+		   type       (km)           (km)           status
+  -------------------------------------------------------------
+
+	0     GPON        0              20             Online
+	1     GPON        0              20             Online
+
+	2     GPON        0              20             Online
+	3     GPON        0              20             Online
+	4     GPON        0              20             Online
+	5     GPON        0              20             Online
+	6     GPON        0              20             Online
+
+	7     GPON        0              20             Online
+
+---- More ( Press 'Q' to break ) ----
+[37D                                     [37D
+	8     GPON        0              20             Online
+
+	9     GPON        0              20             Online
+   10     GPON        0              20             Online
+
+   11     GPON        0              20             Online
+
+   12     GPON        0              20             Online
+   13     GPON        0              20             Online
+
+   14     GPON        0              20             Online
+
+   15     GPON        0              20             Online
+
+  -------------------------------------------------------------
+
+  -----------------------------------------------------------------------------
+  F/S/P   ONT         SN         Control     Run      Config   Match    Protect
+		  ID                     flag        state    state    state    side
+  -----------------------------------------------------------------------------
+
+  0/ 0/0    0  485754438FF40483  active      online   failed   match    no
+
+  0/ 0/0    1  485754438FFBC983  active      online   failed   match    no
+
+  0/ 0/0    2  48575443C399886F  active      online   normal   match    no
+
+  0/ 0/0    3  485754438FFACA83  active      online   failed   match    no
+
+  0/ 0/0    4  485754438FFB9683  active      online   failed   match    no
+  0/ 0/0    5  48575443E9ED9685  active      offline  initial  initial  no
+
+  0/ 0/0    6  5054494E3076EDC1  active      offline  initial  initial  no
+
+  0/ 0/0    7  485754438FFC0D83  active      online   failed   match    no
+  0/ 0/0    8  48575443E9E65985  active      online   failed   match    no
+
+  0/ 0/0    9  48575443E9EE9585  active      online   failed   match    no
+
+  0/ 0/0   10  485754438FFBEB83  active      offline  initial  initial  no
+
+
+---- More ( Press 'Q' to break ) ----
+[37D                                     [37D
+  0/ 0/0   11  48575443E9ED5285  active      online   failed   match    no
+
+  0/ 0/0   12  48575443E9EA2285  active      online   failed   match    no
+
+  0/ 0/0   13  48575443E9ED6385  active      online   failed   match    no
+
+  0/ 0/0   14  48575443E9EFE985  active      online   failed   match    no
+
+  0/ 0/0   15  48575443E9EEFB85  active      offline  initial  initial  no
+
+  0/ 0/0   16  48575443A2145564  active      online   normal   match    no
+
+  -----------------------------------------------------------------------------
+  F/S/P   ONT-ID   Description
+  -----------------------------------------------------------------------------
+
+  0/ 0/0       0   49
+
+  0/ 0/0       1   50
+  0/ 0/0       2   51
+
+  0/ 0/0       3   52
+
+  0/ 0/0       4   53
+
+  0/ 0/0       5   6
+
+  0/ 0/0       6   7
+
+  0/ 0/0       7   54
+
+  0/ 0/0       8   36
+
+  0/ 0/0       9   43
+
+  0/ 0/0      10   56
+
+  0/ 0/0      11   61
+
+  0/ 0/0      12   62
+
+  0/ 0/0      13   63
+
+  0/ 0/0      14   64
+
+---- More ( Press 'Q' to break ) ----
+[37D                                     [37D
+  0/ 0/0      15   65
+
+  0/ 0/0      16   68
+
+  -----------------------------------------------------------------------------
+
+  In port 0/ 0/0 , the total of ONTs are: 17, online: 13
+
+  -----------------------------------------------------------------------------
+  F/S/P   ONT         SN         Control     Run      Config   Match    Protect
+		  ID                     flag        state    state    state    side
+  -----------------------------------------------------------------------------
+
+  0/ 0/1    0  48575443C385F16F  active      offline  initial  initial  no
+  0/ 0/1    1  48575443C379DB6F  active      online   normal   match    no
+
+  0/ 0/1    2  485754433DD0B473  active      online   normal   match    no
+
+  0/ 0/1    3  485754436F427980  active      online   normal   match    no
+
+  0/ 0/1    4  48575443C399FF6F  active      online   normal   match    no
+
+  0/ 0/1    5  485754433DD00A73  active      online   normal   match    no
+  0/ 0/1    6  48575443A20D6D64  active      online   normal   match    no
+
+  0/ 0/1    7  485754433E966573  active      online   normal   match    no
+
+  0/ 0/1    8  54504C476BE3E1AE  active      online   failed   match    no
+
+  0/ 0/1    9  485754433DC66973  active      online   normal   match    no
+
+  0/ 0/1   10  485754433DDBED73  active      online   normal   match    no
+
+  0/ 0/1   11  48575443C38CC86F  active      online   normal   match    no
+
+  0/ 0/1   12  485754431657BB8C  active      online   failed   match    no
+
+  0/ 0/1   13  48575443A21A1C64  active      online   normal   match    no
+
+  0/ 0/1   14  48575443A2196164  active      online   normal   match    no
+
+  0/ 0/1   15  48575443A216FD64  active      offline  initial  initial  no
+
+
+---- More ( Press 'Q' to break ) ----
+[37D                                     [37D
+  0/ 0/1   16  48575443A2187364  active      online   normal   match    no
+
+  0/ 0/1   17  485754433D94BD73  active      online   normal   match    no
+
+  0/ 0/1   19  48575443A219C764  active      online   normal   match    no
+
+  0/ 0/1   20  48575443A2186264  active      online   normal   match    no
+
+  0/ 0/1   21  485754436EE20D80  active      offline  initial  initial  no
+
+  0/ 0/1   22  485754436F4AB580  active      online   normal   match    no
+
+  0/ 0/1   23  485754436F41E080  active      online   normal   match    no
+
+  0/ 0/1   24  48575443C39BEC6F  active      online   normal   match    no
+
+  0/ 0/1   25  48575443C39C306F  active      online   normal   match    no
+
+  0/ 0/1   26  485754436EE26280  active      online   normal   match    no
+
+  0/ 0/1   27  485754436F421380  active      online   normal   match    no
+
+  0/ 0/1   28  485754438FFB3083  active      offline  initial  initial  no
+
+  0/ 0/1   29  485754438FFADB83  active      offline  initial  initial  no
+
+  0/ 0/1   30  485754438FFCD983  active      online   failed   match    no
+
+  0/ 0/1   31  48575443C957C66E  active      online   normal   match    no
+
+  0/ 0/1   32  48575443E9EDC985  active      online   failed   match    no
+
+  0/ 0/1   33  48575443E9EDA785  active      online   failed   match    no
+
+  -----------------------------------------------------------------------------
+  F/S/P   ONT-ID   Description
+  -----------------------------------------------------------------------------
+
+  0/ 0/1       0   11
+
+  0/ 0/1       1   12
+
+  0/ 0/1       2   13
+
+  0/ 0/1       3   8
+
+
+---- More ( Press 'Q' to break ) ----
+[37D                                     [37D
+  0/ 0/1       4   15
+
+  0/ 0/1       5   19
+
+  0/ 0/1       6   23
+
+  0/ 0/1       7   24
+
+  0/ 0/1       8   25
+
+  0/ 0/1       9   26
+
+  0/ 0/1      10   27
+
+  0/ 0/1      11   28
+
+  0/ 0/1      12   69
+
+  0/ 0/1      13   31
+
+  0/ 0/1      14   32
+
+  0/ 0/1      15   33
+  0/ 0/1      16   34
+
+  0/ 0/1      17   35
+
+  0/ 0/1      19   38
+
+  0/ 0/1      20   40
+
+  0/ 0/1      21   41
+
+  0/ 0/1      22   46
+
+  0/ 0/1      23   1
+
+  0/ 0/1      24   4
+
+  0/ 0/1      25   18
+
+  0/ 0/1      26   47
+
+  0/ 0/1      27   48
+
+  0/ 0/1      28   5
+
+
+---- More ( Press 'Q' to break ) ----
+[37D                                     [37D
+  0/ 0/1      29   9
+
+  0/ 0/1      30   2
+
+  0/ 0/1      31   3
+
+  0/ 0/1      32   55
+  0/ 0/1      33   58
+
+  -----------------------------------------------------------------------------
+
+  In port 0/ 0/1 , the total of ONTs are: 33, online: 28
+
+  -----------------------------------------------------------------------------
+  F/S/P   ONT         SN         Control     Run      Config   Match    Protect
+		  ID                     flag        state    state    state    side
+  -----------------------------------------------------------------------------
+
+  0/ 0/2    0  485754436F3ED280  active      online   normal   match    no
+
+  -----------------------------------------------------------------------------
+  F/S/P   ONT-ID   Description
+  -----------------------------------------------------------------------------
+
+  0/ 0/2       0   10
+
+  -----------------------------------------------------------------------------
+
+  In port 0/ 0/2 , the total of ONTs are: 1, online: 1
+
+  -----------------------------------------------------------------------------
+  F/S/P   ONT         SN         Control     Run      Config   Match    Protect
+		  ID                     flag        state    state    state    side
+  -----------------------------------------------------------------------------
+
+  0/ 0/3    0  48575443C39D516F  active      offline  initial  initial  no
+
+  0/ 0/3    1  48575443C93BF66E  active      online   normal   match    no
+
+---- More ( Press 'Q' to break ) ----
+[37D                                     [37D
+  0/ 0/3    2  485754433DC4E273  active      online   normal   match    no
+
+  0/ 0/3    3  48575443A218D964  active      online   normal   match    no
+
+  0/ 0/3    4  485754436F41AD80  active      online   normal   match    no
+
+  0/ 0/3    5  485754436F4AE880  active      online   normal   match    no
+
+  0/ 0/3    6  485754436F412580  active      online   normal   match    no
+
+  0/ 0/3    7  48575443E9ED8585  active      online   failed   match    no
+
+  0/ 0/3    8  48575443E9EE8485  active      online   failed   match    no
+
+  0/ 0/3    9  485754431657EE8C  active      online   failed   match    no
+
+  0/ 0/3   10  48575443165EB48C  active      online   failed   match    no
+
+  0/ 0/3   11  48575443165ED68C  active      online   failed   match    no
+
+  0/ 0/3   12  48575443164DF88C  active      online   failed   match    no
+
+  0/ 0/3   13  4857544351ED5590  active      online   failed   match    no
+
+  0/ 0/3   14  4857544316558A8C  active      online   failed   match    no
+
+  0/ 0/3   15  485754431653488C  active      online   failed   match    no
+
+  -----------------------------------------------------------------------------
+  F/S/P   ONT-ID   Description
+  -----------------------------------------------------------------------------
+
+  0/ 0/3       0   17
+
+  0/ 0/3       1   20
+
+  0/ 0/3       2   39
+
+  0/ 0/3       3   30
+  0/ 0/3       4   42
+
+  0/ 0/3       5   44
+
+  0/ 0/3       6   45
+---- More ( Press 'Q' to break ) ----
+[37D                                     [37D
+  0/ 0/3       7   59
+
+  0/ 0/3       8   67
+
+  0/ 0/3       9   22
+
+  0/ 0/3      10   72
+  0/ 0/3      11   70
+
+  0/ 0/3      12   71
+
+  0/ 0/3      13   74
+  0/ 0/3      14   76
+  0/ 0/3      15   77
+
+  -----------------------------------------------------------------------------
+
+  In port 0/ 0/3 , the total of ONTs are: 16, online: 15
+
+  -----------------------------------------------------------------------------
+  F/S/P   ONT         SN         Control     Run      Config   Match    Protect
+		  ID                     flag        state    state    state    side
+  -----------------------------------------------------------------------------
+
+  0/ 0/4    0  48575443E9ED3085  active      online   failed   match    no
+
+  0/ 0/4    1  48575443E9EEA685  active      online   failed   match    no
+  0/ 0/4    2  48575443E9ED7485  active      online   failed   match    no
+
+  0/ 0/4    3  485754431656128C  active      online   failed   match    no
+
+  0/ 0/4    4  4857544351EA8B90  active      online   failed   match    no
+
+  -----------------------------------------------------------------------------
+  F/S/P   ONT-ID   Description
+  -----------------------------------------------------------------------------
+  0/ 0/4       0   57
+
+---- More ( Press 'Q' to break ) ----
+[37D                                     [37D
+  0/ 0/4       1   60
+
+  0/ 0/4       2   66
+  0/ 0/4       3   73
+
+  0/ 0/4       4   75
+  -----------------------------------------------------------------------------
+
+  In port 0/ 0/4 , the total of ONTs are: 5, online: 5
+
+  In port 0/ 0/5 , the total of ONTs are: 0, online: 0
+  In port 0/ 0/6 , the total of ONTs are: 0, online: 0
+  In port 0/ 0/7 , the total of ONTs are: 0, online: 0
+  In port 0/ 0/8 , the total of ONTs are: 0, online: 0
+  In port 0/ 0/9 , the total of ONTs are: 0, online: 0
+
+  In port 0/ 0/10, the total of ONTs are: 0, online: 0
+  In port 0/ 0/11, the total of ONTs are: 0, online: 0
+
+  In port 0/ 0/12, the total of ONTs are: 0, online: 0
+  In port 0/ 0/13, the total of ONTs are: 0, online: 0
+  In port 0/ 0/14, the total of ONTs are: 0, online: 0
+  In port 0/ 0/15, the total of ONTs are: 0, online: 0
+
+
+MA5683T(config)#

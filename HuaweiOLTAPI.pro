@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     GlobalConfig.cpp \
     QTelnetInterface.cpp \
     OLTConstants.cpp \
-    QOLTCommands.cpp
+    QOLTCommands.cpp \
+    QInfoDialog.cpp
 
 HEADERS  += QFrontend.h \
     ../QTelnet/QTelnet.h \
@@ -27,9 +28,14 @@ HEADERS  += QFrontend.h \
     GlobalConfig.h \
     QTelnetInterface.h \
     OLTConstants.h \
-    QOLTCommands.h
+    QOLTCommands.h \
+    QInfoDialog.h
 
-FORMS    += QFrontend.ui
+FORMS    += QFrontend.ui \
+    QInfoDialog.ui
 
 RESOURCES += \
     resources.qrc
+
+DISTFILES += \
+    BoardInfo.txt

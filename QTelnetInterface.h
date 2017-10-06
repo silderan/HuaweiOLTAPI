@@ -59,11 +59,11 @@ private:
 	void playQueue();
 
 protected:
-	void addCommand( const QString &label, const QString &cmd, const QString &promtp, const OLTConstants::ErrorStrings &errors, OLTState okState = OltUnknownSate );
-	void addLoginCommand( const QString &label, const QString &cmd, const QString &promtp, OLTState okState = OltUnknownSate )
-	{ addCommand(label, cmd, promtp, oltConstants.loginErrors(), okState ); }
-	void addCommand( const QString &label, const QString &cmd, const QString &promtp, OLTState okState = OltUnknownSate )
-	{ addCommand(label, cmd, promtp, oltConstants.commandErrors(), okState ); }
+	void addCommand( const QString &label, const QString &cmd, const QString &prompt, const OLTConstants::ErrorStrings &errors, OLTState okState = OltUnknownSate );
+	void addLoginCommand( const QString &label, const QString &cmd, const QString &prompt, OLTState okState = OltUnknownSate )
+	{ addCommand(label, cmd, prompt, oltConstants.loginErrors(), okState ); }
+	void addCommand( const QString &label, const QString &cmd, const QString &prompt, OLTState okState = OltUnknownSate )
+	{ addCommand(label, cmd, prompt, oltConstants.commandErrors(), okState ); }
 
 public:
 	QTelnetInterface();

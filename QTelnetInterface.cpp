@@ -5,11 +5,15 @@
  * @brief QTelnetInterface::addCommand
  * Adds a new command to the queue.
  * @param cmd The command to send.
- * @param promtp The prompt to wait to for a succesfull command.
+ * @param prompt The prompt to wait to for a succesfull command.
  * @param errors Lists of paired texts for errors and their explanation text.
  */
 void QTelnetInterface::addCommand(const QString &label, const QString &cmd, const QString &prompt, const OLTConstants::ErrorStrings &errors, OLTState okState)
 {
+	Q_ASSERT_X( !label.isEmpty(), "addCommand", "Label is empty" );
+	Q_ASSERT_X( (label == "InitialWelcome") || !cmd.isEmpty(), "addCommand", "Command is empty" );
+	Q_ASSERT_X( !prompt.isEmpty(), "addCommand", "Prompt is empty" );
+
 	CommandControl newCmd;
 	newCmd.label = label;
 	newCmd.cmd = cmd;
@@ -67,6 +71,11 @@ void QTelnetInterface::onDataFromOLT(const char *data, int length)
 		m_dataBuffer.clear();
 		m_currentCommand.clear();
 		playQueue();
+	}
+	else if( m_dataBuffer.contains("---- More ( Press 'Q' to break ) ----") )
+	{
+		m_dataBuffer.replace("---- More ( Press 'Q' to break ) ----", "");
+		sendData( " " );
 	}
 	else if( m_dataBuffer.contains(m_currentCommand.prompt) )
 	{

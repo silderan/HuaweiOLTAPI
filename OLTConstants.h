@@ -2,6 +2,7 @@
 #define QOLTCONSTANTS_H
 
 #include <QMap>
+#include <QStringList>
 #include <qstring.h>
 
 class OLTConstants
@@ -48,6 +49,7 @@ private:
 	ErrorStrings m_loginErrors;
 	void loadOLTConstantsFile();
 
+	QString parseCommand(QString command, const QStringList data) const;
 public:
 	OLTConstants();
 
@@ -68,7 +70,8 @@ public:
 	// Commands.
 	QString commandEnableAdmin() const { return m_oltCommands.value("EnableAdmin"); }
 	QString commandEnterConfigMode() const { return m_oltCommands.value("EnterConfig"); }
-	QString scroll(quint16 lines) const { return QString(m_oltCommands.value("scroll")).replace("{lines}", QString::number(lines)); }
+	QString scroll(quint16 lines) const { return parseCommand(m_oltCommands.value("scroll"), QStringList() << "{lines}" << QString::number(lines)); }
+	QString boardInfo(quint8 frame, quint8 slot) const { return parseCommand(m_oltCommands.value("BoardInfo"), QStringList() << "{frame}" << QString::number(frame) << "{slot}" << QString::number(slot)); }
 };
 
 extern OLTConstants oltConstants;

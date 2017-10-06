@@ -3,6 +3,7 @@
 
 #include <QMessageBox>
 
+#include "QInfoDialog.h"
 #include "GlobalConfig.h"
 
 QFrontend::QFrontend(QWidget *parent) :
@@ -22,6 +23,7 @@ QFrontend::QFrontend(QWidget *parent) :
 	connect( &huaweiOLT, SIGNAL(stateChanged(QAbstractSocket::SocketState)), SLOT(oltTelnetStatusChanged(QAbstractSocket::SocketState)) );
 	connect( &huaweiOLT, SIGNAL(oltStateChanged(QTelnetInterface::OLTState)), this, SLOT(oltStatusChanged(QTelnetInterface::OLTState)) );
 	connect( &huaweiOLT, SIGNAL(errorResponse(QString,QString,QString)), this, SLOT(oltErrorResponse(QString,QString,QString)) );
+	connect( &huaweiOLT, SIGNAL(boardInfoReceived(BoardInfo)), this, SLOT(boardInfoReceived(BoardInfo)) );
 }
 
 QFrontend::~QFrontend()
@@ -154,4 +156,14 @@ void QFrontend::on_btNewOLTs_clicked()
 void QFrontend::on_btScroll_clicked()
 {
 	huaweiOLT.scroll(ui->sbScroll->value());
+}
+
+void QFrontend::on_btBoardInfo_clicked()
+{
+	huaweiOLT.boardInfo(ui->sbFrame->value(), ui->sbFrame->value());
+}
+
+void QFrontend::boardInfoReceived(const BoardInfo &boardInfo)
+{
+	QInfoDialog( tr("Board Info"), boardInfo.toString() ).exec();
 }

@@ -32,6 +32,9 @@ private slots:
 	void on_btLogin_clicked();
 	void on_btNewOLTs_clicked();
 	void on_btScroll_clicked();
+
+	void on_btBoardInfo_clicked();
+	void boardInfoReceived(const BoardInfo &boardInfo);
 };
 
 #endif // QFRONTEND_H

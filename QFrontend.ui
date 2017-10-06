@@ -6,25 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>863</width>
-    <height>638</height>
+    <width>628</width>
+    <height>425</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>QFrontend</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout_2">
+   <layout class="QGridLayout" name="gridLayout_3">
     <item row="0" column="0">
      <widget class="QSplitter" name="splitter">
-      <property name="frameShape">
-       <enum>QFrame::NoFrame</enum>
-      </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="handleWidth">
-       <number>5</number>
       </property>
       <property name="childrenCollapsible">
        <bool>false</bool>
@@ -84,13 +78,33 @@
          <widget class="QLineEdit" name="leUPass"/>
         </item>
         <item row="4" column="0" colspan="2">
-         <widget class="QPlainTextEdit" name="telnetOut"/>
+         <widget class="QPlainTextEdit" name="telnetOut">
+          <property name="font">
+           <font>
+            <family>Fixedsys</family>
+            <pointsize>6</pointsize>
+           </font>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="layoutWidget">
-       <layout class="QFormLayout" name="formLayout">
-        <item row="0" column="0">
+      <widget class="QWidget" name="">
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="4" column="0">
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="0" column="0" colspan="2">
          <widget class="QPushButton" name="btLogin">
           <property name="text">
            <string>Conectar</string>
@@ -98,9 +112,9 @@
          </widget>
         </item>
         <item row="2" column="0">
-         <widget class="QPushButton" name="btNewOLTs">
+         <widget class="QPushButton" name="btBoardInfo">
           <property name="text">
-           <string>Get New ONTs</string>
+           <string>boardInfo</string>
           </property>
          </widget>
         </item>
@@ -118,6 +132,27 @@
           </property>
          </widget>
         </item>
+        <item row="3" column="0">
+         <widget class="QPushButton" name="btNewOLTs">
+          <property name="text">
+           <string>Get New ONTs</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="2">
+         <widget class="QSpinBox" name="sbSlot">
+          <property name="maximum">
+           <number>10</number>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QSpinBox" name="sbFrame">
+          <property name="maximum">
+           <number>32</number>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
      </widget>
@@ -129,8 +164,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>863</width>
-     <height>26</height>
+     <width>628</width>
+     <height>21</height>
     </rect>
    </property>
   </widget>
@@ -152,7 +187,6 @@
   <tabstop>leUPass</tabstop>
   <tabstop>telnetOut</tabstop>
   <tabstop>btLogin</tabstop>
-  <tabstop>btNewOLTs</tabstop>
  </tabstops>
  <resources/>
  <connections/>
