@@ -20,7 +20,10 @@ SOURCES += main.cpp\
     QTelnetInterface.cpp \
     OLTConstants.cpp \
     QOLTCommands.cpp \
-    QInfoDialog.cpp
+    QInfoDialog.cpp \
+    OLTCommands_UnmanagedOLTs.cpp \
+    OLTCommands_BoardInfo.cpp \
+    OLTCommands_BaseInfo.cpp
 
 HEADERS  += QFrontend.h \
     ../QTelnet/QTelnet.h \
@@ -29,7 +32,10 @@ HEADERS  += QFrontend.h \
     QTelnetInterface.h \
     OLTConstants.h \
     QOLTCommands.h \
-    QInfoDialog.h
+    QInfoDialog.h \
+    OLTCommands_UnmanagedOLTs.h \
+    OLTCommands_BoardInfo.h \
+    OLTCommands_BaseInfo.h
 
 FORMS    += QFrontend.ui \
     QInfoDialog.ui

@@ -14,7 +14,7 @@ class QFrontend : public QMainWindow
 {
 Q_OBJECT
 	Ui::QFrontend *ui;
-	OLTCommands huaweiOLT;
+	QOLTCommands huaweiOLT;
 
 public:
 	explicit QFrontend(QWidget *parent = 0);
@@ -28,7 +28,6 @@ private slots:
 	void oltTelnetStatusChanged(QAbstractSocket::SocketState state);
 	void oltStatusChanged(QTelnetInterface::OLTState state);
 	void oltErrorResponse(const QString &tag, const QString &cmd, const QString &err);
-	void oltCommandResponse(const QString &tag, const QString &cmd, const QString &responce);
 	void on_btLogin_clicked();
 	void on_btNewOLTs_clicked();
 	void on_btScroll_clicked();

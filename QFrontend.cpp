@@ -55,19 +55,19 @@ void QFrontend::oltTelnetStatusChanged(QAbstractSocket::SocketState state)
 	switch(state)
 	{
 	case QAbstractSocket::UnconnectedState:
-		addViewerText( tr("Desconectado de %1").arg(huaweiOLT.peerInfo()) );
+		addViewerText( tr("Desconectado de %1\n").arg(huaweiOLT.peerInfo()) );
 		ui->btLogin->setText( tr("Conectar") );
 		break;
 	case QAbstractSocket::HostLookupState:
-		addViewerText( tr("Resolviendo DNS %1").arg(huaweiOLT.peerInfo()) );
+		addViewerText( tr("Resolviendo DNS %1\n").arg(huaweiOLT.peerInfo()) );
 		ui->btLogin->setText( tr("Cancelar") );
 		break;
 	case QAbstractSocket::ConnectingState:
-		addViewerText( tr("Conectando a %1").arg(huaweiOLT.peerInfo()) );
+		addViewerText( tr("Conectando a %1\n").arg(huaweiOLT.peerInfo()) );
 		ui->btLogin->setText( tr("Cancelar") );
 		break;
 	case QAbstractSocket::ConnectedState:
-		addViewerText( tr("Conectado a %1").arg(huaweiOLT.peerInfo()) );
+		addViewerText( tr("Conectado a %1\n").arg(huaweiOLT.peerInfo()) );
 		ui->btLogin->setText( tr("Desconectar") );
 		break;
 	case QAbstractSocket::BoundState:
@@ -79,7 +79,7 @@ void QFrontend::oltTelnetStatusChanged(QAbstractSocket::SocketState state)
 		ui->btLogin->setText( tr("Cancelar") );
 		break;
 	case QAbstractSocket::ClosingState:
-		addViewerText( tr("Cerrando conexión de %1").arg(huaweiOLT.peerInfo()) );
+		addViewerText( tr("Cerrando conexión de %1\n").arg(huaweiOLT.peerInfo()) );
 		ui->btLogin->setText( tr("Forzar") );
 		break;
 	}
@@ -111,12 +111,7 @@ void QFrontend::oltErrorResponse(const QString &tag, const QString &cmd, const Q
 {
 	QMessageBox::warning(this, this->windowTitle(),
 						 tr("Error reported from OLT while processing cmd \"%1\" Tag=\"%2\": \n%3").arg(cmd, tag, err));
-	addViewerText(tr("Error on command [%1] %2; %3").arg(tag, cmd, err));
-}
-
-void QFrontend::oltCommandResponse(const QString &tag, const QString &cmd, const QString &response)
-{
-
+	addViewerText(tr("Error on command [%1] %2; %3\n").arg(tag, cmd, err));
 }
 
 void QFrontend::on_btLogin_clicked()
@@ -162,7 +157,7 @@ void QFrontend::on_btScroll_clicked()
 
 void QFrontend::on_btBoardInfo_clicked()
 {
-	huaweiOLT.getBoardInfo(ui->sbFrame->value(), ui->sbFrame->value());
+	huaweiOLT.getBoardInfo(ui->sbFrame->value(), ui->sbSlot->value());
 }
 
 void QFrontend::boardInfoReceived(const BoardInfo &boardInfo)
