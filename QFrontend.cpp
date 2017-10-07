@@ -11,11 +11,42 @@ QFrontend::QFrontend(QWidget *parent) :
 	ui(new Ui::QFrontend)
 {
 	ui->setupUi(this);
+
+	// List of widgets that has the param values.
+	// All the widgets inside this list will be enabled/disabled
+	// up to the command combo-box current index selected.
+	m_paramWidgets.append( QList<QWidget*>()
+						   << ui->serial
+						   << ui->frame
+						   << ui->slot
+						   << ui->port
+						   << ui->value
+						   << ui->ontID );
+
+	// This string list order must match with the enum CommanIndex
+	// to the command combo box and send button works fine and easy
+	// to add more commands while keaping easy to read code.
+	// The QVariant parámeters stands for the enabled widgets object names.
+	// All the widgets names listed here, will be enabled to allow user
+	// to change values.
+	ui->command->addItem( "set scroll", QStringList() << "value" );
+	ui->command->addItem( "get unmanaged ONTs", QStringList() );
+	ui->command->addItem( "get board info", QStringList() << "frame" << "slot" );
+	ui->command->addItem( "get ont info", QStringList() << "frame" << "slot" << "port" << "ontID" );
+
 	globalConfig.load();
-	ui->leFQDN->setText(globalConfig.host());
-	ui->leUName->setText(globalConfig.uname());
-	ui->leUPass->setText(globalConfig.upass());
-	ui->sbPort->setValue(globalConfig.port());
+	ui->leFQDN->setText( globalConfig.hostName() );
+	ui->sbPort->setValue( globalConfig.hostPort() );
+	ui->leUName->setText( globalConfig.oltUName() );
+	ui->leUPass->setText( globalConfig.oltUPpass() );
+
+	ui->command->setCurrentIndex( ui->command->findText(globalConfig.command()) );
+	ui->serial->setText( globalConfig.serialNumber() );
+	ui->value->setValue( globalConfig.valueNumber() );
+	ui->frame->setValue( globalConfig.frameNumber() );
+	ui->slot->setValue( globalConfig.slotNumber() );
+	ui->port->setValue( globalConfig.portNumber() );
+	ui->ontID->setValue( globalConfig.ontIDNumber() );
 
 	// Connect all telnet comming data to the main text viewer.
 	connect( &huaweiOLT, SIGNAL(newData(const char*,int)), this, SLOT(oltTelnetIncommings(const char*,int)) );
@@ -30,10 +61,20 @@ QFrontend::QFrontend(QWidget *parent) :
 QFrontend::~QFrontend()
 {
 	huaweiOLT.close();
-	globalConfig.setHost(ui->leFQDN->text());
-	globalConfig.setUName(ui->leUName->text());
-	globalConfig.setUPass(ui->leUPass->text());
-	globalConfig.setPort(ui->sbPort->value());
+
+	globalConfig.setHostName(ui->leFQDN->text());
+	globalConfig.setHostUName(ui->leUName->text());
+	globalConfig.sethostUPass(ui->leUPass->text());
+	globalConfig.setHostPort(ui->sbPort->value());
+
+	globalConfig.setCommand( ui->command->currentText() );
+	globalConfig.setSerialNumber( ui->serial->text() );
+	globalConfig.setValueNumber( ui->value->value() );
+	globalConfig.setFrameNumber( ui->frame->value() );
+	globalConfig.setSlotNumber( ui->slot->value() );
+	globalConfig.setPortNumber( ui->port->value() );
+	globalConfig.setONTIDNumber( ui->ontID->value() );
+
 	globalConfig.save();
 	delete ui;
 	ui = Q_NULLPTR;
@@ -41,8 +82,8 @@ QFrontend::~QFrontend()
 
 void QFrontend::addViewerText(const QString &text)
 {
-	ui->telnetOut->textCursor().insertText(text);
-//	ui->telnetOut->appendPlainText( text );
+	if( ui )
+		ui->telnetOut->textCursor().insertText(text);
 }
 
 void QFrontend::oltTelnetIncommings(const char *data, int length)
@@ -145,19 +186,29 @@ void QFrontend::on_btLogin_clicked()
 	}
 }
 
-void QFrontend::on_btNewOLTs_clicked()
+void QFrontend::on_command_currentIndexChanged(int index)
 {
-	huaweiOLT.getUnmanaged();
+	QStringList paramNames = ui->command->itemData(index).toStringList();
+	foreach( QWidget *paramObject, m_paramWidgets )
+		paramObject->setEnabled(paramNames.contains(paramObject->objectName()));
 }
 
-void QFrontend::on_btScroll_clicked()
+void QFrontend::on_sendCMD_clicked()
 {
-	huaweiOLT.setScroll(ui->sbScroll->value());
-}
-
-void QFrontend::on_btBoardInfo_clicked()
-{
-	huaweiOLT.getBoardInfo(ui->sbFrame->value(), ui->sbSlot->value());
+	switch( static_cast<CommandIndex>(ui->command->currentIndex()) )
+	{
+	case QFrontend::CmdScroll:
+		huaweiOLT.setScroll(ui->value->value());
+		break;
+	case QFrontend::CmdGetUnmanaged:
+		huaweiOLT.getUnmanaged();
+		break;
+	case QFrontend::CmdBoardInfo:
+		huaweiOLT.getBoardInfo( ui->frame->value(), ui->slot->value() );
+		break;
+	case QFrontend::CmdONTInfo:
+		break;
+	}
 }
 
 void QFrontend::boardInfoReceived(const BoardInfo &boardInfo)

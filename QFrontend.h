@@ -16,6 +16,15 @@ Q_OBJECT
 	Ui::QFrontend *ui;
 	QOLTCommands huaweiOLT;
 
+	enum CommandIndex
+	{
+		CmdScroll,
+		CmdGetUnmanaged,
+		CmdBoardInfo,
+		CmdONTInfo
+	};
+	QList<QWidget*> m_paramWidgets;
+
 public:
 	explicit QFrontend(QWidget *parent = 0);
 	~QFrontend();
@@ -28,13 +37,14 @@ private slots:
 	void oltTelnetStatusChanged(QAbstractSocket::SocketState state);
 	void oltStatusChanged(QTelnetInterface::OLTState state);
 	void oltErrorResponse(const QString &tag, const QString &cmd, const QString &err);
-	void on_btLogin_clicked();
-	void on_btNewOLTs_clicked();
-	void on_btScroll_clicked();
 
-	void on_btBoardInfo_clicked();
+	void on_btLogin_clicked();
+
 	void boardInfoReceived(const BoardInfo &boardInfo);
 	void unmanagedReceived(const UnmanagedONTs &unmanaged);
+
+	void on_command_currentIndexChanged(int index);
+	void on_sendCMD_clicked();
 };
 
 #endif // QFRONTEND_H
