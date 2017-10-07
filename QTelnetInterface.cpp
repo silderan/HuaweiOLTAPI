@@ -1,6 +1,9 @@
 #include "QTelnetInterface.h"
 
 
+#ifndef QT_NO_DEBUG
+#include <QFile>
+#endif
 /**
  * @brief QTelnetInterface::addCommand
  * Adds a new command to the queue.
@@ -13,6 +16,22 @@ void QTelnetInterface::addCommand(const QString &label, const QString &cmd, cons
 	Q_ASSERT_X( !label.isEmpty(), "addCommand", "Label is empty" );
 	Q_ASSERT_X( (label == "InitialWelcome") || !cmd.isEmpty(), "addCommand", "Command is empty" );
 	Q_ASSERT_X( !prompt.isEmpty(), "addCommand", "Prompt is empty" );
+
+#ifndef QT_NO_DEBUG
+	if( !isConnected() )
+	{
+		char extra = '0';
+		while( true )
+		{
+			QFile f( QString("../HuaweiOLTAPI/%1%2.txt").arg(label).arg(extra) );
+			if( !f.open(QIODevice::ReadOnly) )
+				break;
+			emit newResponse( label, QString("[Offline] %1").arg(cmd), QString(f.readAll()) );
+			extra++;
+		}
+		return;
+	}
+#endif
 
 	CommandControl newCmd;
 	newCmd.label = label;
@@ -41,9 +60,8 @@ QTelnetInterface::QTelnetInterface()
 
 void QTelnetInterface::connectToOLT(const QString &host, quint16 port, const QString &uname, const QString &upass)
 {
-	addLoginCommand( "InitialWelcome", "", oltConstants.constantUName(), OltLogging );
-	addLoginCommand( "UsernameLogin", uname, oltConstants.constantUPass(), OltLogging );
-	addLoginCommand( "PasswordLogin", upass, oltConstants.promptInitial(), OltLogged );
+	m_uname = uname;
+	m_upass = upass;
 	QTelnet::connectToHost(host, port);
 }
 
@@ -103,7 +121,9 @@ void QTelnetInterface::onTelnetStateChange(QAbstractSocket::SocketState st)
 		break;
 	case QAbstractSocket::ConnectedState:
 		m_OLTState = OltConnected;
-		playQueue();
+		addLoginCommand( "InitialWelcome", "", oltConstants.constantUName(), OltLogging );
+		addLoginCommand( "UsernameLogin", m_uname, oltConstants.constantUPass(), OltLogging );
+		addLoginCommand( "PasswordLogin", m_upass, oltConstants.promptInitial(), OltLogged );
 		break;
 	case QAbstractSocket::BoundState:
 		m_OLTState = OltUnconnected;

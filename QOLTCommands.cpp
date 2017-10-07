@@ -1,10 +1,32 @@
 #include "QOLTCommands.h"
 
 #include <QRegExp>
+
+QStringList CommandReceivedInfo::splitLines(const QString &txt)
+{
+	return txt.split(QRegExp("[\\n\\r]+"), QString::SkipEmptyParts);
+}
+
+QString CommandReceivedInfo::toString() const
+{
+	QStringList info = toStringInfoData(true);
+	QString rtn;
+	int i;
+	int keyLength;
+	for( i = 0; i < info.count(); i+= 2 )
+		if( keyLength < info[i].length() )
+			keyLength = info[i].length();
+
+	keyLength++;
+	for( i = 0; i < info.count(); i+= 2 )
+		rtn += QString("%1 : %2\n").arg(info[i+0], keyLength, ' ').arg(info[i+1]);
+	return rtn;
+}
+
 BoardInfo::BoardInfo(const QString &tag, const QString &command, const QString &rawData)
 	: CommandReceivedInfo(tag, command, rawData)
 {
-	QStringList lines = rawData.split(QRegExp("[\\n\\r]"), QString::SkipEmptyParts);
+	QStringList lines = splitLines(rawData);
 	int i = 0;
 	while( i < lines.count() )
 	{
@@ -32,6 +54,7 @@ BoardInfo::BoardInfo(const QString &tag, const QString &command, const QString &
 			portInfo.maxDistance = lines[i].mid(36, 6).trimmed().toInt();
 			portInfo.opticalStatus = lines[i].mid(49).trimmed();
 			m_portInfoList.append(portInfo);
+			portInfo.clear();
 		}
 		i++;
 	}
@@ -49,6 +72,7 @@ BoardInfo::BoardInfo(const QString &tag, const QString &command, const QString &
 				ontInfo.matchState = resto[3];
 				ontInfo.protectSide = resto[4];
 				m_ontInfoList.append(ontInfo);
+				ontInfo.clear();
 			}
 		}
 		else
@@ -109,62 +133,47 @@ OLTCommands::OLTCommands()
 	connect(this, SIGNAL(newResponse(QString,QString,QString)), this, SLOT(onCommandReceived(QString,QString,QString)));
 }
 
-void OLTCommands::enableAdminMode()
+void OLTCommands::setAdminMode()
 {
 	if( oltState() < QTelnetInterface::OltAdminMode )
 		addCommand( "EnablingAdmin", oltConstants.commandEnableAdmin(), oltConstants.promptAdmin(), OltAdminMode );
 }
 
-void OLTCommands::enterConfigMode()
+void OLTCommands::setConfigMode()
 {
 	if( oltState() < QTelnetInterface::OltConfigMode )
 	{
-		enableAdminMode();
+		setAdminMode();
 		addCommand( "ConfigMode", oltConstants.commandEnterConfigMode(), oltConstants.promptConfig(), OltConfigMode );
 	}
 }
 
-void OLTCommands::scroll(int lines)
+void OLTCommands::setScroll(int lines)
 {
 	addCommand("Scroll", oltConstants.scroll(lines), oltConstants.promptConfig());
 }
 
-void OLTCommands::boardInfo(quint8 frame, quint8 slot)
+void OLTCommands::getBoardInfo(quint8 frame, quint8 slot)
 {
-#ifndef QT_NO_DEBUG
-	if( !isConnected() )
-	{
-		emit boardInfoReceived(BoardInfo("BoardInfoUnconnected", oltConstants.boardInfo(frame, slot),
-			offlineResponse("BoardInfo")));
-	}
-	else
-#endif
-	addCommand("boardInfo", oltConstants.boardInfo(frame, slot), oltConstants.promptConfig());
+	addCommand("BoardInfo", oltConstants.boardInfo(frame, slot), oltConstants.promptConfig());
+}
+
+void OLTCommands::getUnmanaged()
+{
+	addCommand("GetUnmanaged", oltConstants.unmanaged(), oltConstants.promptConfig());
 }
 
 void OLTCommands::onCommandReceived(const QString &tag, const QString &cmd, const QString data)
 {
-	if( tag == "boardInfo" )
-		emit boardInfoReceived(BoardInfo(tag, cmd, data));
+	if( tag == "BoardInfo" )
+		emit boardInfo( BoardInfo(tag, cmd, data) );
+	else if( tag == "GetUnmanaged" )
+		emit unmanagedOnts( UnmanagedONTs(tag, cmd, data) );
 }
-
-#ifndef QT_NO_DEBUG
-#include <QFile>
-QString offlineResponse(const QString &id)
-{
-	QFile f( QString("../HuaweiOLTAPI/%1.txt").arg(id));
-
-	Q_ASSERT_X( f.open(QIODevice::ReadOnly),
-				(QObject::tr("offlineResponse(%1)").arg(f.fileName())).toLatin1().data(), "Cannot open file. Please, ensure that the files is in the path. You may move them or change the above path to match yours" );
-
-	return QString(f.readAll());
-}
-#endif
-
 
 QStringList CommandReceivedInfo::OntBasicInfo::fromString(const QString &txt, int framePos, int slotPos, int portPos, int idPos, int serialPos)
 {
-	QStringList bits = txt.split(QRegExp("\\s+|\\/"), QString::SkipEmptyParts);
+	QStringList bits = txt.split(QRegExp("[\\s\\/]+"), QString::SkipEmptyParts);
 	int i = 0;
 	bool converted;
 
@@ -212,4 +221,53 @@ QStringList CommandReceivedInfo::OntBasicInfo::fromString(const QString &txt, in
 		i++;
 	}
 	return bits.mid(i);
+}
+
+
+UnmanagedONTs::UnmanagedONTs(const QString &tag, const QString &command, const QString &rawData) :
+	CommandReceivedInfo(tag, command, rawData)
+{
+	QStringList pair;
+	QStringList lines = splitLines(rawData);
+	OntInfo ont;
+	for( int l = 0; l < lines.count(); l++ )
+	{
+		if( (pair = lines[l].split(QRegExp("\\s+:\\s+"), QString::SkipEmptyParts)).count() != 2 )
+			continue;
+		if( pair[0].contains("F/S/P") )
+			ont.fromString( pair[1], 0, 1, 2, -1, -1 );
+		else if( pair[0].contains("Ont SN") )
+			ont.serial = pair[1].trimmed();
+		else if( pair[0].contains("Password") )
+			ont.password = pair[1].trimmed();
+		else if( pair[0].contains("Loid") )
+			ont.loid = pair[1].trimmed();
+		else if( pair[0].contains("Checkcode") )
+			ont.checkcode = pair[1].trimmed();
+		else if( pair[0].contains("VendorID") )
+			ont.vendorID = pair[1].trimmed();
+		else if( pair[0].contains("Ont Version") )
+			ont.hwVersion = pair[1].trimmed();
+		else if( pair[0].contains("Ont SoftwareVersion") )
+			ont.swVersion = pair[1].trimmed();
+		else if( pair[0].contains("Ont EquipmentID") )
+			ont.equipID = pair[1].trimmed();
+		else if( pair[0].contains("Ont autofind time") )
+		{
+			m_unmanagedOnts.append(ont);
+			ont.clear();
+		}
+	}
+}
+
+QStringList UnmanagedONTs::toStringInfoData(bool includeRaw) const
+{
+	Q_UNUSED(includeRaw);
+	QStringList rtn = CommandReceivedInfo::toStringInfoData();
+	for( int ont = 0; ont < m_unmanagedOnts.count(); ont++ )
+	{
+		rtn += QStringList() << "Unmanaged ONT Number" << QString::number(ont);
+		rtn += m_unmanagedOnts[ont].toStringInfoData();
+	}
+	return rtn;
 }

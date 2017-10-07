@@ -38,4 +38,5 @@ RESOURCES += \
     resources.qrc
 
 DISTFILES += \
-    BoardInfo.txt
+    BoardInfo0.txt \
+    GetUnmanaged0.txt

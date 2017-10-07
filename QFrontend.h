@@ -35,6 +35,7 @@ private slots:
 
 	void on_btBoardInfo_clicked();
 	void boardInfoReceived(const BoardInfo &boardInfo);
+	void unmanagedReceived(const UnmanagedONTs &unmanaged);
 };
 
 #endif // QFRONTEND_H

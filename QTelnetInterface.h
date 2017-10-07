@@ -52,6 +52,8 @@ private:
 
 	OLTState m_OLTState;
 	QString m_dataBuffer;
+	QString m_uname;
+	QString m_upass;
 	CommandControl m_currentCommand;
 	QQueue<CommandControl> m_commandsQueue;
 

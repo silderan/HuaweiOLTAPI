@@ -23,7 +23,8 @@ QFrontend::QFrontend(QWidget *parent) :
 	connect( &huaweiOLT, SIGNAL(stateChanged(QAbstractSocket::SocketState)), SLOT(oltTelnetStatusChanged(QAbstractSocket::SocketState)) );
 	connect( &huaweiOLT, SIGNAL(oltStateChanged(QTelnetInterface::OLTState)), this, SLOT(oltStatusChanged(QTelnetInterface::OLTState)) );
 	connect( &huaweiOLT, SIGNAL(errorResponse(QString,QString,QString)), this, SLOT(oltErrorResponse(QString,QString,QString)) );
-	connect( &huaweiOLT, SIGNAL(boardInfoReceived(BoardInfo)), this, SLOT(boardInfoReceived(BoardInfo)) );
+	connect( &huaweiOLT, SIGNAL(boardInfo(BoardInfo)), this, SLOT(boardInfoReceived(BoardInfo)) );
+	connect( &huaweiOLT, SIGNAL(unmanagedOnts(UnmanagedONTs)), this, SLOT(unmanagedReceived(UnmanagedONTs)) );
 }
 
 QFrontend::~QFrontend()
@@ -40,7 +41,8 @@ QFrontend::~QFrontend()
 
 void QFrontend::addViewerText(const QString &text)
 {
-	ui->telnetOut->appendPlainText( text );
+	ui->telnetOut->textCursor().insertText(text);
+//	ui->telnetOut->appendPlainText( text );
 }
 
 void QFrontend::oltTelnetIncommings(const char *data, int length)
@@ -96,7 +98,7 @@ void QFrontend::oltStatusChanged(QTelnetInterface::OLTState state)
 	case QTelnetInterface::OltLogging:
 		break;
 	case QTelnetInterface::OltLogged:
-		huaweiOLT.enterConfigMode();
+		huaweiOLT.setConfigMode();
 		break;
 	case QTelnetInterface::OltAdminMode:
 		break;
@@ -150,20 +152,25 @@ void QFrontend::on_btLogin_clicked()
 
 void QFrontend::on_btNewOLTs_clicked()
 {
-
+	huaweiOLT.getUnmanaged();
 }
 
 void QFrontend::on_btScroll_clicked()
 {
-	huaweiOLT.scroll(ui->sbScroll->value());
+	huaweiOLT.setScroll(ui->sbScroll->value());
 }
 
 void QFrontend::on_btBoardInfo_clicked()
 {
-	huaweiOLT.boardInfo(ui->sbFrame->value(), ui->sbFrame->value());
+	huaweiOLT.getBoardInfo(ui->sbFrame->value(), ui->sbFrame->value());
 }
 
 void QFrontend::boardInfoReceived(const BoardInfo &boardInfo)
 {
 	QInfoDialog( tr("Board Info"), boardInfo.toString() ).exec();
+}
+
+void QFrontend::unmanagedReceived(const UnmanagedONTs &unmanaged)
+{
+	QInfoDialog( tr("Unmanaged ONTs"), unmanaged.toString() ).exec();
 }

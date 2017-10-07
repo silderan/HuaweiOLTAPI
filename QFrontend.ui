@@ -81,15 +81,15 @@
          <widget class="QPlainTextEdit" name="telnetOut">
           <property name="font">
            <font>
-            <family>Fixedsys</family>
-            <pointsize>6</pointsize>
+            <family>Courier New</family>
+            <pointsize>8</pointsize>
            </font>
           </property>
          </widget>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <layout class="QGridLayout" name="gridLayout_2">
         <item row="4" column="0">
          <spacer name="verticalSpacer">

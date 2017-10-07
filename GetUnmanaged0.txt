@@ -1,0 +1,27 @@
+
+   ----------------------------------------------------------------------------
+   Number              : 1
+   F/S/P               : 0/0/15
+   Ont SN              : 48575443C39BEC6F
+   Password            : 0x00000000000000000000
+   Loid                :
+   Checkcode           :
+   VendorID            : HWTC
+   Ont Version         : 494.B
+   Ont SoftwareVersion : V3R013C00S106
+   Ont EquipmentID     : 245H
+   Ont autofind time   : 2016-08-13 00:49:49+08:00
+   ----------------------------------------------------------------------------
+   Number              : 2
+   F/S/P               : 0/0/15
+   Ont SN              : 48575443C957C66E
+   Password            : 0x00000000000000000000
+   Loid                :
+   Checkcode           :
+   VendorID            : HWTC
+   Ont Version         : 4B4.A
+   Ont SoftwareVersion : V3R013C00S106
+   Ont EquipmentID     : 247H
+   Ont autofind time   : 2016-08-13 00:49:49+08:00
+   ----------------------------------------------------------------------------
+   The number of GPON autofind ONT is 2
