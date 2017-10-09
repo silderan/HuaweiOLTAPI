@@ -55,6 +55,11 @@ void QOLTCommands::getGPONServiceProfile(int serviceProfileID)
 	addCommand( "GPONServiceProfile", oltConstants.gponServiceProfile(serviceProfileID), oltConstants.promptConfig() );
 }
 
+void QOLTCommands::enterGPONSrvcPrfl(int serviceProfileID)
+{
+	addCommand( "EnterGPONSrvPrfl", oltConstants.enterGPONSrvProfile(serviceProfileID), oltConstants.promptConfig() );
+}
+
 void QOLTCommands::onCommandReceived(const QString &label, const QString &cmd, const QString data)
 {
 	if( label == "BoardInfo" )					emit boardInfo( BoardInfo(label, cmd, data) );

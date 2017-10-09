@@ -98,6 +98,9 @@ public:
 	QString gponServiceProfile(int serviceProfileID) const
 		{ return parseCommand(m_oltCommands.value("GPONServiceProfile"), QStringList()
 							  << "{srv_profile_id}" << QString::number(serviceProfileID)); }
+	QString enterGPONSrvProfile(int serviceProfileID) const
+		{ return parseCommand(m_oltCommands.value("EnterGPONSrvPrfl"), QStringList()
+							  << "{srv_profile_id}" << QString::number(serviceProfileID)); }
 
 	QString trafficTableIP(int index) const
 		{ return parseCommand(m_oltCommands.value("TrafficTableIPInfo"), QStringList()

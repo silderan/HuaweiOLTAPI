@@ -1,16 +1,16 @@
   -----------------------------------------------------------------------------
-  Profile-ID  : 0
-  Profile-name: srv-profile_default_0
+  Profile-ID  : 1
+  Profile-name: 247H
   Access-type : GPON
   -----------------------------------------------------------------------------
   Port-type     Port-number
   -----------------------------------------------------------------------------
-  POTS          adaptive
-  ETH           adaptive
+  POTS          2
+  ETH           4
   VDSL          0
   TDM           0
   MOCA          0
-  CATV          0
+  CATV          1
   -----------------------------------------------------------------------------
   TDM port type                     : E1
   TDM service type                  : TDMoGem
@@ -36,24 +36,16 @@
   ETH       2       unconcern unconcern      unconcern   unconcern
   ETH       3       unconcern unconcern      unconcern   unconcern
   ETH       4       unconcern unconcern      unconcern   unconcern
-  ETH       5       unconcern unconcern      unconcern   unconcern
-  ETH       6       unconcern unconcern      unconcern   unconcern
-  ETH       7       unconcern unconcern      unconcern   unconcern
-  ETH       8       unconcern unconcern      unconcern   unconcern
   -----------------------------------------------------------------------------
   Notes: Run the display traffic table ip command to query
 		 traffic table configuration
   -----------------------------------------------------------------------------
   Port-type Port-ID  DownstreamMode  MismatchPolicy
-[37D                                     [37D  -----------------------------------------------------------------------------
+  -----------------------------------------------------------------------------
   ETH             1  operation       discard
   ETH             2  operation       discard
   ETH             3  operation       discard
-  ETH             4  operation       discard
-  ETH             5  operation       discard
-  ETH             6  operation       discard
-  ETH             7  operation       discard
-  ETH             8  operation       discard
+[37D                                     [37D  ETH             4  operation       discard
   -----------------------------------------------------------------------------
   Port-type Port-ID Dscp-mapping-table-index
   -----------------------------------------------------------------------------
@@ -61,24 +53,24 @@
   ETH       2       0
   ETH       3       0
   ETH       4       0
-  ETH       5       0
-  ETH       6       0
-  ETH       7       0
-  ETH       8       0
   IPHOST    1       0
+  -----------------------------------------------------------------------------
+  Port   Port Service-type Index S-VLAN S-PRI C-VLAN C-PRI ENCAP      S-PRI
+  type   ID                                                           POLICY
+  -----------------------------------------------------------------------------
+  ETH    1    Translation  1     3333   -     3333   -     -          -
+  ETH    2    Translation  1     3333   -     3333   -     -          -
+  ETH    3    Translation  1     3333   -     3333   -     -          -
+  ETH    4    Translation  1     3333   -     3333   -     -          -
+  -----------------------------------------------------------------------------
+  Notes: * indicates transparent attribute of the vlan
   -----------------------------------------------------------------------------
   Port-type  Port-ID    IGMP-mode         IGMP-VLAN  IGMP-PRI  Max-MAC-Count
   -----------------------------------------------------------------------------
-[37D                                     [37D  ETH              1    -                         -         -      Unlimited
+  ETH              1    -                         -         -      Unlimited
   ETH              2    -                         -         -      Unlimited
-  ETH              3    -                         -         -      Unlimited
+[37D                                     [37D  ETH              3    -                         -         -      Unlimited
   ETH              4    -                         -         -      Unlimited
-  ETH              5    -                         -         -      Unlimited
-  ETH              6    -                         -         -      Unlimited
-  ETH              7    -                         -         -      Unlimited
-  ETH              8    -                         -         -      Unlimited
   -----------------------------------------------------------------------------
-  Binding times : 0
+  Binding times : 2
   -----------------------------------------------------------------------------
-
-MA5683T(config)#

@@ -45,3 +45,5 @@ Steps:
    until a file is not found. So, ihis must be consecutives. That's, if you'll
    create a "ONTMACInfo0.txt" and "ONTMACInfo2.txt", the second never will be
    used because the "ONTMACInfo1.txt" doesn't exists and breaks the loop.
+14.Now, its turn to parse rawData at class constructor and add toStringInfoData
+   function.

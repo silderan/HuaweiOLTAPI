@@ -25,6 +25,7 @@ public:
 	void getONTMACInfo(int frame, int slot, int port, int ontid);
 	void getGPONServiceProfiles();
 	void getGPONServiceProfile(int serviceProfileID);
+	void enterGPONSrvcPrfl(int serviceProfileID);
 
 private slots:
 	void onCommandReceived(const QString &tag, const QString &cmd, const QString data);

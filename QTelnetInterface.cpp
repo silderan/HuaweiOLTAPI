@@ -82,26 +82,28 @@ void QTelnetInterface::playQueue()
 void QTelnetInterface::onDataFromOLT(const char *data, int length)
 {
 	m_dataBuffer.append( QByteArray(data, length) );
-	QString err = m_currentCommand.errorStrings.errorString(m_dataBuffer);
-	if( !err.isEmpty() )
-	{
-		emit errorResponse(m_currentCommand.label, m_currentCommand.cmd, err);
-		m_dataBuffer.clear();
-		m_currentCommand.clear();
-		playQueue();
-	}
-	else if( m_dataBuffer.contains("---- More ( Press 'Q' to break ) ----") )
+	if( m_dataBuffer.contains("---- More ( Press 'Q' to break ) ----") )
 	{
 		m_dataBuffer.replace("---- More ( Press 'Q' to break ) ----", "");
 		sendData( " " );
 	}
 	else if( m_dataBuffer.contains(m_currentCommand.prompt) )
 	{
-		if( m_currentCommand.state != OltUnknownSate )
-			setOltState(m_currentCommand.state);
-		emit newResponse(m_currentCommand.label, m_currentCommand.cmd, m_dataBuffer);
-		m_dataBuffer.clear();
-		m_currentCommand.clear();
+		QString err = m_currentCommand.errorStrings.errorString(m_dataBuffer);
+		if( !err.isEmpty() )
+		{
+			emit errorResponse(m_currentCommand.label, m_currentCommand.cmd, err);
+			m_dataBuffer.clear();
+			m_currentCommand.clear();
+		}
+		else
+		{
+			if( m_currentCommand.state != OltUnknownSate )
+				setOltState(m_currentCommand.state);
+			emit newResponse(m_currentCommand.label, m_currentCommand.cmd, m_dataBuffer);
+			m_dataBuffer.clear();
+			m_currentCommand.clear();
+		}
 		playQueue();
 	}
 }

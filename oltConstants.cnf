@@ -54,10 +54,14 @@ COMMAND: GetUnmanaged = display ont autofind all
 COMMAND: ONTWANInfo = display ont wan-info {frame}/{slot} {port} {ontid}
 # Para obtener las MAC-VLAN que la OLT descubre de las ONT.
 COMMAND: ONTMACInfo = display mac-address port {frame}/{slot}/{port} ont {ontid}
+
 # Para obtener la tabla de los srv-profiles
 COMMAND: GPONServiceProfiles = display ont-srvprofile gpon all
 # Para obtener la informacion de un service profile concreto.
 COMMAND: GPONServiceProfile = display ont-srvprofile gpon profile-id {srv_profile_id}
+# Para entrar en el contexto de un service-profile. Puede ser uno nuevo o uno existente.
+COMMAND: EnterGPONSrvPrfl = ont-srvprofile gpon profile-id {srv_profile_id}\n
+
 # Para obtener informacion sobre la version de hardware, software, etc.
 COMMAND: ONTVersion = display ont version {frame} {slot} {port} {ontid}
 
