@@ -72,10 +72,9 @@ public:
 		m_wanInfo.clear();
 	}
 protected:
-	virtual QStringList toStringInfoData(bool includeRaw) const
+	virtual QStringList toStringInfoData() const
 	{
-		Q_UNUSED(includeRaw);
-		return OLTCommandReply::toStringInfoData(false)
+		return QStringList()
 				<< "" << QObject::tr("Interficies WAN")
 				<< m_wanInfo.toStringInfoData();
 	}

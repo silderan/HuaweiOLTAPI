@@ -54,4 +54,6 @@ DISTFILES += \
     GetUnmanaged0.txt \
     ONTMACInfo0.txt \
     ONTWANInfo0.txt \
-    GPONServiceProfiles0.txt
+    GPONServiceProfiles0.txt \
+    AddingCommand.txt \
+    GPONServiceProfile0.txt

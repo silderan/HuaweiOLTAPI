@@ -1,7 +1,7 @@
 #include "OLTCommands_GPONServiceProfile.h"
 
-GPONServiceProfiles::GPONServiceProfiles(const QString &tag, const QString &command, const QString &rawData) :
-	OLTCommandReply(tag, command, rawData)
+GPONServiceProfiles::GPONServiceProfiles(const QString &label, const QString &command, const QString &rawData) :
+	OLTCommandReply(label, command, rawData)
 {
 	QStringList lines = splitLines(rawData);
 	ServiceProfilesBase srvProfileBase;
@@ -16,4 +16,11 @@ GPONServiceProfiles::GPONServiceProfiles(const QString &tag, const QString &comm
 			m_serviceProfileList.append(srvProfileBase);
 		}
 	}
+}
+
+
+GPONServiceProfile::GPONServiceProfile(const QString &label, const QString &command, const QString &rawData) :
+	OLTCommandReply(label, command, rawData)
+{
+
 }

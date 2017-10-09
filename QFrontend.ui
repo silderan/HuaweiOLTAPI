@@ -91,13 +91,6 @@
       </widget>
       <widget class="QWidget" name="layoutWidget">
        <layout class="QGridLayout" name="gridLayout_2">
-        <item row="1" column="0">
-         <widget class="QPushButton" name="btLogin">
-          <property name="text">
-           <string>Conectar</string>
-          </property>
-         </widget>
-        </item>
         <item row="4" column="0">
          <widget class="QLabel" name="label_6">
           <property name="text">
@@ -108,10 +101,10 @@
           </property>
          </widget>
         </item>
-        <item row="4" column="1">
-         <widget class="QSpinBox" name="value">
-          <property name="maximum">
-           <number>512</number>
+        <item row="1" column="0">
+         <widget class="QPushButton" name="btLogin">
+          <property name="text">
+           <string>Conectar</string>
           </property>
          </widget>
         </item>
@@ -128,23 +121,17 @@
         <item row="5" column="1">
          <widget class="QSpinBox" name="frame"/>
         </item>
-        <item row="2" column="2">
-         <widget class="QPushButton" name="sendCMD">
-          <property name="text">
-           <string>Send</string>
+        <item row="4" column="1">
+         <widget class="QSpinBox" name="value">
+          <property name="maximum">
+           <number>512</number>
           </property>
          </widget>
-        </item>
-        <item row="2" column="0" colspan="2">
-         <widget class="QComboBox" name="command"/>
-        </item>
-        <item row="3" column="1" colspan="2">
-         <widget class="QLineEdit" name="serial"/>
         </item>
         <item row="8" column="1">
          <widget class="QSpinBox" name="ontID"/>
         </item>
-        <item row="9" column="0">
+        <item row="10" column="0">
          <spacer name="verticalSpacer">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -157,6 +144,9 @@
           </property>
          </spacer>
         </item>
+        <item row="2" column="0" colspan="2">
+         <widget class="QComboBox" name="command"/>
+        </item>
         <item row="6" column="0">
          <widget class="QLabel" name="label_8">
           <property name="text">
@@ -167,13 +157,13 @@
           </property>
          </widget>
         </item>
-        <item row="8" column="0">
-         <widget class="QLabel" name="label_10">
+        <item row="3" column="1" colspan="2">
+         <widget class="QLineEdit" name="serial"/>
+        </item>
+        <item row="2" column="2">
+         <widget class="QPushButton" name="sendCMD">
           <property name="text">
-           <string>ONT ID</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           <string>Send</string>
           </property>
          </widget>
         </item>
@@ -181,6 +171,16 @@
          <widget class="QLabel" name="label_9">
           <property name="text">
            <string>Port (GPON)</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="0">
+         <widget class="QLabel" name="label_10">
+          <property name="text">
+           <string>ONT ID</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -202,6 +202,19 @@
         </item>
         <item row="7" column="1">
          <widget class="QSpinBox" name="port"/>
+        </item>
+        <item row="9" column="0">
+         <widget class="QLabel" name="label_11">
+          <property name="text">
+           <string>Service Profile ID</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="9" column="1">
+         <widget class="QSpinBox" name="serviceProfileID"/>
         </item>
        </layout>
       </widget>

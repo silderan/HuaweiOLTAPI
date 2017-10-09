@@ -1,0 +1,47 @@
+How to add a new command to interet with the OLT
+
+Steps:
+1. Choose command to add from the oltConstants.cnf
+  (TODO I must create a way to add new commands presents in resource file but not in regular file)
+2. In OLTConstant class must be the function to retrieve the command text.
+   The command name (the "left" part of the command, next to "COMMAND:" text) is the key
+   to access to it through the mapping.
+   Beware if it uses some kind of parámeters (enclosed by { }) as you'll need to parse it.
+3. Add a class with this issues:
+   a) Shall inherit from OLTCommandReply. For now, it is not imperative, but very advisable because
+	  this base class gives you some usefull functions and could be used in future for polymorphic-class uses.
+   b) MUST be in the OLTCommands namespace.
+	  As this classes uses names that FOR SURE will be used in other places with diferent behaviour
+	  is better to eclose it with the namespace.
+   For now, left it completly empty.
+4. Add in OLTCommands class the function that will send the command to the OLT
+   Obviously, this function shall match the OLTConstant function parameters.
+5. Add in OLTCommands class the signal function that will send the OLT reply class just created.
+   Remember to include the reply class header file.
+6. In the OLTCommands onCommandReceived function add the code to catch the new label to
+   emit the new signal.
+7. In QFrontend class, add the slot that match with the signal and connect both.
+   In the slot function body you'll want to popup a dialog to see data reply from OLT.
+   Just copy and paste code from other slot funcion and change whatever is necessary.
+8. Add in QFrontend header file a new value in CommandIndex enumerator.
+9. Add in QFrontend constructor function a new item in Command combo box
+   This item must contain the names of all widget object names that will be used to gather
+   values to send to OLT.
+   Maybe, you'll need to add new widgets with dialog editor. Beware about the object name
+   because it's used to enable/disable up to command combo box index selected.
+10.Add in QFrontend on_sendCMD_clicked the new CommandIndex enumerator value case where
+   you must invoque the OLTCommand function created that sends data to OLT.
+11.Compile and RUN the program.
+   Connect to OLT.
+   You shall be able to chose the new item in combo vox and send it.
+   If everything has been done fine, the dialog will show with the OLT command reply.
+12.Select all reply text in the dialog box and copy it (Ctrl+C)
+13.Create a new text file with the name <Label><n>.txt Where...
+   Label: Is the label used in QOLTCommands functions to send/receive command/reply.
+   n: Is a number, starting with 0 of the offline response to debug code.
+   Meaning. When in debug mode, you send a command to the OLT but not connected, the
+   program will look for this kind of files and will create false OLT replies.
+   You can create as many false OLT Replies like that. All will be used on after other
+   until a file is not found. So, ihis must be consecutives. That's, if you'll
+   create a "ONTMACInfo0.txt" and "ONTMACInfo2.txt", the second never will be
+   used because the "ONTMACInfo1.txt" doesn't exists and breaks the loop.

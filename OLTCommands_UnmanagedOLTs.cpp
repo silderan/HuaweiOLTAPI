@@ -26,10 +26,9 @@ UnmanagedONTs::UnmanagedONTs(const QString &tag, const QString &command, const Q
 	}
 }
 
-QStringList UnmanagedONTs::toStringInfoData(bool includeRaw) const
+QStringList UnmanagedONTs::toStringInfoData() const
 {
-	Q_UNUSED(includeRaw);
-	QStringList rtn = OLTCommandReply::toStringInfoData();
+	QStringList rtn;
 	for( int ont = 0; ont < m_unmanagedOnts.count(); ont++ )
 	{
 		rtn += QStringList() << "Unmanaged ONT Number" << QString::number(ont);

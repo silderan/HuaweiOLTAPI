@@ -27,19 +27,16 @@ public:
 
 	static QStringList splitLines(const QString &txt);
 	static int splitField(const QString &line, QString &key, QString &value);
-protected:
-	virtual QStringList toStringInfoData(bool includeRaw = false) const
+	static QString centeredText( const QString &fillText, const QString &centerText, int lineLenght);
+	QStringList toStringInfoDataBase() const
 	{
-		QStringList rtn = QStringList()
+		return QStringList()
 				<< QObject::tr("TAG") << m_tag
 				<< QObject::tr("Command") << m_command;
-		if( includeRaw )
-		{
-			rtn.append("Rar data");
-			rtn.append(m_raw);
-		}
-		return rtn;
 	}
+protected:
+	virtual QStringList toStringInfoData() const
+	{	return QStringList(); }
 
 	struct OntBasicInfo
 	{

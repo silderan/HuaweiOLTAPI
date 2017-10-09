@@ -70,10 +70,9 @@ BoardInfo::BoardInfo(const QString &tag, const QString &command, const QString &
 	}
 }
 
-QStringList BoardInfo::toStringInfoData(bool includeRaw) const
+QStringList BoardInfo::toStringInfoData() const
 {
-	Q_UNUSED(includeRaw);
-	QStringList rtn = OLTCommandReply::toStringInfoData(false);
+	QStringList rtn;
 	rtn.append("Board Name"); rtn.append(m_boardName);
 	rtn.append("Board Status"); rtn.append(m_boardStatus);
 	int i;

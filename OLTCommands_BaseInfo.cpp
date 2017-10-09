@@ -76,13 +76,23 @@ int OLTCommandReply::splitField(const QString &line, QString &key, QString &valu
 	}
 }
 
+QString OLTCommandReply::centeredText(const QString &fillText, const QString &centerText, int lineLengtn)
+{
+	QString lText = fillText.repeated( ((lineLengtn - centerText.length())/2) / fillText.count() );
+	return QString("%1 %2 %3").arg(lText, centerText, lText);
+}
+
 QString OLTCommandReply::toString() const
 {
-	QStringList info = toStringInfoData(true);
+	QStringList info = OLTCommandReply::toStringInfoDataBase();
+	QStringList classInfo = toStringInfoData();
 	QString rtn;
 	int i;
 	int keyLength = 0;
 	int valueLength = 0;
+
+	if( classInfo.count() )
+		info += classInfo;
 	for( i = 0; i < info.count(); i+= 2 )
 	{
 		if( keyLength < info[i+0].length() )
@@ -91,17 +101,20 @@ QString OLTCommandReply::toString() const
 			valueLength = info[i+1].length();
 	}
 
-	keyLength++;
 	for( i = 0; i < info.count(); i+= 2 )
 	{
-		if( info[i+0].count() )
+		if( info[i+0].count() > 1 )
 			rtn += QString("%1 : %2\n").arg(info[i+0], keyLength, ' ').arg(info[i+1]);
 		else
 		{
-			int center = info[i+1].count();
-			QString laterals = QString("_").repeated(((valueLength+keyLength+3)>>1) - (center>>1));
-			rtn += QString("%1%2%3\n").arg(laterals, info[i+1], laterals);
+			if( info[i+0].count() == 1 )
+				rtn += centeredText( info[1+0], info[i+1], keyLength + valueLength + 3);
+			else
+				rtn += centeredText( "-", info[i+1], keyLength + valueLength + 3 );
+			rtn += "\n";
 		}
 	}
+	if( classInfo.count() == 0 )
+		rtn += QString( "%1\n%2").arg(centeredText("- ", "RAW DATA", keyLength + valueLength + 3), m_raw );
 	return rtn;
 }

@@ -24,6 +24,7 @@ public:
 	void getONTWANInfo(int frame, int slot, int port, int ontid);
 	void getONTMACInfo(int frame, int slot, int port, int ontid);
 	void getGPONServiceProfiles();
+	void getGPONServiceProfile(int serviceProfileID);
 
 private slots:
 	void onCommandReceived(const QString &tag, const QString &cmd, const QString data);
@@ -34,6 +35,7 @@ signals:
 	void ontWANInfo(const ONTWANInfo &);
 	void ontMACInfo(const ONTMACInfo &);
 	void gponServiceProfiles(const GPONServiceProfiles &);
+	void gponServiceProfile(const GPONServiceProfile &);
 };
 
 #endif // OLTCOMMANDS_H

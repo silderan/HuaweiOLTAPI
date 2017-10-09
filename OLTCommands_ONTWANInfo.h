@@ -95,7 +95,7 @@ public:
 		m_ontInfo.clear();
 	}
 protected:
-	virtual QStringList toStringInfoData(bool includeRaw) const;
+	virtual QStringList toStringInfoData() const;
 };
 
 #endif // OLTCOMMANDS_ONTWANINFO_H

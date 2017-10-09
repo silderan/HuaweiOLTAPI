@@ -48,10 +48,9 @@ ONTWANInfo::ONTWANInfo(const QString &tag, const QString &command, const QString
 	}
 }
 
-QStringList ONTWANInfo::toStringInfoData(bool includeRaw) const
+QStringList ONTWANInfo::toStringInfoData() const
 {
-	Q_UNUSED(includeRaw);
-	QStringList rtn = OLTCommandReply::toStringInfoData(false);
+	QStringList rtn;
 	for( int wan = 0; wan < m_ontInfo.wanInfoList.count(); wan++ )
 		rtn += QStringList()
 			<< "" << QObject::tr("Interficie WAN número %1").arg(wan)

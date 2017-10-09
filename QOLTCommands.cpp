@@ -50,11 +50,17 @@ void QOLTCommands::getGPONServiceProfiles()
 	addCommand( "GPONServiceProfiles", oltConstants.gponServiceProfiles(), oltConstants.promptConfig() );
 }
 
-void QOLTCommands::onCommandReceived(const QString &tag, const QString &cmd, const QString data)
+void QOLTCommands::getGPONServiceProfile(int serviceProfileID)
 {
-	if( tag == "BoardInfo" )				emit boardInfo( BoardInfo(tag, cmd, data) );
-	else if( tag == "GetUnmanaged" )		emit unmanagedOnts( UnmanagedONTs(tag, cmd, data) );
-	else if( tag == "ONTWANInfo" )			emit ontWANInfo( ONTWANInfo(tag, cmd, data) );
-	else if( tag == "ONTMACInfo" )			emit ontMACInfo( ONTMACInfo(tag, cmd, data) );
-	else if( tag == "GPONServiceProfiles" )	emit gponServiceProfiles( GPONServiceProfiles(tag, cmd, data) );
+	addCommand( "GPONServiceProfile", oltConstants.gponServiceProfile(serviceProfileID), oltConstants.promptConfig() );
+}
+
+void QOLTCommands::onCommandReceived(const QString &label, const QString &cmd, const QString data)
+{
+	if( label == "BoardInfo" )					emit boardInfo( BoardInfo(label, cmd, data) );
+	else if( label == "GetUnmanaged" )			emit unmanagedOnts( UnmanagedONTs(label, cmd, data) );
+	else if( label == "ONTWANInfo" )			emit ontWANInfo( ONTWANInfo(label, cmd, data) );
+	else if( label == "ONTMACInfo" )			emit ontMACInfo( ONTMACInfo(label, cmd, data) );
+	else if( label == "GPONServiceProfiles" )	emit gponServiceProfiles( GPONServiceProfiles(label, cmd, data) );
+	else if( label == "GPONServiceProfile" )	emit gponServiceProfile( GPONServiceProfile(label, cmd, data) );
 }

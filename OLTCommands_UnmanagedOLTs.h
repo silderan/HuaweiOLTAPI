@@ -56,7 +56,7 @@ public:
 	}
 
 protected:
-	virtual QStringList toStringInfoData(bool includeRaw) const;
+	virtual QStringList toStringInfoData() const;
 };
 
 #endif // OLTCOMMANDS_UNMANAGEDOLTS_H

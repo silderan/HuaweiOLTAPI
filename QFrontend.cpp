@@ -36,6 +36,7 @@ QFrontend::QFrontend(QWidget *parent) :
 	ui->command->addItem( "get ont WAN info", QStringList() << "frame" << "slot" << "port" << "ontID" );
 	ui->command->addItem( "get ont MAC info", QStringList() << "frame" << "slot" << "port" << "ontID" );
 	ui->command->addItem( "get GPON service profiles", QStringList() );
+	ui->command->addItem( "get GPON service profile info", QStringList() << "serviceProfileID" );
 
 	globalConfig.load();
 	ui->leFQDN->setText( globalConfig.hostName() );
@@ -61,7 +62,8 @@ QFrontend::QFrontend(QWidget *parent) :
 	connect( &huaweiOLT, SIGNAL(unmanagedOnts(UnmanagedONTs)), this, SLOT(unmanagedReceived(UnmanagedONTs)) );
 	connect( &huaweiOLT, SIGNAL(ontWANInfo(ONTWANInfo)), this, SLOT(ontsWANInfoReceived(ONTWANInfo)) );
 	connect( &huaweiOLT, SIGNAL(ontMACInfo(ONTMACInfo)), this, SLOT(ontsMACInfoReceived(ONTMACInfo)) );
-	connect( &huaweiOLT, SIGNAL(gponServiceProfiles(GPONServiceProfiles)), this, SLOT(gponSrvPrfReceived(GPONServiceProfiles)) );
+	connect( &huaweiOLT, SIGNAL(gponServiceProfiles(GPONServiceProfiles)), this, SLOT(gponSrvPrfsReceived(GPONServiceProfiles)) );
+	connect( &huaweiOLT, SIGNAL(gponServiceProfile(GPONServiceProfile)), this, SLOT(gponSrvPrfReceived(GPONServiceProfile)) );
 }
 
 QFrontend::~QFrontend()
@@ -223,6 +225,9 @@ void QFrontend::on_sendCMD_clicked()
 	case QFrontend::CmdGPONServiceProfiles:
 		huaweiOLT.getGPONServiceProfiles();
 		break;
+	case QFrontend::CmdGPONServiceProfile:
+		huaweiOLT.getGPONServiceProfile( ui->serviceProfileID->value() );
+		break;
 	}
 }
 
@@ -246,7 +251,12 @@ void QFrontend::ontsMACInfoReceived(const ONTMACInfo &ontMACInfo)
 	QInfoDialog( tr("ONTs MAC Info"), ontMACInfo.toString() ).exec();
 }
 
-void QFrontend::gponSrvPrfReceived(const GPONServiceProfiles &gponSrvProfiles)
+void QFrontend::gponSrvPrfsReceived(const GPONServiceProfiles &gponSrvProfiles)
 {
 	QInfoDialog( tr("GPON service-profiles"), gponSrvProfiles.toString() ).exec();
+}
+
+void QFrontend::gponSrvPrfReceived(const GPONServiceProfile &gponSrvProfile)
+{
+	QInfoDialog( tr("GPON service-profile"), gponSrvProfile.toString() ).exec();
 }
