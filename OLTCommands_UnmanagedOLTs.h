@@ -5,7 +5,7 @@
 
 namespace OLTCommands { class UnmanagedOLTs; }
 
-class UnmanagedONTs : public CommandReceivedInfo
+class UnmanagedONTs : public OLTCommandReply
 {
 protected:
 	struct OntInfo : public OntBasicInfo
@@ -51,7 +51,7 @@ public:
 
 	void clear()
 	{
-		CommandReceivedInfo::clear();
+		OLTCommandReply::clear();
 		m_unmanagedOnts.clear();
 	}
 

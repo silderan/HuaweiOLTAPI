@@ -3,19 +3,21 @@
 
 #include <QStringList>
 
-namespace OLTCommands { class CommandReceivedInfo; }
+namespace OLTCommands { class OLTCommandReply; }
 
-class CommandReceivedInfo
+class OLTCommandReply
 {
 	QString m_tag;
 	QString m_command;
 	QString m_raw;
 
 public:
-	CommandReceivedInfo(const QString &tag,const QString &command, const QString &rawData) :
+	OLTCommandReply(const QString &tag,const QString &command, const QString &rawData) :
 		m_tag(tag), m_command(command), m_raw(rawData)
 	{
 	}
+	virtual ~OLTCommandReply()
+	{	}
 	void clear()
 	{
 		m_tag.clear();

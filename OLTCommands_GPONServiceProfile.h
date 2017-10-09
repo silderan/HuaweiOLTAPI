@@ -8,7 +8,7 @@ namespace OLTCommands
 	class GPONServiceProfile;
 }
 
-class GPONServiceProfiles : public CommandReceivedInfo
+class GPONServiceProfiles : public OLTCommandReply
 {
 protected:
 	struct ServiceProfilesBase
@@ -54,7 +54,7 @@ public:
 	GPONServiceProfiles(const QString &tag,const QString &command, const QString &rawData);
 	void clear()
 	{
-		CommandReceivedInfo::clear();
+		OLTCommandReply::clear();
 		m_serviceProfileList.clear();
 	}
 
@@ -62,7 +62,7 @@ protected:
 	virtual QStringList toStringInfoData(bool includeRaw) const
 	{
 		Q_UNUSED(includeRaw);
-		return CommandReceivedInfo::toStringInfoData(false)
+		return OLTCommandReply::toStringInfoData(false)
 				<< "" << QObject::tr("Service Profiles")
 				<< m_serviceProfileList.toStringInfoData();
 	}

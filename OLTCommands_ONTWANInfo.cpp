@@ -1,7 +1,7 @@
 #include "OLTCommands_ONTWANInfo.h"
 
 ONTWANInfo::ONTWANInfo(const QString &tag, const QString &command, const QString &rawData) :
-	CommandReceivedInfo(tag, command, rawData)
+	OLTCommandReply(tag, command, rawData)
 {
 	QStringList lines = splitLines(rawData);
 	QString key, value;
@@ -51,7 +51,7 @@ ONTWANInfo::ONTWANInfo(const QString &tag, const QString &command, const QString
 QStringList ONTWANInfo::toStringInfoData(bool includeRaw) const
 {
 	Q_UNUSED(includeRaw);
-	QStringList rtn = CommandReceivedInfo::toStringInfoData(false);
+	QStringList rtn = OLTCommandReply::toStringInfoData(false);
 	for( int wan = 0; wan < m_ontInfo.wanInfoList.count(); wan++ )
 		rtn += QStringList()
 			<< "" << QObject::tr("Interficie WAN número %1").arg(wan)

@@ -1,7 +1,7 @@
 #include "OLTCommands_ONTMACInfo.h"
 
 ONTMACInfo::ONTMACInfo(const QString &tag, const QString &command, const QString &rawData) :
-	CommandReceivedInfo(tag, command, rawData)
+	OLTCommandReply(tag, command, rawData)
 {
 	QRegExp matcher("\\n\\s+(\\d+)\\s+([\\w-]+)\\s+(\\w+)\\s+([\\w:-]+)\\s+(\\w+)\\s+(\\d+)[\\s\\/]+(\\d+)[\\s\\/]+(\\d+)[\\s]+(\\d+)[\\s]+(\\d+)[\\s]+(\\d+)",
 			Qt::CaseInsensitive);

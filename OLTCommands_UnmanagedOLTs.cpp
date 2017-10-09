@@ -1,7 +1,7 @@
 #include "OLTCommands_UnmanagedOLTs.h"
 
 UnmanagedONTs::UnmanagedONTs(const QString &tag, const QString &command, const QString &rawData) :
-	CommandReceivedInfo(tag, command, rawData)
+	OLTCommandReply(tag, command, rawData)
 {
 	QString key, value;
 	QStringList lines = splitLines(rawData);
@@ -29,7 +29,7 @@ UnmanagedONTs::UnmanagedONTs(const QString &tag, const QString &command, const Q
 QStringList UnmanagedONTs::toStringInfoData(bool includeRaw) const
 {
 	Q_UNUSED(includeRaw);
-	QStringList rtn = CommandReceivedInfo::toStringInfoData();
+	QStringList rtn = OLTCommandReply::toStringInfoData();
 	for( int ont = 0; ont < m_unmanagedOnts.count(); ont++ )
 	{
 		rtn += QStringList() << "Unmanaged ONT Number" << QString::number(ont);

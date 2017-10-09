@@ -5,7 +5,7 @@
 
 namespace OLTCOMMANDS { class ONTWANInfo; }
 
-class ONTWANInfo : public CommandReceivedInfo
+class ONTWANInfo : public OLTCommandReply
 {
 protected:
 	struct WANInfo
@@ -91,7 +91,7 @@ public:
 
 	void clear()
 	{
-		CommandReceivedInfo::clear();
+		OLTCommandReply::clear();
 		m_ontInfo.clear();
 	}
 protected:

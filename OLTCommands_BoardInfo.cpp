@@ -1,7 +1,7 @@
 #include "OLTCommands_BoardInfo.h"
 
 BoardInfo::BoardInfo(const QString &tag, const QString &command, const QString &rawData)
-	: CommandReceivedInfo(tag, command, rawData)
+	: OLTCommandReply(tag, command, rawData)
 {
 	QStringList lines = splitLines(rawData);
 	int i = 0;
@@ -73,7 +73,7 @@ BoardInfo::BoardInfo(const QString &tag, const QString &command, const QString &
 QStringList BoardInfo::toStringInfoData(bool includeRaw) const
 {
 	Q_UNUSED(includeRaw);
-	QStringList rtn = CommandReceivedInfo::toStringInfoData(false);
+	QStringList rtn = OLTCommandReply::toStringInfoData(false);
 	rtn.append("Board Name"); rtn.append(m_boardName);
 	rtn.append("Board Status"); rtn.append(m_boardStatus);
 	int i;

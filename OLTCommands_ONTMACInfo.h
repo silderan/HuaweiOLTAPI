@@ -8,7 +8,7 @@ namespace OLTCommands
 	class ONTMACInfo;
 }
 
-class ONTMACInfo : public CommandReceivedInfo
+class ONTMACInfo : public OLTCommandReply
 {
 protected:
 	struct WANInfo : public OntBasicInfo
@@ -68,14 +68,14 @@ public:
 
 	void clear()
 	{
-		CommandReceivedInfo::clear();
+		OLTCommandReply::clear();
 		m_wanInfo.clear();
 	}
 protected:
 	virtual QStringList toStringInfoData(bool includeRaw) const
 	{
 		Q_UNUSED(includeRaw);
-		return CommandReceivedInfo::toStringInfoData(false)
+		return OLTCommandReply::toStringInfoData(false)
 				<< "" << QObject::tr("Interficies WAN")
 				<< m_wanInfo.toStringInfoData();
 	}

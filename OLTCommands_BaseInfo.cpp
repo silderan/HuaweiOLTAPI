@@ -2,7 +2,7 @@
 
 #include <QRegExp>
 
-QStringList CommandReceivedInfo::OntBasicInfo::fromString(const QString &txt, int framePos, int slotPos, int portPos, int idPos, int serialPos)
+QStringList OLTCommandReply::OntBasicInfo::fromString(const QString &txt, int framePos, int slotPos, int portPos, int idPos, int serialPos)
 {
 	QStringList bits = txt.split(QRegExp("[\\s\\/]+"), QString::SkipEmptyParts);
 	int i = 0;
@@ -54,12 +54,12 @@ QStringList CommandReceivedInfo::OntBasicInfo::fromString(const QString &txt, in
 	return bits.mid(i);
 }
 
-QStringList CommandReceivedInfo::splitLines(const QString &txt)
+QStringList OLTCommandReply::splitLines(const QString &txt)
 {
 	return txt.split(QRegExp("[\\n\\r]+"), QString::SkipEmptyParts);
 }
 
-int CommandReceivedInfo::splitField(const QString &line, QString &key, QString &value)
+int OLTCommandReply::splitField(const QString &line, QString &key, QString &value)
 {
 	int split = line.indexOf(':');
 	if( split != -1 )
@@ -76,7 +76,7 @@ int CommandReceivedInfo::splitField(const QString &line, QString &key, QString &
 	}
 }
 
-QString CommandReceivedInfo::toString() const
+QString OLTCommandReply::toString() const
 {
 	QStringList info = toStringInfoData(true);
 	QString rtn;

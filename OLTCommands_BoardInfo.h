@@ -5,7 +5,7 @@
 
 namespace OLTCommands { class BoardInfo; }
 
-class BoardInfo : public CommandReceivedInfo
+class BoardInfo : public OLTCommandReply
 {
 public:
 	struct PortInfo
@@ -57,7 +57,7 @@ public:
 
 	void clear()
 	{
-		CommandReceivedInfo::clear();
+		OLTCommandReply::clear();
 		m_boardName.clear();
 		m_boardStatus.clear();
 		frame = 0;
