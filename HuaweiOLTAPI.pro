@@ -23,19 +23,25 @@ SOURCES += main.cpp\
     QInfoDialog.cpp \
     OLTCommands_UnmanagedOLTs.cpp \
     OLTCommands_BoardInfo.cpp \
-    OLTCommands_BaseInfo.cpp
+    OLTCommands_BaseInfo.cpp \
+    OLTCommands_ONTWANInfo.cpp \
+    OLTCommands_ONTMACInfo.cpp \
+    OLTCommands_GPONServiceProfile.cpp
 
 HEADERS  += QFrontend.h \
     ../QTelnet/QTelnet.h \
     QIniFile.h \
     GlobalConfig.h \
     QTelnetInterface.h \
-    OLTConstants.h \
     QOLTCommands.h \
     QInfoDialog.h \
     OLTCommands_UnmanagedOLTs.h \
     OLTCommands_BoardInfo.h \
-    OLTCommands_BaseInfo.h
+    OLTCommands_BaseInfo.h \
+    OLTCommands_ONTWANInfo.h \
+    OLTConstants.h \
+    OLTCommands_ONTMACInfo.h \
+    OLTCommands_GPONServiceProfile.h
 
 FORMS    += QFrontend.ui \
     QInfoDialog.ui
@@ -45,4 +51,7 @@ RESOURCES += \
 
 DISTFILES += \
     BoardInfo0.txt \
-    GetUnmanaged0.txt
+    GetUnmanaged0.txt \
+    ONTMACInfo0.txt \
+    ONTWANInfo0.txt \
+    GPONServiceProfiles0.txt

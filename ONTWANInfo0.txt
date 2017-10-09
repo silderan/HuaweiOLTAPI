@@ -1,0 +1,66 @@
+  ---------------------------------------------------------------------
+  F/S/P                      : 0/0/0
+  ONT ID                     : 0
+  ---------------------------------------------------------------------
+  Index                      : 1
+  Name                       : OLT_C_TR069_DHCP_WAN
+  Service type               : Tr069
+  Connection type            : IP routed
+  IPv4 Connection status     : Connected
+  IPv4 access type           : DHCP
+  IPv4 address               : 10.50.219.49
+  Subnet mask                : 255.255.0.0
+  Default gateway            : 10.50.0.1
+  Manage VLAN                : 3333
+  Manage priority            : 5
+  Option60                   : Yes
+  Switch                     : Enable
+  MAC address                : 48FD-8E8F-F405
+  Priority policy            : Specified
+  L2 encap-type              : IPoE
+  IPv4 switch                : Enable
+  IPv6 switch                : Disable
+  Prefix                     : -
+  Prefix access mode         : Invalid
+  Prefix preferred time      : -
+  Prefix valid time          : -
+  IPv6 Connection status     : Invalid
+  IPv6 address               : -
+  IPv6 address status        : Invalid
+  IPv6 address access mode   : Invalid
+  IPv6 address preferred time: -
+  IPv6 address valid time    : -
+  DS-Lite Mode               : Invalid
+  DS-Lite peer address       : -
+  ---------------------------------------------------------------------
+  Index                      : 2
+  Name                       :
+  Service type               : Voip, Internet
+  Connection type            : IP routed
+  IPv4 Connection status     : Connected
+  IPv4 access type           : PPPoE
+  IPv4 address               : 62.82.225.98
+  Subnet mask                : 255.255.255.255
+  Default gateway            : 62.82.225.1
+  Manage VLAN                : 110
+  Manage priority            : 3
+  Option60                   : No
+  Switch                     : Enable
+  MAC address                : 48FD-8E8F-F406
+  Priority policy            : Specified
+  L2 encap-type              : PPPoE
+  IPv4 switch                : Enable
+  IPv6 switch                : Disable
+  Prefix                     : -
+  Prefix access mode         : Invalid
+  Prefix preferred time      : -
+  Prefix valid time          : -
+  IPv6 Connection status     : Invalid
+  IPv6 address               : -
+  IPv6 address status        : Invalid
+  IPv6 address access mode   : Invalid
+  IPv6 address preferred time: -
+  IPv6 address valid time    : -
+  DS-Lite Mode               : Invalid
+  DS-Lite peer address       : -
+  ---------------------------------------------------------------------

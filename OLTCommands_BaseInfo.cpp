@@ -59,18 +59,49 @@ QStringList CommandReceivedInfo::splitLines(const QString &txt)
 	return txt.split(QRegExp("[\\n\\r]+"), QString::SkipEmptyParts);
 }
 
+int CommandReceivedInfo::splitField(const QString &line, QString &key, QString &value)
+{
+	int split = line.indexOf(':');
+	if( split != -1 )
+	{
+		key = line.left(split).trimmed();
+		value = line.mid(split+1).trimmed();
+		return 2;
+	}
+	else
+	{
+		key = line;
+		value.clear();
+		return 1;
+	}
+}
+
 QString CommandReceivedInfo::toString() const
 {
 	QStringList info = toStringInfoData(true);
 	QString rtn;
 	int i;
-	int keyLength;
+	int keyLength = 0;
+	int valueLength = 0;
 	for( i = 0; i < info.count(); i+= 2 )
-		if( keyLength < info[i].length() )
-			keyLength = info[i].length();
+	{
+		if( keyLength < info[i+0].length() )
+			keyLength = info[i+0].length();
+		if( valueLength < info[i+1].length() )
+			valueLength = info[i+1].length();
+	}
 
 	keyLength++;
 	for( i = 0; i < info.count(); i+= 2 )
-		rtn += QString("%1 : %2\n").arg(info[i+0], keyLength, ' ').arg(info[i+1]);
+	{
+		if( info[i+0].count() )
+			rtn += QString("%1 : %2\n").arg(info[i+0], keyLength, ' ').arg(info[i+1]);
+		else
+		{
+			int center = info[i+1].count();
+			QString laterals = QString("_").repeated(((valueLength+keyLength+3)>>1) - (center>>1));
+			rtn += QString("%1%2%3\n").arg(laterals, info[i+1], laterals);
+		}
+	}
 	return rtn;
 }

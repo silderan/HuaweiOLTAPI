@@ -49,16 +49,17 @@ COMMAND: ExitConfig = quit
 COMMAND: BoardInfo = display board {frame}/{slot}
 # Para obtener la informacion de las ONT nuevas
 COMMAND: GetUnmanaged = display ont autofind all
+
 # Para obtener la informacion de IPs, VLANs y MAC de la wan de la OLT
-COMMAND: ONTWANInfo = display ont wan-info {frame}/{slot} {gpon} {ontid}
+COMMAND: ONTWANInfo = display ont wan-info {frame}/{slot} {port} {ontid}
 # Para obtener las MAC-VLAN que la OLT descubre de las ONT.
-COMMAND: ONTMACInfo = display mac-address port {frame}/{slot}/{gpon} ont {ontid}
+COMMAND: ONTMACInfo = display mac-address port {frame}/{slot}/{port} ont {ontid}
 # Para obtener la tabla de los srv-profiles
 COMMAND: GPONServiceProfiles = display ont-srvprofile gpon all
 # Para obtener la informacion de un service profile concreto.
 COMMAND: GPONServiceProfile = display ont-srvprofile gpon profile-id {srv_profile_id}
 # Para obtener informacion sobre la version de hardware, software, etc.
-COMMAND: ONTVersion = display ont version {frame} {slot} {gpon} {ontid}
+COMMAND: ONTVersion = display ont version {frame} {slot} {port} {ontid}
 
 # Para manipular los traffic table
 COMMAND: TrafficTableIPInfo = display traffic table ip index {index}
@@ -73,31 +74,31 @@ COMMAND: AddDBAProfile = dba-profile add profile-name "{name}" {type} {speeds}
 COMMAND: DelDBAProfile = dba-profile delete profile-id {id}
 
 # Para activar/desactivar la gestion del ACS tr069 en las ONT:
-COMMAND: SetTR69Server = ont tr069-server-config {gpon} {ontid} profile-id {tr069id}
-COMMAND: UnsetTR69Server = undo ont tr069-server-config {gpon} {ontid}
+COMMAND: SetTR69Server = ont tr069-server-config {port} {ontid} profile-id {tr069id}
+COMMAND: UnsetTR69Server = undo ont tr069-server-config {port} {ontid}
 
 # Para activar/desactivar la interficie de gestion en las ONT
-COMMAND: SetONTIPConfig = ont ipconfig {gpon} {ontid} dhcp vlan {vlan} priority {priority}
-COMMAND: UnsetONTIPConfig = undo ont ipconfig {gpon} {ontid}\n
+COMMAND: SetONTIPConfig = ont ipconfig {port} {ontid} dhcp vlan {vlan} priority {priority}
+COMMAND: UnsetONTIPConfig = undo ont ipconfig {port} {ontid}\n
 
 # Para administrar/dejar de administrar una ONT en la OLT
-COMMAND: ManageONT = ont add {gpon} sn-auth "{SN}" omci ont-lineprofile-id {lineprofile} ont-srvprofile-id {srvprofile} desc "{desc}"
-COMMAND: UnmanageONT = ont delete {gpon} {ontid}
+COMMAND: ManageONT = ont add {port} sn-auth "{SN}" omci ont-lineprofile-id {lineprofile} ont-srvprofile-id {srvprofile} desc "{desc}"
+COMMAND: UnmanageONT = ont delete {port} {ontid}
 
 # Para entrar/salir en el contexto de configuracion de los GPON
 COMMAND: EnterGPONContext = interface gpon {frame}/{slot}
 COMMAND: QuitGPONContext = quit
 
 # Para crear/borrar/mostrar los service-port
-COMMAND: ONTServicePorts = display service-port port {frame}/{slot}/{gpon} ont {ontid}\n
-COMMAND: AddServicePortLimited = service-port vlan {olt_vlan} gpon {frame}/{slot}/{gpon} ont {ontid} gemport {gem} multi-service user-vlan {ont_vlan} tag-transform translate inbound traffic-table index {up_traffic_index} outbound traffic-table index {dw_traffic_index}
-COMMAND: AddServicePortUnlimited = service-port vlan {olt_vlan} gpon {frame}/{slot}/{gpon} ont {ontid} gemport {gem} multi-service user-vlan {ont_vlan} tag-transform translate\n
+COMMAND: ONTServicePorts = display service-port port {frame}/{slot}/{port} ont {ontid}\n
+COMMAND: AddServicePortLimited = service-port vlan {olt_vlan} gpon {frame}/{slot}/{port} ont {ontid} gemport {gem} multi-service user-vlan {ont_vlan} tag-transform translate inbound traffic-table index {up_traffic_index} outbound traffic-table index {dw_traffic_index}
+COMMAND: AddServicePortUnlimited = service-port vlan {olt_vlan} gpon {frame}/{slot}/{port} ont {ontid} gemport {gem} multi-service user-vlan {ont_vlan} tag-transform translate\n
 COMMAND: DelServicePort = undo service-port {index}
 
 # Para resetear a valores de fábrica la ONT por OMCI
-COMMAND: ResetONT = ont factory-setting-restore {gpon} {ontid}\ny
+COMMAND: ResetONT = ont factory-setting-restore {port} {ontid}\ny
 # Para reiniciar la ONT
-COMMAND: RebootONT = ont reset graceful {gpon} {ontid} {gracetime}\ny
+COMMAND: RebootONT = ont reset graceful {port} {ontid} {gracetime}\ny
 
 # Para crear/borrar/mostrar los lineprofile de gpon/epon
 # TODO: Completarlo.
@@ -105,7 +106,7 @@ COMMAND: GetLineProfiles = display ont-lineprofile {gepon} all
 COMMAND: GetLineProfile = display ont-lineprofile {gepon} profile-id {profile} profile-name "{name}"
 COMMAND: AddLineProfile = ont-lineprofile {gepon} profile-name "{name}"
 COMMAND: DelLineProfile = undo ont-lineprofile {gepon} profile-id {profile}
-COMMAND: ModLineProfile = ont-lineprofile {gepon} profile-id "{name}"
+COMMAND: ModLineProfile = ont-lineprofile {gepon} profile-id "{index}"
 COMMAND: LineProfileTR069 = tr069-management {enable_disable}
 COMMAND: LineProfileTCONTDBA = tcont {tcont_index} dba-profile-id {dba_profile_id}
 COMMAND: LineProfileAddGEM = gem add {gemport} eth tcont {tcont_index}

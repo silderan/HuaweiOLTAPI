@@ -33,6 +33,9 @@ QFrontend::QFrontend(QWidget *parent) :
 	ui->command->addItem( "get unmanaged ONTs", QStringList() );
 	ui->command->addItem( "get board info", QStringList() << "frame" << "slot" );
 	ui->command->addItem( "get ont info", QStringList() << "frame" << "slot" << "port" << "ontID" );
+	ui->command->addItem( "get ont WAN info", QStringList() << "frame" << "slot" << "port" << "ontID" );
+	ui->command->addItem( "get ont MAC info", QStringList() << "frame" << "slot" << "port" << "ontID" );
+	ui->command->addItem( "get GPON service profiles", QStringList() );
 
 	globalConfig.load();
 	ui->leFQDN->setText( globalConfig.hostName() );
@@ -56,6 +59,9 @@ QFrontend::QFrontend(QWidget *parent) :
 	connect( &huaweiOLT, SIGNAL(errorResponse(QString,QString,QString)), this, SLOT(oltErrorResponse(QString,QString,QString)) );
 	connect( &huaweiOLT, SIGNAL(boardInfo(BoardInfo)), this, SLOT(boardInfoReceived(BoardInfo)) );
 	connect( &huaweiOLT, SIGNAL(unmanagedOnts(UnmanagedONTs)), this, SLOT(unmanagedReceived(UnmanagedONTs)) );
+	connect( &huaweiOLT, SIGNAL(ontWANInfo(ONTWANInfo)), this, SLOT(ontsWANInfoReceived(ONTWANInfo)) );
+	connect( &huaweiOLT, SIGNAL(ontMACInfo(ONTMACInfo)), this, SLOT(ontsMACInfoReceived(ONTMACInfo)) );
+	connect( &huaweiOLT, SIGNAL(gponServiceProfiles(GPONServiceProfiles)), this, SLOT(gponSrvPrfReceived(GPONServiceProfiles)) );
 }
 
 QFrontend::~QFrontend()
@@ -208,6 +214,15 @@ void QFrontend::on_sendCMD_clicked()
 		break;
 	case QFrontend::CmdONTInfo:
 		break;
+	case QFrontend::CmdONTWANInfo:
+		huaweiOLT.getONTWANInfo( ui->frame->value(), ui->slot->value(), ui->port->value(), ui->ontID->value() );
+		break;
+	case QFrontend::CmdONTMACInfo:
+		huaweiOLT.getONTMACInfo( ui->frame->value(), ui->slot->value(), ui->port->value(), ui->ontID->value() );
+		break;
+	case QFrontend::CmdGPONServiceProfiles:
+		huaweiOLT.getGPONServiceProfiles();
+		break;
 	}
 }
 
@@ -219,4 +234,19 @@ void QFrontend::boardInfoReceived(const BoardInfo &boardInfo)
 void QFrontend::unmanagedReceived(const UnmanagedONTs &unmanaged)
 {
 	QInfoDialog( tr("Unmanaged ONTs"), unmanaged.toString() ).exec();
+}
+
+void QFrontend::ontsWANInfoReceived(const ONTWANInfo &ontWANInfo)
+{
+	QInfoDialog( tr("ONTs WAN Info"), ontWANInfo.toString() ).exec();
+}
+
+void QFrontend::ontsMACInfoReceived(const ONTMACInfo &ontMACInfo)
+{
+	QInfoDialog( tr("ONTs MAC Info"), ontMACInfo.toString() ).exec();
+}
+
+void QFrontend::gponSrvPrfReceived(const GPONServiceProfiles &gponSrvProfiles)
+{
+	QInfoDialog( tr("GPON service-profiles"), gponSrvProfiles.toString() ).exec();
 }

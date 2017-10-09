@@ -3,32 +3,22 @@
 UnmanagedONTs::UnmanagedONTs(const QString &tag, const QString &command, const QString &rawData) :
 	CommandReceivedInfo(tag, command, rawData)
 {
-	QStringList pair;
+	QString key, value;
 	QStringList lines = splitLines(rawData);
 	OntInfo ont;
-	for( int l = 0; l < lines.count(); l++ )
+	for( int i = 0; i < lines.count(); i++ )
 	{
-		if( (pair = lines[l].split(QRegExp("\\s+:\\s+"), QString::SkipEmptyParts)).count() != 2 )
-			continue;
-		if( pair[0].contains("F/S/P") )
-			ont.fromString( pair[1], 0, 1, 2, -1, -1 );
-		else if( pair[0].contains("Ont SN") )
-			ont.serial = pair[1].trimmed();
-		else if( pair[0].contains("Password") )
-			ont.password = pair[1].trimmed();
-		else if( pair[0].contains("Loid") )
-			ont.loid = pair[1].trimmed();
-		else if( pair[0].contains("Checkcode") )
-			ont.checkcode = pair[1].trimmed();
-		else if( pair[0].contains("VendorID") )
-			ont.vendorID = pair[1].trimmed();
-		else if( pair[0].contains("Ont Version") )
-			ont.hwVersion = pair[1].trimmed();
-		else if( pair[0].contains("Ont SoftwareVersion") )
-			ont.swVersion = pair[1].trimmed();
-		else if( pair[0].contains("Ont EquipmentID") )
-			ont.equipID = pair[1].trimmed();
-		else if( pair[0].contains("Ont autofind time") )
+		splitField(lines[i], key, value);
+		if( key.contains("F/S/P") )						ont.fromString( value, 0, 1, 2, -1, -1 );
+		else if( key.contains("Ont SN") )				ont.serial = value;
+		else if( key.contains("Password") )				ont.password = value;
+		else if( key.contains("Loid") )					ont.loid = value;
+		else if( key.contains("Checkcode") )			ont.checkcode = value;
+		else if( key.contains("VendorID") )				ont.vendorID = value;
+		else if( key.contains("Ont Version") )			ont.hwVersion = value;
+		else if( key.contains("Ont SoftwareVersion") )	ont.swVersion = value;
+		else if( key.contains("Ont EquipmentID") )		ont.equipID = value;
+		else if( key.contains("Ont autofind time") )
 		{
 			m_unmanagedOnts.append(ont);
 			ont.clear();

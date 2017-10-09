@@ -21,7 +21,10 @@ Q_OBJECT
 		CmdScroll,
 		CmdGetUnmanaged,
 		CmdBoardInfo,
-		CmdONTInfo
+		CmdONTInfo,
+		CmdONTWANInfo,
+		CmdONTMACInfo,
+		CmdGPONServiceProfiles
 	};
 	QList<QWidget*> m_paramWidgets;
 
@@ -42,6 +45,9 @@ private slots:
 
 	void boardInfoReceived(const BoardInfo &boardInfo);
 	void unmanagedReceived(const UnmanagedONTs &unmanaged);
+	void ontsWANInfoReceived(const ONTWANInfo &ontWANInfo);
+	void ontsMACInfoReceived(const ONTMACInfo &ontMACInfo);
+	void gponSrvPrfReceived(const GPONServiceProfiles &gponSrvProfiles);
 
 	void on_command_currentIndexChanged(int index);
 	void on_sendCMD_clicked();

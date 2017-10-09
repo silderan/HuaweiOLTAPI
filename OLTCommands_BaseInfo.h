@@ -24,6 +24,7 @@ public:
 	}
 
 	static QStringList splitLines(const QString &txt);
+	static int splitField(const QString &line, QString &key, QString &value);
 protected:
 	virtual QStringList toStringInfoData(bool includeRaw = false) const
 	{

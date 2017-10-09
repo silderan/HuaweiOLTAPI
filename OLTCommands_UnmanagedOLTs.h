@@ -17,6 +17,7 @@ protected:
 		QString hwVersion;
 		QString swVersion;
 		QString equipID;
+		QString autofindTime;
 		void clear()
 		{
 			OntBasicInfo::clear();
@@ -27,6 +28,7 @@ protected:
 			hwVersion.clear();
 			swVersion.clear();
 			equipID.clear();
+			autofindTime.clear();
 		}
 		QStringList toStringInfoData() const
 		{
