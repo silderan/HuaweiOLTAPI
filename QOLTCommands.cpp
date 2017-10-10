@@ -8,7 +8,7 @@ QOLTCommands::QOLTCommands()
 void QOLTCommands::setAdminMode()
 {
 	if( oltState() < QTelnetInterface::OltAdminMode )
-		addCommand( "EnablingAdmin", oltConstants.commandEnableAdmin(), oltConstants.promptAdmin(), OltAdminMode );
+		addCommand( "EnablingAdmin", oltConstants.commandEnableAdmin(), OltAdminMode );
 }
 
 void QOLTCommands::setConfigMode()
@@ -16,48 +16,53 @@ void QOLTCommands::setConfigMode()
 	if( oltState() < QTelnetInterface::OltConfigMode )
 	{
 		setAdminMode();
-		addCommand( "ConfigMode", oltConstants.commandEnterConfigMode(), oltConstants.promptConfig(), OltConfigMode );
+		addCommand( "ConfigMode", oltConstants.commandEnterConfigMode(), OltConfigMode );
 	}
+}
+
+void QOLTCommands::quitContext()
+{
+	addCommand("QuittingContext", oltConstants.quitContext());
 }
 
 void QOLTCommands::setScroll(int lines)
 {
-	addCommand("Scroll", oltConstants.scroll(lines), oltConstants.promptConfig());
+	addCommand("Scroll", oltConstants.scroll(lines));
 }
 
 void QOLTCommands::getBoardInfo(quint8 frame, quint8 slot)
 {
-	addCommand("BoardInfo", oltConstants.boardInfo(frame, slot), oltConstants.promptConfig());
+	addCommand("BoardInfo", oltConstants.boardInfo(frame, slot));
 }
 
 void QOLTCommands::getUnmanaged()
 {
-	addCommand("GetUnmanaged", oltConstants.unmanaged(), oltConstants.promptConfig());
+	addCommand("GetUnmanaged", oltConstants.unmanaged());
 }
 
 void QOLTCommands::getONTWANInfo(int frame, int slot, int port, int ontid)
 {
-	addCommand("ONTWANInfo", oltConstants.ontWANInfo(frame, slot, port, ontid), oltConstants.promptConfig());
+	addCommand("ONTWANInfo", oltConstants.ontWANInfo(frame, slot, port, ontid));
 }
 
 void QOLTCommands::getONTMACInfo(int frame, int slot, int port, int ontid)
 {
-	addCommand("ONTMACInfo", oltConstants.ontMACInfo(frame, slot, port, ontid), oltConstants.promptConfig());
+	addCommand("ONTMACInfo", oltConstants.ontMACInfo(frame, slot, port, ontid));
 }
 
 void QOLTCommands::getGPONServiceProfiles()
 {
-	addCommand( "GPONServiceProfiles", oltConstants.gponServiceProfiles(), oltConstants.promptConfig() );
+	addCommand( "GPONServiceProfiles", oltConstants.gponServiceProfiles() );
 }
 
 void QOLTCommands::getGPONServiceProfile(int serviceProfileID)
 {
-	addCommand( "GPONServiceProfile", oltConstants.gponServiceProfile(serviceProfileID), oltConstants.promptConfig() );
+	addCommand( "GPONServiceProfile", oltConstants.gponServiceProfile(serviceProfileID) );
 }
 
 void QOLTCommands::enterGPONSrvcPrfl(int serviceProfileID)
 {
-	addCommand( "EnterGPONSrvPrfl", oltConstants.enterGPONSrvProfile(serviceProfileID), oltConstants.promptConfig() );
+	addCommand( "EnterGPONSrvPrfl", oltConstants.enterGPONSrvProfile(serviceProfileID) );
 }
 
 void QOLTCommands::onCommandReceived(const QString &label, const QString &cmd, const QString data)

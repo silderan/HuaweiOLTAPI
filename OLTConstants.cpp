@@ -2,43 +2,9 @@
 
 #include <QFile>
 
-QString OLTConstants::Prompts::prompt(const QString &name) const
+QString OLTConstants::Constants::moreText() const
 {
-	return value(name);
-}
-
-QString OLTConstants::Prompts::basic() const
-{
-	return prompt("basic");
-}
-
-QString OLTConstants::Prompts::initial() const
-{
-	QString rtn = prompt("initial");
-	return rtn.isEmpty() ? basic() : rtn;
-}
-
-QString OLTConstants::Prompts::config() const
-{
-	QString rtn = prompt("config");
-	return rtn.isEmpty() ? basic() : rtn;
-}
-
-QString OLTConstants::Prompts::admin() const
-{
-	QString rtn = prompt("admin");
-	return rtn.isEmpty() ? basic() : rtn;
-}
-
-
-QString OLTConstants::Constants::askForUsername() const
-{
-	return value("ASK_USERNAME");
-}
-
-QString OLTConstants::Constants::askForPassword() const
-{
-	return value("ASK_PASSWORD");
+	return value("More Text");
 }
 
 void OLTConstants::ConstantsBase::fromFileLine(const QByteArray &line)
@@ -89,8 +55,11 @@ void OLTConstants::loadOLTConstantsFile()
 			if( linea.startsWith("LOGIN_ERROR:") )
 				m_loginErrors.fromFileLine( linea.mid(12) );
 			else
-			if( linea.startsWith("PROMPT:") )
-				m_prompts.fromFileLine( linea.mid(7) );
+			if( linea.startsWith("LOGIN_PROMPT:") )
+				m_loginPrompt.setPattern( linea.mid(14).trimmed() );
+			else
+			if( linea.startsWith("COMMAND_PROMPT:") )
+				m_cmdPrompt.setPattern( linea.mid(17).trimmed() );
 			else
 			if( linea.startsWith("CONSTANT:") )
 				m_constants.fromFileLine( linea.mid(9) );

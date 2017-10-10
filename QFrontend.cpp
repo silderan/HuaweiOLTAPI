@@ -21,7 +21,8 @@ QFrontend::QFrontend(QWidget *parent) :
 						   << ui->slot
 						   << ui->port
 						   << ui->value
-						   << ui->ontID );
+						   << ui->ontID
+						   << ui->serviceProfileID );
 
 	// This string list order must match with the enum CommanIndex
 	// to the command combo box and send button works fine and easy
@@ -37,6 +38,7 @@ QFrontend::QFrontend(QWidget *parent) :
 	ui->command->addItem( "get ont MAC info", QStringList() << "frame" << "slot" << "port" << "ontID" );
 	ui->command->addItem( "get GPON service profiles", QStringList() );
 	ui->command->addItem( "get GPON service profile info", QStringList() << "serviceProfileID" );
+	ui->command->addItem( "enter GPON service profile", QStringList() << "serviceProfileID" );
 
 	globalConfig.load();
 	ui->leFQDN->setText( globalConfig.hostName() );
@@ -194,6 +196,11 @@ void QFrontend::on_btLogin_clicked()
 	}
 }
 
+void QFrontend::on_quit_clicked()
+{
+	huaweiOLT.quitContext();
+}
+
 void QFrontend::on_command_currentIndexChanged(int index)
 {
 	QStringList paramNames = ui->command->itemData(index).toStringList();
@@ -227,6 +234,9 @@ void QFrontend::on_sendCMD_clicked()
 		break;
 	case QFrontend::CmdGPONServiceProfile:
 		huaweiOLT.getGPONServiceProfile( ui->serviceProfileID->value() );
+		break;
+	case QFrontend::CmdEnterSrvPrfl:
+		huaweiOLT.enterGPONSrvcPrfl( ui->serviceProfileID->value() );
 		break;
 	}
 }

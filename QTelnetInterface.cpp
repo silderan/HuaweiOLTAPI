@@ -11,11 +11,10 @@
  * @param prompt The prompt to wait to for a succesfull command.
  * @param errors Lists of paired texts for errors and their explanation text.
  */
-void QTelnetInterface::addCommand(const QString &label, const QString &cmd, const QString &prompt, const OLTConstants::ErrorStrings &errors, OLTState okState)
+void QTelnetInterface::addCommand(const QString &label, const QString &cmd, const OLTConstants::ErrorStrings &errors, OLTState okState)
 {
 	Q_ASSERT_X( !label.isEmpty(), "addCommand", "Label is empty" );
 	Q_ASSERT_X( (label == "InitialWelcome") || !cmd.isEmpty(), "addCommand", "Command is empty" );
-	Q_ASSERT_X( !prompt.isEmpty(), "addCommand", "Prompt is empty" );
 
 #ifndef QT_NO_DEBUG
 	if( !isConnected() )
@@ -36,7 +35,6 @@ void QTelnetInterface::addCommand(const QString &label, const QString &cmd, cons
 	CommandControl newCmd;
 	newCmd.label = label;
 	newCmd.cmd = cmd;
-	newCmd.prompt = prompt;
 	newCmd.errorStrings = errors;
 	newCmd.state = okState;
 	m_commandsQueue.append( newCmd );
@@ -82,12 +80,13 @@ void QTelnetInterface::playQueue()
 void QTelnetInterface::onDataFromOLT(const char *data, int length)
 {
 	m_dataBuffer.append( QByteArray(data, length) );
-	if( m_dataBuffer.contains("---- More ( Press 'Q' to break ) ----") )
+	if( m_dataBuffer.contains(oltConstants.constantMoreText()) )
 	{
-		m_dataBuffer.replace("---- More ( Press 'Q' to break ) ----", "");
+		m_dataBuffer.replace(oltConstants.constantMoreText(), "");
 		sendData( " " );
 	}
-	else if( m_dataBuffer.contains(m_currentCommand.prompt) )
+	else if( m_dataBuffer.contains(oltConstants.cmdPrompt()) ||
+			 m_dataBuffer.contains(oltConstants.loginPrompt()) )
 	{
 		QString err = m_currentCommand.errorStrings.errorString(m_dataBuffer);
 		if( !err.isEmpty() )
@@ -123,9 +122,9 @@ void QTelnetInterface::onTelnetStateChange(QAbstractSocket::SocketState st)
 		break;
 	case QAbstractSocket::ConnectedState:
 		m_OLTState = OltConnected;
-		addLoginCommand( "InitialWelcome", "", oltConstants.constantUName(), OltLogging );
-		addLoginCommand( "UsernameLogin", m_uname, oltConstants.constantUPass(), OltLogging );
-		addLoginCommand( "PasswordLogin", m_upass, oltConstants.promptInitial(), OltLogged );
+		addCommand( "InitialWelcome", "", oltConstants.loginErrors(), OltLogging );
+		addCommand( "UsernameLogin", m_uname, oltConstants.loginErrors(), OltLogging );
+		addCommand( "PasswordLogin", m_upass, oltConstants.loginErrors(), OltLogged );
 		break;
 	case QAbstractSocket::BoundState:
 		m_OLTState = OltUnconnected;

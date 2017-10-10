@@ -25,7 +25,8 @@ Q_OBJECT
 		CmdONTWANInfo,
 		CmdONTMACInfo,
 		CmdGPONServiceProfiles,
-		CmdGPONServiceProfile
+		CmdGPONServiceProfile,
+		CmdEnterSrvPrfl
 	};
 	QList<QWidget*> m_paramWidgets;
 
@@ -53,6 +54,7 @@ private slots:
 
 	void on_command_currentIndexChanged(int index);
 	void on_sendCMD_clicked();
+	void on_quit_clicked();
 };
 
 #endif // QFRONTEND_H

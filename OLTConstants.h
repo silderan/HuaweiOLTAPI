@@ -4,6 +4,7 @@
 #include <QMap>
 #include <QStringList>
 #include <qstring.h>
+#include <QRegExp>
 
 class OLTConstants
 {
@@ -17,22 +18,11 @@ public:
 	class Constants : public ConstantsBase
 	{
 	public:
-		QString askForUsername() const;
-		QString askForPassword() const;
+		QString moreText() const;
 	};
 
 	class Commands : public ConstantsBase
 	{
-	};
-
-	class Prompts : public ConstantsBase
-	{
-	public:
-		QString prompt(const QString &name) const;
-		QString basic() const;
-		QString initial() const;
-		QString config() const;
-		QString admin() const;
 	};
 
 	class ErrorStrings : public ConstantsBase
@@ -43,7 +33,8 @@ public:
 
 private:
 	Constants m_constants;
-	Prompts m_prompts;
+	QRegExp m_loginPrompt;
+	QRegExp m_cmdPrompt;
 	Commands m_oltCommands;
 	ErrorStrings m_cmdErrors;
 	ErrorStrings m_loginErrors;
@@ -53,23 +44,22 @@ private:
 public:
 	OLTConstants();
 
+	// Constants:
+	QString constantMoreText() const { return m_constants.moreText();	}
+
 	// Prompts
-	QString promptBasic() const { return m_prompts.basic(); }
-	QString promptInitial() const { return m_prompts.initial(); }
-	QString promptAdmin() const { return m_prompts.admin(); }
-	QString promptConfig() const { return m_prompts.config(); }
+	const QRegExp &loginPrompt() const { return m_loginPrompt; }
+	const QRegExp &cmdPrompt() const { return m_cmdPrompt; }
 
 	// Error strings.
 	const ErrorStrings &commandErrors() const { return m_cmdErrors; }
 	const ErrorStrings &loginErrors() const { return m_loginErrors; }
 
-	// Constants.
-	QString constantUName() const { return m_constants.askForUsername(); }
-	QString constantUPass() const { return m_constants.askForPassword(); }
-
 	// Commands.
 	QString commandEnableAdmin() const { return m_oltCommands.value("EnableAdmin"); }
 	QString commandEnterConfigMode() const { return m_oltCommands.value("EnterConfig"); }
+	QString quitContext() const { return m_oltCommands.value("QuitContext"); }
+
 	QString scroll(int lines) const { return parseCommand(m_oltCommands.value("scroll"), QStringList() << "{lines}" << QString::number(lines)); }
 	QString boardInfo(int frame, int slot) const { return parseCommand(m_oltCommands.value("BoardInfo"), QStringList() << "{frame}" << QString::number(frame) << "{slot}" << QString::number(slot)); }
 	QString unmanaged() const { return m_oltCommands.value("GetUnmanaged"); }

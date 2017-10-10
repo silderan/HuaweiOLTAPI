@@ -1,24 +1,14 @@
 ## Estos son los textos y comandos que usa la OLT. Si no se especifican correctamente
 ## el programa se quedara bloqueado o funcionara mal.
 
-## Textos varios.
-# El texto que se muestra cuando se pude el usuario
-CONSTANT: ASK_USERNAME = User name
-# El texto que se muestra al pedir la contrasenya.
-CONSTANT: ASK_PASSWORD = User password
+## Algunos textos literales útiles que muestra la OLT.
+# Cuando no cabe en pantalla el texto que envía la OLT.
+CONSTANT: More Text = ---- More ( Press 'Q' to break ) ----
 
-# En el login, cuando no se puede conectar de nuevo con el mismo usuario
-
-## Diferentes prompts según el contexto en el que esté la OLT
-# El prompt básico que se muestra despues de cada comando ejecutado.
-# Si no se encuentra un prompt más específico, se usará este.
-PROMPT: basic = \nMA5683T
-# El prompt inicial
-PROMPT: initial = \nMA5683T>
-# El prompt en el modo "admin" habilitado.
-PROMPT: admin = \nMA5683T#
-# El prompt en el modo admin + config habilitados.
-PROMPT: config = \nMA5683T(config)#
+## Los prompts son los textos que envía la OLT cuando espera que el usuario
+## introduzca algún comando o información. Usaremos expresiones regulares
+LOGIN_PROMPT: >>User (?:name|password)
+COMMAND_PROMPT: MA5683T[\S ]*[#>]
 
 ## Mensajes varios que muestra la OLT en caso de error en el login
 ## Añade cuantos sean necesarios.
@@ -44,7 +34,7 @@ COMMAND: scroll = scroll {lines}
 COMMAND: EnableAdmin = enable
 # Para entrar/salir en el modo de configuracion
 COMMAND: EnterConfig = config
-COMMAND: ExitConfig = quit
+COMMAND: QuitContext = quit
 # Para obtener la informacion global de las ONT
 COMMAND: BoardInfo = display board {frame}/{slot}
 # Para obtener la informacion de las ONT nuevas

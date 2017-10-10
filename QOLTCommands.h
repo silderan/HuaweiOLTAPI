@@ -18,6 +18,7 @@ public:
 	QOLTCommands();
 	void setAdminMode();
 	void setConfigMode();
+	void quitContext();
 	void setScroll(int lines);
 	void getBoardInfo(quint8 frame, quint8 slot);
 	void getUnmanaged();

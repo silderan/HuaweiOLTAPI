@@ -216,6 +216,13 @@
         <item row="9" column="1">
          <widget class="QSpinBox" name="serviceProfileID"/>
         </item>
+        <item row="1" column="2">
+         <widget class="QPushButton" name="quit">
+          <property name="text">
+           <string>quit context</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
      </widget>

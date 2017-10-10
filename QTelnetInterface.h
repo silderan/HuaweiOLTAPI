@@ -35,18 +35,16 @@ private:
 		QString label;
 		QString cmd;
 		OLTConstants::ErrorStrings errorStrings;
-		QString prompt;
 		OLTState state;	// State on succefull command (on prompt match)
 		void clear()
 		{
 			label.clear();
 			cmd.clear();
-			prompt.clear();
 			state = OltUnknownSate;
 		}
 		bool isCleared()
 		{
-			return prompt.isEmpty();
+			return label.isEmpty();
 		}
 	};
 
@@ -60,12 +58,11 @@ private:
 	void setOltState(OLTState newState);
 	void playQueue();
 
+	void addCommand(const QString &label, const QString &cmd, const OLTConstants::ErrorStrings &errors, OLTState okState = OltUnknownSate );
+
 protected:
-	void addCommand( const QString &label, const QString &cmd, const QString &prompt, const OLTConstants::ErrorStrings &errors, OLTState okState = OltUnknownSate );
-	void addLoginCommand( const QString &label, const QString &cmd, const QString &prompt, OLTState okState = OltUnknownSate )
-	{ addCommand(label, cmd, prompt, oltConstants.loginErrors(), okState ); }
-	void addCommand( const QString &label, const QString &cmd, const QString &prompt, OLTState okState = OltUnknownSate )
-	{ addCommand(label, cmd, prompt, oltConstants.commandErrors(), okState ); }
+	void addCommand( const QString &label, const QString &cmd, OLTState okState = OltUnknownSate )
+		{ addCommand(label, cmd, oltConstants.commandErrors(), okState ); }
 
 public:
 	QTelnetInterface();
