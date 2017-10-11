@@ -65,12 +65,18 @@ void QOLTCommands::enterGPONSrvcPrfl(int serviceProfileID)
 	addCommand( "EnterGPONSrvPrfl", oltConstants.enterGPONSrvProfile(serviceProfileID) );
 }
 
+void QOLTCommands::getONTVersion(int frame, int slot, int port, int ontid)
+{
+	addCommand( "ONTVersion", oltConstants.ontVersion(frame, slot, port, ontid) );
+}
+
 void QOLTCommands::onCommandReceived(const QString &label, const QString &cmd, const QString data)
 {
 	if( label == "BoardInfo" )					emit boardInfo( BoardInfo(label, cmd, data) );
 	else if( label == "GetUnmanaged" )			emit unmanagedOnts( UnmanagedONTs(label, cmd, data) );
 	else if( label == "ONTWANInfo" )			emit ontWANInfo( ONTWANInfo(label, cmd, data) );
 	else if( label == "ONTMACInfo" )			emit ontMACInfo( ONTMACInfo(label, cmd, data) );
+	else if( label == "ONTVersion" )			emit ontVersionInfo( ONTVersion(label, cmd, data) );
 	else if( label == "GPONServiceProfiles" )	emit gponServiceProfiles( GPONServiceProfiles(label, cmd, data) );
 	else if( label == "GPONServiceProfile" )	emit gponServiceProfile( GPONServiceProfile(label, cmd, data) );
 }

@@ -59,9 +59,9 @@ QStringList OLTCommandReply::splitLines(const QString &txt)
 	return txt.split(QRegExp("[\\n\\r]+"), QString::SkipEmptyParts);
 }
 
-int OLTCommandReply::splitField(const QString &line, QString &key, QString &value)
+int OLTCommandReply::splitField(const QString &line, QString &key, QString &value, QString splitChar)
 {
-	int split = line.indexOf(':');
+	int split = line.indexOf(splitChar);
 	if( split != -1 )
 	{
 		key = line.left(split).trimmed();

@@ -6,6 +6,7 @@
 #include "OLTCommands_UnmanagedOLTs.h"
 #include "OLTCommands_ONTWANInfo.h"
 #include "OLTCommands_ONTMACInfo.h"
+#include "OLTCommands_ONTVersion.h"
 #include "OLTCommands_GPONServiceProfile.h"
 
 namespace OLTCommands { class QOLTCommands; }
@@ -24,6 +25,7 @@ public:
 	void getUnmanaged();
 	void getONTWANInfo(int frame, int slot, int port, int ontid);
 	void getONTMACInfo(int frame, int slot, int port, int ontid);
+	void getONTVersion(int frame, int slot, int port, int ontid);
 	void getGPONServiceProfiles();
 	void getGPONServiceProfile(int serviceProfileID);
 	void enterGPONSrvcPrfl(int serviceProfileID);
@@ -36,6 +38,7 @@ signals:
 	void unmanagedOnts(const UnmanagedONTs &);
 	void ontWANInfo(const ONTWANInfo &);
 	void ontMACInfo(const ONTMACInfo &);
+	void ontVersionInfo(const ONTVersion &);
 	void gponServiceProfiles(const GPONServiceProfiles &);
 	void gponServiceProfile(const GPONServiceProfile &);
 };

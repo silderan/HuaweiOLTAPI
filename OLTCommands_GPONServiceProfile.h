@@ -42,6 +42,16 @@ struct ServiceProfile : public ServiceProfilesBase
 	QString tdm;	// Number of TDM ports.
 	QString moca;	// Number of MOCA ports.
 	QString catv;	// Number of CATV conectors.
+	virtual QStringList toStringInfoData() const
+	{
+		return ServiceProfilesBase::toStringInfoData()
+				<< QObject::tr("Puertos telefonía (POTS)") << pots
+				<< QObject::tr("Puertos ethernet") << eths
+				<< QObject::tr("Puertos VDSL") << vdsl
+				<< QObject::tr("Puertos TDM") << tdm
+				<< QObject::tr("Puertos MOCA") << moca
+				<< QObject::tr("Conectores antena (CATV)") << catv;
+	}
 };
 
 class ServiceProfilesList : public QList<ServiceProfilesBase>
@@ -84,6 +94,13 @@ protected:
 
 class GPONServiceProfile : public OLTCommandReply
 {
+	ServiceProfile m_srvProfile;
+
+protected:
+	virtual QStringList toStringInfoData() const
+	{
+		return m_srvProfile.toStringInfoData();
+	}
 public:
 	GPONServiceProfile(const QString &label, const QString &command, const QString &rawData);
 };

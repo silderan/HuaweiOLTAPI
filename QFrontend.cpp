@@ -36,6 +36,7 @@ QFrontend::QFrontend(QWidget *parent) :
 	ui->command->addItem( "get ont info", QStringList() << "frame" << "slot" << "port" << "ontID" );
 	ui->command->addItem( "get ont WAN info", QStringList() << "frame" << "slot" << "port" << "ontID" );
 	ui->command->addItem( "get ont MAC info", QStringList() << "frame" << "slot" << "port" << "ontID" );
+	ui->command->addItem( "get ONT Version", QStringList() << "frame" << "slot" << "port" << "ontID" );
 	ui->command->addItem( "get GPON service profiles", QStringList() );
 	ui->command->addItem( "get GPON service profile info", QStringList() << "serviceProfileID" );
 	ui->command->addItem( "enter GPON service profile", QStringList() << "serviceProfileID" );
@@ -64,6 +65,7 @@ QFrontend::QFrontend(QWidget *parent) :
 	connect( &huaweiOLT, SIGNAL(unmanagedOnts(UnmanagedONTs)), this, SLOT(unmanagedReceived(UnmanagedONTs)) );
 	connect( &huaweiOLT, SIGNAL(ontWANInfo(ONTWANInfo)), this, SLOT(ontsWANInfoReceived(ONTWANInfo)) );
 	connect( &huaweiOLT, SIGNAL(ontMACInfo(ONTMACInfo)), this, SLOT(ontsMACInfoReceived(ONTMACInfo)) );
+	connect( &huaweiOLT, SIGNAL(ontVersionInfo(ONTVersion)), this, SLOT(ontVersionReceived(ONTVersion)) );
 	connect( &huaweiOLT, SIGNAL(gponServiceProfiles(GPONServiceProfiles)), this, SLOT(gponSrvPrfsReceived(GPONServiceProfiles)) );
 	connect( &huaweiOLT, SIGNAL(gponServiceProfile(GPONServiceProfile)), this, SLOT(gponSrvPrfReceived(GPONServiceProfile)) );
 }
@@ -229,6 +231,9 @@ void QFrontend::on_sendCMD_clicked()
 	case QFrontend::CmdONTMACInfo:
 		huaweiOLT.getONTMACInfo( ui->frame->value(), ui->slot->value(), ui->port->value(), ui->ontID->value() );
 		break;
+	case QFrontend::CmdONTVersion:
+		huaweiOLT.getONTVersion( ui->frame->value(), ui->slot->value(), ui->port->value(), ui->ontID->value() );
+		break;
 	case QFrontend::CmdGPONServiceProfiles:
 		huaweiOLT.getGPONServiceProfiles();
 		break;
@@ -259,6 +264,11 @@ void QFrontend::ontsWANInfoReceived(const ONTWANInfo &ontWANInfo)
 void QFrontend::ontsMACInfoReceived(const ONTMACInfo &ontMACInfo)
 {
 	QInfoDialog( tr("ONTs MAC Info"), ontMACInfo.toString() ).exec();
+}
+
+void QFrontend::ontVersionReceived(const ONTVersion &ontVersion)
+{
+	QInfoDialog( tr("ONT Version Info"), ontVersion.toString() ).exec();
 }
 
 void QFrontend::gponSrvPrfsReceived(const GPONServiceProfiles &gponSrvProfiles)

@@ -24,6 +24,7 @@ Q_OBJECT
 		CmdONTInfo,
 		CmdONTWANInfo,
 		CmdONTMACInfo,
+		CmdONTVersion,
 		CmdGPONServiceProfiles,
 		CmdGPONServiceProfile,
 		CmdEnterSrvPrfl
@@ -49,6 +50,7 @@ private slots:
 	void unmanagedReceived(const UnmanagedONTs &unmanaged);
 	void ontsWANInfoReceived(const ONTWANInfo &ontWANInfo);
 	void ontsMACInfoReceived(const ONTMACInfo &ontMACInfo);
+	void ontVersionReceived(const ONTVersion &ontVersion);
 	void gponSrvPrfsReceived(const GPONServiceProfiles &gponSrvProfiles);
 	void gponSrvPrfReceived(const GPONServiceProfile &gponSrvProfile);
 

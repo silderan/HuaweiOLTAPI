@@ -1,0 +1,13 @@
+  --------------------------------------------------------------------------
+  F/S/P                    : 0/0/0
+  ONT-ID                   : 0
+  Vendor-ID                : HWTC
+  ONT Version              : 494.B
+  Product-ID               : 49
+  Equipment-ID             : 245H
+  Main Software Version    : V3R015C10S150
+  Standby Software Version : V3R015C10S150
+  OntProductDescription    : EchoLife HG8245H GPON Terminal (CLASS B+/PRODUC
+							 T ID:2102311KSE6RGA002393/CHIP:00030020121030)
+  Support XML Version      : 1.3.0.0
+  --------------------------------------------------------------------------
