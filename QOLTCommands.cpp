@@ -50,6 +50,11 @@ void QOLTCommands::getONTMACInfo(int frame, int slot, int port, int ontid)
 	addCommand("ONTMACInfo", oltConstants.ontMACInfo(frame, slot, port, ontid));
 }
 
+void QOLTCommands::getONTVersion(int frame, int slot, int port, int ontid)
+{
+	addCommand( "ONTVersion", oltConstants.ontVersion(frame, slot, port, ontid) );
+}
+
 void QOLTCommands::getGPONServiceProfiles()
 {
 	addCommand( "GPONServiceProfiles", oltConstants.gponServiceProfiles() );
@@ -65,9 +70,29 @@ void QOLTCommands::enterGPONSrvcPrfl(int serviceProfileID)
 	addCommand( "EnterGPONSrvPrfl", oltConstants.enterGPONSrvProfile(serviceProfileID) );
 }
 
-void QOLTCommands::getONTVersion(int frame, int slot, int port, int ontid)
+void QOLTCommands::getTrafficTableIPs()
 {
-	addCommand( "ONTVersion", oltConstants.ontVersion(frame, slot, port, ontid) );
+	addCommand( "TrafficTableIPs", oltConstants.getTrafficTableIPs() );
+}
+
+void QOLTCommands::getTrafficTableIP(int index)
+{
+	addCommand( "TrafficTableIP", oltConstants.trafficTableIP(index) );
+}
+
+void QOLTCommands::addTrafficTableIP(const QString &name, int cir, int pir, int priority)
+{
+	addCommand( "AddTrafficTableIP", oltConstants.addTrafficTableIP(name, cir, pir, priority) );
+}
+
+void QOLTCommands::modTrafficTableIP(int index, const QString &name, int cir, int pir, int priority)
+{
+	addCommand( "ModTrafficTableIP", oltConstants.modTrafficTableIP(index, name, cir, pir, priority) );
+}
+
+void QOLTCommands::delTrafficTableIP(int index)
+{
+	addCommand( "DelTrafficTableIP", oltConstants.delTrafficTableIP(index) );
 }
 
 void QOLTCommands::onCommandReceived(const QString &label, const QString &cmd, const QString data)
@@ -79,4 +104,6 @@ void QOLTCommands::onCommandReceived(const QString &label, const QString &cmd, c
 	else if( label == "ONTVersion" )			emit ontVersionInfo( ONTVersion(label, cmd, data) );
 	else if( label == "GPONServiceProfiles" )	emit gponServiceProfiles( GPONServiceProfiles(label, cmd, data) );
 	else if( label == "GPONServiceProfile" )	emit gponServiceProfile( GPONServiceProfile(label, cmd, data) );
+	else if( label == "TrafficTableIPs" )		emit trafficTableIPs( TrafficTableIPs(label, cmd, data) );
+	else if( label == "TrafficTableIP" )		emit trafficTableIP( TrafficTableIP(label, cmd, data) );
 }

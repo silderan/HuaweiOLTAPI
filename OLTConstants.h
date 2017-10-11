@@ -92,8 +92,9 @@ public:
 		{ return parseCommand(m_oltCommands.value("EnterGPONSrvPrfl"), QStringList()
 							  << "{srv_profile_id}" << QString::number(serviceProfileID)); }
 
+	QString getTrafficTableIPs() const { return m_oltCommands.value("TrafficTableIPs");	}
 	QString trafficTableIP(int index) const
-		{ return parseCommand(m_oltCommands.value("TrafficTableIPInfo"), QStringList()
+		{ return parseCommand(m_oltCommands.value("TrafficTableIP"), QStringList()
 							  << "{index}" << QString::number(index) ); }
 	QString addTrafficTableIP(const QString &name, int cir, int pir, int priority)
 		{ return parseCommand(m_oltCommands.value("AddTrafficTableIP"), QStringList()

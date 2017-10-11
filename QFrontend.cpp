@@ -21,8 +21,10 @@ QFrontend::QFrontend(QWidget *parent) :
 						   << ui->slot
 						   << ui->port
 						   << ui->value
-						   << ui->ontID
-						   << ui->serviceProfileID );
+						   << ui->cir
+						   << ui->pir
+						   << ui->priority
+						   << ui->name);
 
 	// This string list order must match with the enum CommanIndex
 	// to the command combo box and send button works fine and easy
@@ -38,8 +40,13 @@ QFrontend::QFrontend(QWidget *parent) :
 	ui->command->addItem( "get ont MAC info", QStringList() << "frame" << "slot" << "port" << "ontID" );
 	ui->command->addItem( "get ONT Version", QStringList() << "frame" << "slot" << "port" << "ontID" );
 	ui->command->addItem( "get GPON service profiles", QStringList() );
-	ui->command->addItem( "get GPON service profile info", QStringList() << "serviceProfileID" );
-	ui->command->addItem( "enter GPON service profile", QStringList() << "serviceProfileID" );
+	ui->command->addItem( "get GPON service profile info", QStringList() << "value" );
+	ui->command->addItem( "enter GPON service profile", QStringList() << "value" );
+	ui->command->addItem( "get all Traffic Table IPs ", QStringList() );
+	ui->command->addItem( "get Traffic Table IP", QStringList() << "value" );
+	ui->command->addItem( "add Traffic Table IP", QStringList() << "cir" << "pir" << "priority" << "name" );
+	ui->command->addItem( "modify Traffic Table IP", QStringList() << "value" << "cir" << "pir" << "priority" << "name" );
+	ui->command->addItem( "delete Traffic Table IP", QStringList() << "value" );
 
 	globalConfig.load();
 	ui->leFQDN->setText( globalConfig.hostName() );
@@ -47,13 +54,17 @@ QFrontend::QFrontend(QWidget *parent) :
 	ui->leUName->setText( globalConfig.oltUName() );
 	ui->leUPass->setText( globalConfig.oltUPpass() );
 
+	ui->cmd->setText( globalConfig.customCmd() );
 	ui->command->setCurrentIndex( ui->command->findText(globalConfig.command()) );
 	ui->serial->setText( globalConfig.serialNumber() );
 	ui->value->setValue( globalConfig.valueNumber() );
 	ui->frame->setValue( globalConfig.frameNumber() );
 	ui->slot->setValue( globalConfig.slotNumber() );
 	ui->port->setValue( globalConfig.portNumber() );
-	ui->ontID->setValue( globalConfig.ontIDNumber() );
+
+	ui->cir->setValue( globalConfig.cirNumber() );
+	ui->pir->setValue( globalConfig.pirNumber() );
+	ui->priority->setValue( globalConfig.priorityNumber() );
 
 	// Connect all telnet comming data to the main text viewer.
 	connect( &huaweiOLT, SIGNAL(newData(const char*,int)), this, SLOT(oltTelnetIncommings(const char*,int)) );
@@ -63,11 +74,16 @@ QFrontend::QFrontend(QWidget *parent) :
 	connect( &huaweiOLT, SIGNAL(errorResponse(QString,QString,QString)), this, SLOT(oltErrorResponse(QString,QString,QString)) );
 	connect( &huaweiOLT, SIGNAL(boardInfo(BoardInfo)), this, SLOT(boardInfoReceived(BoardInfo)) );
 	connect( &huaweiOLT, SIGNAL(unmanagedOnts(UnmanagedONTs)), this, SLOT(unmanagedReceived(UnmanagedONTs)) );
+
 	connect( &huaweiOLT, SIGNAL(ontWANInfo(ONTWANInfo)), this, SLOT(ontsWANInfoReceived(ONTWANInfo)) );
 	connect( &huaweiOLT, SIGNAL(ontMACInfo(ONTMACInfo)), this, SLOT(ontsMACInfoReceived(ONTMACInfo)) );
 	connect( &huaweiOLT, SIGNAL(ontVersionInfo(ONTVersion)), this, SLOT(ontVersionReceived(ONTVersion)) );
+
 	connect( &huaweiOLT, SIGNAL(gponServiceProfiles(GPONServiceProfiles)), this, SLOT(gponSrvPrfsReceived(GPONServiceProfiles)) );
 	connect( &huaweiOLT, SIGNAL(gponServiceProfile(GPONServiceProfile)), this, SLOT(gponSrvPrfReceived(GPONServiceProfile)) );
+
+	connect( &huaweiOLT, SIGNAL(trafficTableIPs(TrafficTableIPs)), this, SLOT(trafficTableIPsReceived(TrafficTableIPs)) );
+	connect( &huaweiOLT, SIGNAL(trafficTableIP(TrafficTableIP)), this, SLOT(trafficTableIPReceived(TrafficTableIP)) );
 }
 
 QFrontend::~QFrontend()
@@ -79,13 +95,17 @@ QFrontend::~QFrontend()
 	globalConfig.sethostUPass(ui->leUPass->text());
 	globalConfig.setHostPort(ui->sbPort->value());
 
+	globalConfig.setCustomCmd( ui->cmd->text() );
 	globalConfig.setCommand( ui->command->currentText() );
 	globalConfig.setSerialNumber( ui->serial->text() );
 	globalConfig.setValueNumber( ui->value->value() );
 	globalConfig.setFrameNumber( ui->frame->value() );
 	globalConfig.setSlotNumber( ui->slot->value() );
 	globalConfig.setPortNumber( ui->port->value() );
-	globalConfig.setONTIDNumber( ui->ontID->value() );
+
+	globalConfig.setCIRNumber( ui->cir->value() );
+	globalConfig.setPIRNumber( ui->cir->value() );
+	globalConfig.setPriorityNumber( ui->priority->value() );
 
 	globalConfig.save();
 	delete ui;
@@ -226,22 +246,37 @@ void QFrontend::on_sendCMD_clicked()
 	case QFrontend::CmdONTInfo:
 		break;
 	case QFrontend::CmdONTWANInfo:
-		huaweiOLT.getONTWANInfo( ui->frame->value(), ui->slot->value(), ui->port->value(), ui->ontID->value() );
+		huaweiOLT.getONTWANInfo( ui->frame->value(), ui->slot->value(), ui->port->value(), ui->value->value() );
 		break;
 	case QFrontend::CmdONTMACInfo:
-		huaweiOLT.getONTMACInfo( ui->frame->value(), ui->slot->value(), ui->port->value(), ui->ontID->value() );
+		huaweiOLT.getONTMACInfo( ui->frame->value(), ui->slot->value(), ui->port->value(), ui->value->value() );
 		break;
 	case QFrontend::CmdONTVersion:
-		huaweiOLT.getONTVersion( ui->frame->value(), ui->slot->value(), ui->port->value(), ui->ontID->value() );
+		huaweiOLT.getONTVersion( ui->frame->value(), ui->slot->value(), ui->port->value(), ui->value->value() );
 		break;
 	case QFrontend::CmdGPONServiceProfiles:
 		huaweiOLT.getGPONServiceProfiles();
 		break;
 	case QFrontend::CmdGPONServiceProfile:
-		huaweiOLT.getGPONServiceProfile( ui->serviceProfileID->value() );
+		huaweiOLT.getGPONServiceProfile( ui->value->value() );
 		break;
 	case QFrontend::CmdEnterSrvPrfl:
-		huaweiOLT.enterGPONSrvcPrfl( ui->serviceProfileID->value() );
+		huaweiOLT.enterGPONSrvcPrfl( ui->value->value() );
+		break;
+	case QFrontend::CmdTrafficTableIPs:
+		huaweiOLT.getTrafficTableIPs();
+		break;
+	case QFrontend::CmdTrafficTableIP:
+		huaweiOLT.getTrafficTableIP( ui->value->value() );
+		break;
+	case QFrontend::CmdAddTrafficTableIP:
+		huaweiOLT.addTrafficTableIP( ui->name->text(), ui->cir->value(), ui->pir->value(), ui->priority->value() );
+		break;
+	case QFrontend::CmdModTrafficTableIP:
+		huaweiOLT.modTrafficTableIP( ui->value->value(), ui->name->text(), ui->cir->value(), ui->pir->value(), ui->priority->value() );
+		break;
+	case QFrontend::CmdDelTrafficTableIP:
+		huaweiOLT.delTrafficTableIP( ui->value->value() );
 		break;
 	}
 }
@@ -279,4 +314,25 @@ void QFrontend::gponSrvPrfsReceived(const GPONServiceProfiles &gponSrvProfiles)
 void QFrontend::gponSrvPrfReceived(const GPONServiceProfile &gponSrvProfile)
 {
 	QInfoDialog( tr("GPON service-profile"), gponSrvProfile.toString() ).exec();
+}
+
+void QFrontend::trafficTableIPsReceived(const TrafficTableIPs &trafficTableIPs)
+{
+	QInfoDialog( tr("All Traffic table IP List"), trafficTableIPs.toString() ).exec();
+}
+
+void QFrontend::trafficTableIPReceived(const TrafficTableIP &trafficTableIP)
+{
+	QInfoDialog( tr("Traffic table IP info"), trafficTableIP.toString() ).exec();
+}
+
+void QFrontend::on_btCmd_clicked()
+{
+	if( ui->cmd->text().isEmpty() )
+		huaweiOLT.sendData("\n");
+	else
+	{
+		huaweiOLT.sendData( ui->cmd->text().toLatin1() );
+		huaweiOLT.sendData( "\n" );
+	}
 }

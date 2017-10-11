@@ -8,6 +8,7 @@
 #include "OLTCommands_ONTMACInfo.h"
 #include "OLTCommands_ONTVersion.h"
 #include "OLTCommands_GPONServiceProfile.h"
+#include "OLTCommands_TrafficTableIP.h"
 
 namespace OLTCommands { class QOLTCommands; }
 
@@ -26,9 +27,16 @@ public:
 	void getONTWANInfo(int frame, int slot, int port, int ontid);
 	void getONTMACInfo(int frame, int slot, int port, int ontid);
 	void getONTVersion(int frame, int slot, int port, int ontid);
+
 	void getGPONServiceProfiles();
 	void getGPONServiceProfile(int serviceProfileID);
 	void enterGPONSrvcPrfl(int serviceProfileID);
+
+	void getTrafficTableIPs();
+	void getTrafficTableIP(int index);
+	void addTrafficTableIP(const QString &name, int cir, int pir, int priority);
+	void modTrafficTableIP(int index, const QString &name, int cir, int pir, int priority);
+	void delTrafficTableIP(int index);
 
 private slots:
 	void onCommandReceived(const QString &tag, const QString &cmd, const QString data);
@@ -39,8 +47,12 @@ signals:
 	void ontWANInfo(const ONTWANInfo &);
 	void ontMACInfo(const ONTMACInfo &);
 	void ontVersionInfo(const ONTVersion &);
+
 	void gponServiceProfiles(const GPONServiceProfiles &);
 	void gponServiceProfile(const GPONServiceProfile &);
+
+	void trafficTableIPs(const TrafficTableIPs &);
+	void trafficTableIP(const TrafficTableIP &);
 };
 
 #endif // OLTCOMMANDS_H

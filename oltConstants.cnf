@@ -52,12 +52,12 @@ COMMAND: GPONServiceProfiles = display ont-srvprofile gpon all
 COMMAND: GPONServiceProfile = display ont-srvprofile gpon profile-id {srv_profile_id}
 # Para entrar en el contexto de un service-profile. Puede ser uno nuevo o uno existente.
 COMMAND: EnterGPONSrvPrfl = ont-srvprofile gpon profile-id {srv_profile_id}\n
-
 # Para obtener informacion sobre la version de hardware, software, etc.
 COMMAND: ONTVersion = display ont version {frame} {slot} {port} {ontid}
 
 # Para manipular los traffic table
-COMMAND: TrafficTableIPInfo = display traffic table ip index {index}
+COMMAND: TrafficTableIPs = display traffic table iP from-index 0\n
+COMMAND: TrafficTableIP = display traffic table ip index {index}
 COMMAND: AddTrafficTableIP = traffic table ip name "{name}" cir {cir} pir {pir} priority {priority} priority-policy local-Setting
 COMMAND: ModTrafficTableIP = traffic table ip modify index {index} rename "{name}" cir {cir} pir {pir} priority {priority} priority-policy local-Setting\n
 COMMAND: DelTrafficTableIP = undo traffic table ip index {index}

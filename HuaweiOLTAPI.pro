@@ -27,7 +27,8 @@ SOURCES += main.cpp\
     OLTCommands_ONTWANInfo.cpp \
     OLTCommands_ONTMACInfo.cpp \
     OLTCommands_GPONServiceProfile.cpp \
-    OLTCommands_ONTVersion.cpp
+    OLTCommands_ONTVersion.cpp \
+    OLTCommands_TrafficTableIP.cpp
 
 HEADERS  += QFrontend.h \
     ../QTelnet/QTelnet.h \
@@ -43,7 +44,8 @@ HEADERS  += QFrontend.h \
     OLTConstants.h \
     OLTCommands_ONTMACInfo.h \
     OLTCommands_GPONServiceProfile.h \
-    OLTCommands_ONTVersion.h
+    OLTCommands_ONTVersion.h \
+    OLTCommands_TrafficTableIP.h
 
 FORMS    += QFrontend.ui \
     QInfoDialog.ui
@@ -59,4 +61,6 @@ DISTFILES += \
     GPONServiceProfiles0.txt \
     AddingCommand.txt \
     GPONServiceProfile0.txt \
-    ONTVersion0.txt
+    ONTVersion0.txt \
+    TrafficTableIP0.txt \
+    TrafficTableIPs0.txt

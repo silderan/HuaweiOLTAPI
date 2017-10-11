@@ -37,8 +37,17 @@ public:
 	void setPortNumber(int v) { QIniData::insert("portNumber", QString::number(v)); }
 	int portNumber() const { return QIniData::value("portNumber").toInt(); }
 
-	void setONTIDNumber(int v) { QIniData::insert("ontIDNumber", QString::number(v)); }
-	int ontIDNumber() const { return QIniData::value("ontIDNumber").toInt(); }
+	void setCIRNumber(int v) { QIniData::insert("cirNumber", QString::number(v)); }
+	int cirNumber() const { return QIniData::value("cirNumber").toInt(); }
+
+	void setPIRNumber(int v) { QIniData::insert("pirNumber", QString::number(v)); }
+	int pirNumber() const { return QIniData::value("pirNumber").toInt(); }
+
+	void setPriorityNumber(int v) { QIniData::insert("priorityNumber", QString::number(v)); }
+	int priorityNumber() const { return QIniData::value("priorityNumber").toInt(); }
+
+	void setCustomCmd(const QString &cmd) { QIniData::insert("customCmd", cmd); }
+	QString customCmd() const { return QIniData::value("customCmd"); }
 };
 
 class GlobalConfig : public QIniFile, public GlobalConfigData

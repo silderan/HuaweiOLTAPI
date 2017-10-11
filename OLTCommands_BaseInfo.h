@@ -12,8 +12,8 @@ class OLTCommandReply
 	QString m_raw;
 
 public:
-	OLTCommandReply(const QString &tag,const QString &command, const QString &rawData) :
-		m_tag(tag), m_command(command), m_raw(rawData)
+	OLTCommandReply(const QString &label,const QString &command, const QString &rawData) :
+		m_tag(label), m_command(command), m_raw(rawData)
 	{
 	}
 	virtual ~OLTCommandReply()

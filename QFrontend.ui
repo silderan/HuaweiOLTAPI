@@ -91,27 +91,86 @@
       </widget>
       <widget class="QWidget" name="layoutWidget">
        <layout class="QGridLayout" name="gridLayout_2">
-        <item row="4" column="0">
-         <widget class="QLabel" name="label_6">
+        <item row="1" column="3">
+         <widget class="QLineEdit" name="cmd"/>
+        </item>
+        <item row="4" column="2">
+         <widget class="QLabel" name="label_12">
           <property name="text">
-           <string>Value</string>
+           <string>Name</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
          </widget>
         </item>
-        <item row="1" column="0">
-         <widget class="QPushButton" name="btLogin">
+        <item row="4" column="3">
+         <widget class="QLineEdit" name="name"/>
+        </item>
+        <item row="5" column="2">
+         <widget class="QLabel" name="label_13">
           <property name="text">
-           <string>Conectar</string>
+           <string>CIR</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
          </widget>
         </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="label_5">
+        <item row="6" column="2">
+         <widget class="QLabel" name="label_14">
           <property name="text">
-           <string>Serial number</string>
+           <string>PIR</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="2">
+         <widget class="QLabel" name="label_15">
+          <property name="text">
+           <string>Priority</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="3">
+         <widget class="QSpinBox" name="priority"/>
+        </item>
+        <item row="5" column="3">
+         <widget class="QSpinBox" name="cir">
+          <property name="maximum">
+           <number>999999999</number>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="3">
+         <widget class="QSpinBox" name="pir">
+          <property name="maximum">
+           <number>999999999</number>
+          </property>
+          <property name="displayIntegerBase">
+           <number>10</number>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0" colspan="3">
+         <widget class="QComboBox" name="command"/>
+        </item>
+        <item row="1" column="2">
+         <widget class="QPushButton" name="btCmd">
+          <property name="text">
+           <string>Send Cmd</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="label_6">
+          <property name="text">
+           <string>ID/index/value</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -121,49 +180,13 @@
         <item row="5" column="1">
          <widget class="QSpinBox" name="frame"/>
         </item>
-        <item row="4" column="1">
-         <widget class="QSpinBox" name="value">
-          <property name="maximum">
-           <number>512</number>
-          </property>
-         </widget>
-        </item>
-        <item row="8" column="1">
-         <widget class="QSpinBox" name="ontID"/>
-        </item>
-        <item row="10" column="0">
-         <spacer name="verticalSpacer">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="2" column="0" colspan="2">
-         <widget class="QComboBox" name="command"/>
-        </item>
-        <item row="6" column="0">
-         <widget class="QLabel" name="label_8">
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_5">
           <property name="text">
-           <string>Slot</string>
+           <string>Serial number</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="1" colspan="2">
-         <widget class="QLineEdit" name="serial"/>
-        </item>
-        <item row="2" column="2">
-         <widget class="QPushButton" name="sendCMD">
-          <property name="text">
-           <string>Send</string>
           </property>
          </widget>
         </item>
@@ -177,13 +200,23 @@
           </property>
          </widget>
         </item>
-        <item row="8" column="0">
-         <widget class="QLabel" name="label_10">
+        <item row="3" column="1" colspan="3">
+         <widget class="QLineEdit" name="serial"/>
+        </item>
+        <item row="6" column="0">
+         <widget class="QLabel" name="label_8">
           <property name="text">
-           <string>ONT ID</string>
+           <string>Slot</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QSpinBox" name="value">
+          <property name="maximum">
+           <number>512</number>
           </property>
          </widget>
         </item>
@@ -197,31 +230,45 @@
           </property>
          </widget>
         </item>
-        <item row="6" column="1">
-         <widget class="QSpinBox" name="slot"/>
+        <item row="2" column="3">
+         <widget class="QPushButton" name="sendCMD">
+          <property name="text">
+           <string>Send</string>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="0">
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="1" column="0">
+         <widget class="QPushButton" name="btLogin">
+          <property name="text">
+           <string>Conectar</string>
+          </property>
+         </widget>
         </item>
         <item row="7" column="1">
          <widget class="QSpinBox" name="port"/>
         </item>
-        <item row="9" column="0">
-         <widget class="QLabel" name="label_11">
-          <property name="text">
-           <string>Service Profile ID</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="9" column="1">
-         <widget class="QSpinBox" name="serviceProfileID"/>
-        </item>
-        <item row="1" column="2">
+        <item row="1" column="1">
          <widget class="QPushButton" name="quit">
           <property name="text">
            <string>quit context</string>
           </property>
          </widget>
+        </item>
+        <item row="6" column="1">
+         <widget class="QSpinBox" name="slot"/>
         </item>
        </layout>
       </widget>

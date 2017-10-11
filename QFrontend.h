@@ -27,7 +27,12 @@ Q_OBJECT
 		CmdONTVersion,
 		CmdGPONServiceProfiles,
 		CmdGPONServiceProfile,
-		CmdEnterSrvPrfl
+		CmdEnterSrvPrfl,
+		CmdTrafficTableIPs,
+		CmdTrafficTableIP,
+		CmdAddTrafficTableIP,
+		CmdModTrafficTableIP,
+		CmdDelTrafficTableIP
 	};
 	QList<QWidget*> m_paramWidgets;
 
@@ -51,12 +56,17 @@ private slots:
 	void ontsWANInfoReceived(const ONTWANInfo &ontWANInfo);
 	void ontsMACInfoReceived(const ONTMACInfo &ontMACInfo);
 	void ontVersionReceived(const ONTVersion &ontVersion);
+
 	void gponSrvPrfsReceived(const GPONServiceProfiles &gponSrvProfiles);
 	void gponSrvPrfReceived(const GPONServiceProfile &gponSrvProfile);
+
+	void trafficTableIPsReceived(const TrafficTableIPs &trafficTableIPs);
+	void trafficTableIPReceived(const TrafficTableIP &trafficTableIP);
 
 	void on_command_currentIndexChanged(int index);
 	void on_sendCMD_clicked();
 	void on_quit_clicked();
+	void on_btCmd_clicked();
 };
 
 #endif // QFRONTEND_H
