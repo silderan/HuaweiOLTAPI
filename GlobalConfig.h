@@ -28,6 +28,9 @@ public:
 	void setValueNumber(int v) { QIniData::insert("valueNumber", QString::number(v)); }
 	int valueNumber() const { return QIniData::value("valueNumber").toInt(); }
 
+	void setValueName(const QString &v) { QIniData::insert("valueName", v); }
+	QString valueName() const { return QIniData::value("valueName"); }
+
 	void setFrameNumber(int v) { QIniData::insert("frameNumber", QString::number(v)); }
 	int frameNumber() const { return QIniData::value("frameNumber").toInt(); }
 

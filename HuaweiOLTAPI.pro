@@ -63,4 +63,6 @@ DISTFILES += \
     GPONServiceProfile0.txt \
     ONTVersion0.txt \
     TrafficTableIP0.txt \
-    TrafficTableIPs0.txt
+    TrafficTableIPs0.txt \
+    AddTrafficTableIP0.txt \
+    AddTrafficTableIP1.txt

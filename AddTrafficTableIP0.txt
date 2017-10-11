@@ -1,21 +1,22 @@
+  Create traffic descriptor record successfully
   ------------------------------------------------
-  TD Index             : 16
-  TD Name              : TX_Gestion ONTs
-  Priority             : 5
+  TD Index             : 1
+  TD Name              : testTraffic
+  Priority             : 3
   Copy Priority        : -
   Mapping Index        : -
   CTAG Mapping Priority: -
   CTAG Mapping Index   : -
   CTAG Default Priority: 0
   Priority Policy      : local-pri
-  CIR                  : 2944 kbps
-  CBS                  : 96208 bytes
-  PIR                  : 3968 kbps
-  PBS                  : 128976 bytes
+  CIR                  : 1024 kbps
+  CBS                  : 34768 bytes
+  PIR                  : 1024 kbps
+  PBS                  : 34768 bytes
   Fix                  : 0 kbps
   CAR Threshold Profile: -
   Color Mode           : color-blind
   Color policy         : dei
-  Referenced Status    : used
+  Referenced Status    : not used
   ------------------------------------------------
 MA5683T(config)#

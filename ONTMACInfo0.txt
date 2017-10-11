@@ -11,3 +11,4 @@
 		VPI indicates ONT ID for PON, VCI indicates GEM index for GPON,
 		v/e--vlan/encap, pritag--priority-tagged,
 		ppp--pppoe, ip--ipoe, ip4--ipv4oe, ip6--ipv6oe
+MA5683T(config)#

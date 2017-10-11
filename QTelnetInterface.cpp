@@ -25,7 +25,13 @@ void QTelnetInterface::addCommand(const QString &label, const QString &cmd, cons
 			QFile f( QString("../HuaweiOLTAPI/%1%2.txt").arg(label).arg(extra) );
 			if( !f.open(QIODevice::ReadOnly) )
 				break;
-			emit newResponse( label, QString("[Offline] %1").arg(cmd), QString(f.readAll()) );
+			m_currentCommand.label = label;
+			m_currentCommand.cmd = cmd;
+			m_currentCommand.state = okState;
+			m_currentCommand.errorStrings = errors;
+			QByteArray bytes = f.readAll();
+			onDataFromOLT( bytes.data(), bytes.count() );
+			m_currentCommand.clear();
 			extra++;
 		}
 		return;

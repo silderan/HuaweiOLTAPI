@@ -1,0 +1,2 @@
+  Failure: The traffic table exists already
+MA5683T(config)#

@@ -9,7 +9,7 @@ CONSTANT: More Text = ---- More ( Press 'Q' to break ) ----
 ## introduzca algún comando o información. Usaremos expresiones regulares
 LOGIN_PROMPT: >>User (?:name|password):$
 # cone esta expresión se capturaría el contexto donde está la OLT : MA5683T(\(*\S* *\)*)[>#]
-COMMAND_PROMPT: MA5683T[\S ]*[#>]$
+COMMAND_PROMPT: MA5683T[\S ]*[#>][\n\r]*$
 
 ## Mensajes varios que muestra la OLT en caso de error en el login
 ## Añade cuantos sean necesarios.

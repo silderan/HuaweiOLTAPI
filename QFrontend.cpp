@@ -53,6 +53,7 @@ QFrontend::QFrontend(QWidget *parent) :
 	ui->sbPort->setValue( globalConfig.hostPort() );
 	ui->leUName->setText( globalConfig.oltUName() );
 	ui->leUPass->setText( globalConfig.oltUPpass() );
+	ui->name->setText( globalConfig.valueName() );
 
 	ui->cmd->setText( globalConfig.customCmd() );
 	ui->command->setCurrentIndex( ui->command->findText(globalConfig.command()) );
@@ -103,6 +104,7 @@ QFrontend::~QFrontend()
 	globalConfig.setSlotNumber( ui->slot->value() );
 	globalConfig.setPortNumber( ui->port->value() );
 
+	globalConfig.setValueName( ui->name->text() );
 	globalConfig.setCIRNumber( ui->cir->value() );
 	globalConfig.setPIRNumber( ui->cir->value() );
 	globalConfig.setPriorityNumber( ui->priority->value() );
@@ -184,7 +186,6 @@ void QFrontend::oltErrorResponse(const QString &tag, const QString &cmd, const Q
 {
 	QMessageBox::warning(this, this->windowTitle(),
 						 tr("Error reported from OLT while processing cmd \"%1\" Tag=\"%2\": \n%3").arg(cmd, tag, err));
-	addViewerText(tr("Error on command [%1] %2; %3\n").arg(tag, cmd, err));
 }
 
 void QFrontend::on_btLogin_clicked()

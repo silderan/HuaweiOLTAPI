@@ -19,8 +19,9 @@ QString OLTConstants::ErrorStrings::errorString(const QString &text) const
 	OLTConstants::ErrorStrings::const_iterator i = constBegin();
 	while( i != constEnd() )
 	{
-		if( text.contains(i.key()) )
-			return i.value();
+		int pos = text.indexOf(i.key());
+		if( pos != -1 )
+			return QString("%1\n%2").arg(i.key(), text.mid(pos), i.value());
 		i++;
 	}
 	// No error.

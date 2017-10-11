@@ -106,4 +106,7 @@ void QOLTCommands::onCommandReceived(const QString &label, const QString &cmd, c
 	else if( label == "GPONServiceProfile" )	emit gponServiceProfile( GPONServiceProfile(label, cmd, data) );
 	else if( label == "TrafficTableIPs" )		emit trafficTableIPs( TrafficTableIPs(label, cmd, data) );
 	else if( label == "TrafficTableIP" )		emit trafficTableIP( TrafficTableIP(label, cmd, data) );
+	else if( label == "AddTrafficTableIP" )		emit trafficTableIP( TrafficTableIP(label, cmd, data) );
+	else if( label == "ModTrafficTableIP" )		emit trafficTableIP( TrafficTableIP(label, cmd, data) );
+	else if( label == "DelTrafficTableIP" )		emit trafficTableIP( TrafficTableIP(label, cmd, data) );
 }

@@ -64,3 +64,4 @@
   DS-Lite Mode               : Invalid
   DS-Lite peer address       : -
   ---------------------------------------------------------------------
+MA5683T(config)#
