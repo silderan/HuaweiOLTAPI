@@ -46,7 +46,7 @@ TrafficTableIPs::TrafficTableIPs(const QString &label, const QString &command, c
 			Qt::CaseInsensitive);
 
 	int pos = 0;
-	TrafficTableBasicInfo trafficInfo;
+	TrafficTableBasicIPInfo trafficInfo;
 	while( (pos = matcher.indexIn(rawData, pos)) != -1 )
 	{
 		trafficInfo.id = matcher.cap(1).toInt();

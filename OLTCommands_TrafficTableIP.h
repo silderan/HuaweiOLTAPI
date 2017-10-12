@@ -5,7 +5,7 @@
 
 namespace OLTCommands
 {
-struct TrafficTableBasicInfo
+struct TrafficTableBasicIPInfo
 {
 	int id;
 	int cir;
@@ -15,7 +15,7 @@ struct TrafficTableBasicInfo
 	int priority;
 	QString copyPolicy;
 	QString priorityPolicy;
-	TrafficTableBasicInfo()
+	TrafficTableBasicIPInfo()
 	{
 		clear();
 	}
@@ -43,11 +43,11 @@ struct TrafficTableBasicInfo
 				<< QObject::tr("Copy policy") << copyPolicy
 				<< QObject::tr("Priority policy") << priorityPolicy;
 	}
-	virtual ~TrafficTableBasicInfo()
+	virtual ~TrafficTableBasicIPInfo()
 	{	}
 };
 
-struct TrafficTableIPInfo : public TrafficTableBasicInfo
+struct TrafficTableIPInfo : public TrafficTableBasicIPInfo
 {
 	QString name;
 	QString mappingIndex;
@@ -60,14 +60,14 @@ struct TrafficTableIPInfo : public TrafficTableBasicInfo
 	QString colorMode;//           : color-blind
 	QString colorPolicy;//         : dei
 	QString referencedStatus;//    : used
-	TrafficTableIPInfo() : TrafficTableBasicInfo()
+	TrafficTableIPInfo() : TrafficTableBasicIPInfo()
 	{
 		clear();
 	}
 
 	void clear()
 	{
-		TrafficTableBasicInfo::clear();
+		TrafficTableBasicIPInfo::clear();
 		name.clear();
 		mappingIndex.clear();
 		ctagMappingPriority.clear();
@@ -82,7 +82,7 @@ struct TrafficTableIPInfo : public TrafficTableBasicInfo
 	}
 	virtual QStringList toStringInfoData() const
 	{
-		return TrafficTableBasicInfo::toStringInfoData()
+		return TrafficTableBasicIPInfo::toStringInfoData()
 				<< QObject::tr("Nombre") << name
 				<< QObject::tr("Mapping index") << mappingIndex
 				<< QObject::tr("CTAG Mapping priority") << ctagMappingPriority
@@ -98,7 +98,7 @@ struct TrafficTableIPInfo : public TrafficTableBasicInfo
 	}
 };
 
-class TrafficTableIPList : public QList<TrafficTableBasicInfo>
+class TrafficTableIPList : public QList<TrafficTableBasicIPInfo>
 {
 public:
 	virtual QStringList toStringInfoData() const
