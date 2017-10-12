@@ -1,5 +1,7 @@
 #include "OLTCommands_ONTMACInfo.h"
 
+namespace OLTCommands
+{
 ONTMACInfo::ONTMACInfo(const QString &tag, const QString &command, const QString &rawData) :
 	OLTCommandReply(tag, command, rawData)
 {
@@ -25,4 +27,5 @@ ONTMACInfo::ONTMACInfo(const QString &tag, const QString &command, const QString
 
 		pos += matcher.matchedLength();
 	}
+}
 }

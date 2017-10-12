@@ -9,9 +9,12 @@
 #include "OLTCommands_ONTVersion.h"
 #include "OLTCommands_GPONServiceProfile.h"
 #include "OLTCommands_TrafficTableIP.h"
+#include "OLTCommands_DBAProfile.h"
+#include "OLTCommands_LineProfile.h"
+#include "OLTCommands_ServicePort.h"
 
-namespace OLTCommands { class QOLTCommands; }
-
+namespace OLTCommands
+{
 class QOLTCommands : public QTelnetInterface
 {
 Q_OBJECT
@@ -38,6 +41,24 @@ public:
 	void modTrafficTableIP(int index, const QString &name, int cir, int pir, int priority);
 	void delTrafficTableIP(int index);
 
+	void getDBAPProfiles();
+	void getDBAPProfile(int index);
+	void addDBAPProfile(const QString &name, const QString &type, const QString &speeds);
+//	void modDBAPProfile(int index, const QString &name, const QString &type, const QString &speeds);
+	void delDBAPProfile(int index);
+
+	void getServicePorts(int frame, int slot, int port, int ontid);
+	void getServicePort(int frame, int slot, int port, int ontid, int index);
+	void addServicePort(int frame, int slot, int port, int ontid, int oltVLAN, int ontVLAN, int gemport, int upTrafficIndex = -1, int dwTrafficIndex = -1);
+//	void modServicePort(int frame, int slot, int port, int ontid, int oltVLAN, int ontVLAN, int gemport, int upTrafficIndex = -1, int dwTrafficIndex = -1);
+	void delServicePort(int index);
+
+	void getLineProfiles(int gepon);
+	void getLineProfile(int gepon, int index, const QString &name);
+	void addLineProfile(int gepon, const QString &name);
+//	void modLineProfile(int index, const QString &name, const QString &type, const QString &speeds);
+	void delLineProfile(int gepon, int index);
+
 private slots:
 	void onCommandReceived(const QString &tag, const QString &cmd, const QString data);
 
@@ -53,6 +74,16 @@ signals:
 
 	void trafficTableIPs(const TrafficTableIPs &);
 	void trafficTableIP(const TrafficTableIP &);
+
+	void dbaProfiles(const DBAProfiles &);
+	void dbaProfile(const DBAProfile &);
+
+	void servicePorts(const ServicePorts &);
+	void servicePort(const ServicePort &);
+
+	void lineProfiles(const LineProfiles &);
+	void lineProfile(const LineProfile &);
 };
+}// End namespace.
 
 #endif // OLTCOMMANDS_H

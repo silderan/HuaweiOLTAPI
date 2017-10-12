@@ -282,47 +282,47 @@ void QFrontend::on_sendCMD_clicked()
 	}
 }
 
-void QFrontend::boardInfoReceived(const BoardInfo &boardInfo)
+void QFrontend::boardInfoReceived(const OLTCommands::BoardInfo &boardInfo)
 {
 	QInfoDialog( tr("Board Info"), boardInfo.toString() ).exec();
 }
 
-void QFrontend::unmanagedReceived(const UnmanagedONTs &unmanaged)
+void QFrontend::unmanagedReceived(const OLTCommands::UnmanagedONTs &unmanaged)
 {
 	QInfoDialog( tr("Unmanaged ONTs"), unmanaged.toString() ).exec();
 }
 
-void QFrontend::ontsWANInfoReceived(const ONTWANInfo &ontWANInfo)
+void QFrontend::ontsWANInfoReceived(const OLTCommands::ONTWANInfo &ontWANInfo)
 {
 	QInfoDialog( tr("ONTs WAN Info"), ontWANInfo.toString() ).exec();
 }
 
-void QFrontend::ontsMACInfoReceived(const ONTMACInfo &ontMACInfo)
+void QFrontend::ontsMACInfoReceived(const OLTCommands::ONTMACInfo &ontMACInfo)
 {
 	QInfoDialog( tr("ONTs MAC Info"), ontMACInfo.toString() ).exec();
 }
 
-void QFrontend::ontVersionReceived(const ONTVersion &ontVersion)
+void QFrontend::ontVersionReceived(const OLTCommands::ONTVersion &ontVersion)
 {
 	QInfoDialog( tr("ONT Version Info"), ontVersion.toString() ).exec();
 }
 
-void QFrontend::gponSrvPrfsReceived(const GPONServiceProfiles &gponSrvProfiles)
+void QFrontend::gponSrvPrfsReceived(const OLTCommands::GPONServiceProfiles &gponSrvProfiles)
 {
 	QInfoDialog( tr("GPON service-profiles"), gponSrvProfiles.toString() ).exec();
 }
 
-void QFrontend::gponSrvPrfReceived(const GPONServiceProfile &gponSrvProfile)
+void QFrontend::gponSrvPrfReceived(const OLTCommands::GPONServiceProfile &gponSrvProfile)
 {
 	QInfoDialog( tr("GPON service-profile"), gponSrvProfile.toString() ).exec();
 }
 
-void QFrontend::trafficTableIPsReceived(const TrafficTableIPs &trafficTableIPs)
+void QFrontend::trafficTableIPsReceived(const OLTCommands::TrafficTableIPs &trafficTableIPs)
 {
 	QInfoDialog( tr("All Traffic table IP List"), trafficTableIPs.toString() ).exec();
 }
 
-void QFrontend::trafficTableIPReceived(const TrafficTableIP &trafficTableIP)
+void QFrontend::trafficTableIPReceived(const OLTCommands::TrafficTableIP &trafficTableIP)
 {
 	QInfoDialog( tr("Traffic table IP info"), trafficTableIP.toString() ).exec();
 }

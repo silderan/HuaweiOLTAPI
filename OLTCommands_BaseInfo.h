@@ -3,8 +3,8 @@
 
 #include <QStringList>
 
-namespace OLTCommands { class OLTCommandReply; }
-
+namespace OLTCommands
+{
 class OLTCommandReply
 {
 	QString m_tag;
@@ -63,5 +63,5 @@ protected:
 public:
 	QString toString() const;
 };
-
+} // End namespace
 #endif // OLTCOMMANDS_BASEINFO_H

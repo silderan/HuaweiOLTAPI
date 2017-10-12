@@ -30,7 +30,7 @@ COMMAND_ERROR: Too many parameters = Demasiados argumentos en el comando
 
 ## Comandos a enviar a la OLT
 # Para que no pagine el texto.
-COMMAND: scroll = scroll {lines}
+COMMAND: SetScroll = scroll {lines}
 # Para poder configurar la maquina
 COMMAND: EnableAdmin = enable
 # Para entrar/salir en el modo de configuracion
@@ -42,22 +42,22 @@ COMMAND: BoardInfo = display board {frame}/{slot}
 COMMAND: GetUnmanaged = display ont autofind all
 
 # Para obtener la informacion de IPs, VLANs y MAC de la wan de la OLT
-COMMAND: ONTWANInfo = display ont wan-info {frame}/{slot} {port} {ontid}
+COMMAND: GetONTWANInfo = display ont wan-info {frame}/{slot} {port} {ontid}
 # Para obtener las MAC-VLAN que la OLT descubre de las ONT.
-COMMAND: ONTMACInfo = display mac-address port {frame}/{slot}/{port} ont {ontid}
+COMMAND: GetONTMACInfo = display mac-address port {frame}/{slot}/{port} ont {ontid}
 
 # Para obtener la tabla de los srv-profiles
-COMMAND: GPONServiceProfiles = display ont-srvprofile gpon all
+COMMAND: GetGPONServiceProfiles = display ont-srvprofile gpon all
 # Para obtener la informacion de un service profile concreto.
-COMMAND: GPONServiceProfile = display ont-srvprofile gpon profile-id {srv_profile_id}
+COMMAND: GetGPONServiceProfile = display ont-srvprofile gpon profile-id {srv_profile_id}
 # Para entrar en el contexto de un service-profile. Puede ser uno nuevo o uno existente.
 COMMAND: EnterGPONSrvPrfl = ont-srvprofile gpon profile-id {srv_profile_id}\n
 # Para obtener informacion sobre la version de hardware, software, etc.
-COMMAND: ONTVersion = display ont version {frame} {slot} {port} {ontid}
+COMMAND: GetONTVersion = display ont version {frame} {slot} {port} {ontid}
 
 # Para manipular los traffic table
-COMMAND: TrafficTableIPs = display traffic table iP from-index 0\n
-COMMAND: TrafficTableIP = display traffic table ip index {index}
+COMMAND: GetTrafficTableIPs = display traffic table iP from-index 0\n
+COMMAND: GetTrafficTableIP = display traffic table ip index {index}
 COMMAND: AddTrafficTableIP = traffic table ip name "{name}" cir {cir} pir {pir} priority {priority} priority-policy local-Setting
 COMMAND: ModTrafficTableIP = traffic table ip modify index {index} rename "{name}" cir {cir} pir {pir} priority {priority} priority-policy local-Setting\n
 COMMAND: DelTrafficTableIP = undo traffic table ip index {index}
@@ -85,7 +85,7 @@ COMMAND: EnterGPONContext = interface gpon {frame}/{slot}
 COMMAND: QuitGPONContext = quit
 
 # Para crear/borrar/mostrar los service-port
-COMMAND: ONTServicePorts = display service-port port {frame}/{slot}/{port} ont {ontid}\n
+COMMAND: GetServicePorts = display service-port port {frame}/{slot}/{port} ont {ontid}\n
 COMMAND: AddServicePortLimited = service-port vlan {olt_vlan} gpon {frame}/{slot}/{port} ont {ontid} gemport {gem} multi-service user-vlan {ont_vlan} tag-transform translate inbound traffic-table index {up_traffic_index} outbound traffic-table index {dw_traffic_index}
 COMMAND: AddServicePortUnlimited = service-port vlan {olt_vlan} gpon {frame}/{slot}/{port} ont {ontid} gemport {gem} multi-service user-vlan {ont_vlan} tag-transform translate\n
 COMMAND: DelServicePort = undo service-port {index}

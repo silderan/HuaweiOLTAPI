@@ -60,41 +60,41 @@ public:
 	QString commandEnterConfigMode() const { return m_oltCommands.value("EnterConfig"); }
 	QString quitContext() const { return m_oltCommands.value("QuitContext"); }
 
-	QString scroll(int lines) const { return parseCommand(m_oltCommands.value("scroll"), QStringList() << "{lines}" << QString::number(lines)); }
-	QString boardInfo(int frame, int slot) const { return parseCommand(m_oltCommands.value("BoardInfo"), QStringList() << "{frame}" << QString::number(frame) << "{slot}" << QString::number(slot)); }
-	QString unmanaged() const { return m_oltCommands.value("GetUnmanaged"); }
-	QString ontWANInfo(int frame, int slot, int port, int ontid) const
-		{ return parseCommand(m_oltCommands.value("ONTWANInfo"), QStringList()
+	QString setScroll(int lines) const { return parseCommand(m_oltCommands.value("SetScroll"), QStringList() << "{lines}" << QString::number(lines)); }
+	QString getBoardInfo(int frame, int slot) const { return parseCommand(m_oltCommands.value("BoardInfo"), QStringList() << "{frame}" << QString::number(frame) << "{slot}" << QString::number(slot)); }
+	QString getUnmanaged() const { return m_oltCommands.value("GetUnmanaged"); }
+	QString getONTWANInfo(int frame, int slot, int port, int ontid) const
+		{ return parseCommand(m_oltCommands.value("GetONTWANInfo"), QStringList()
 							  << "{frame}" << QString::number(frame)
 							  << "{slot}" << QString::number(slot)
 							  << "{port}" << QString::number(port)
 							  << "{ontid}" << QString::number(ontid) ); }
 
-	QString ontMACInfo(int frame, int slot, int port, int ontid) const
-		{ return parseCommand(m_oltCommands.value("ONTMACInfo"), QStringList()
+	QString getONTMACInfo(int frame, int slot, int port, int ontid) const
+		{ return parseCommand(m_oltCommands.value("GetONTMACInfo"), QStringList()
 							  << "{frame}" << QString::number(frame)
 							  << "{slot}" << QString::number(slot)
 							  << "{port}" << QString::number(port)
 							  << "{ontid}" << QString::number(ontid) ); }
 
-	QString ontVersion(int frame, int slot, int port, int ontid) const
-		{ return parseCommand(m_oltCommands.value("ONTVersion"), QStringList()
+	QString getONTVersion(int frame, int slot, int port, int ontid) const
+		{ return parseCommand(m_oltCommands.value("GetONTVersion"), QStringList()
 							  << "{frame}" << QString::number(frame)
 							  << "{slot}" << QString::number(slot)
 							  << "{port}" << QString::number(port)
 							  << "{ontid}" << QString::number(ontid) ); }
 
-	QString gponServiceProfiles() const { return m_oltCommands.value("GPONServiceProfiles"); }
-	QString gponServiceProfile(int serviceProfileID) const
-		{ return parseCommand(m_oltCommands.value("GPONServiceProfile"), QStringList()
+	QString getGPONServiceProfiles() const { return m_oltCommands.value("GetGPONServiceProfiles"); }
+	QString getGPONServiceProfile(int serviceProfileID) const
+		{ return parseCommand(m_oltCommands.value("GetGPONServiceProfile"), QStringList()
 							  << "{srv_profile_id}" << QString::number(serviceProfileID)); }
 	QString enterGPONSrvProfile(int serviceProfileID) const
 		{ return parseCommand(m_oltCommands.value("EnterGPONSrvPrfl"), QStringList()
 							  << "{srv_profile_id}" << QString::number(serviceProfileID)); }
 
-	QString getTrafficTableIPs() const { return m_oltCommands.value("TrafficTableIPs");	}
-	QString trafficTableIP(int index) const
-		{ return parseCommand(m_oltCommands.value("TrafficTableIP"), QStringList()
+	QString getTrafficTableIPs() const { return m_oltCommands.value("GetTrafficTableIPs");	}
+	QString getTrafficTableIP(int index) const
+		{ return parseCommand(m_oltCommands.value("GetTrafficTableIP"), QStringList()
 							  << "{index}" << QString::number(index) ); }
 	QString addTrafficTableIP(const QString &name, int cir, int pir, int priority)
 		{ return parseCommand(m_oltCommands.value("AddTrafficTableIP"), QStringList()
@@ -166,8 +166,8 @@ public:
 							  << "{slot}" << QString::number(slot) ); }
 	QString exitGPONContext() const { return m_oltCommands.value("QuitGPONContext"); }
 
-	QString ontServicePorts(int frame, int slot, int port, int ontid) const
-		{ return parseCommand(m_oltCommands.value("ONTServicePorts"), QStringList()
+	QString getServicePorts(int frame, int slot, int port, int ontid) const
+		{ return parseCommand(m_oltCommands.value("GetONTServicePorts"), QStringList()
 							  << "{frame}" << QString::number(frame)
 							  << "{slot}" << QString::number(slot)
 							  << "{port}" << QString::number(port)

@@ -5,9 +5,6 @@
 
 namespace OLTCommands
 {
-	class ONTVersion;
-}
-
 class ONTVersion : public OLTCommandReply
 {
 protected:
@@ -53,5 +50,5 @@ public:
 		return m_versionInfo.toStringInfoData();
 	}
 };
-
+} // End namespace
 #endif // ONTCOMMANDS_ONTVERSION_H

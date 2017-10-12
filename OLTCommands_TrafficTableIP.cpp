@@ -2,6 +2,8 @@
 
 #include <QRegExp>
 
+namespace OLTCommands
+{
 TrafficTableIP::TrafficTableIP(const QString &label, const QString &command, const QString &rawData) :
 	OLTCommandReply(label, command, rawData)
 {
@@ -60,4 +62,5 @@ TrafficTableIPs::TrafficTableIPs(const QString &label, const QString &command, c
 
 		pos += matcher.matchedLength();
 	}
+}
 }

@@ -5,12 +5,6 @@
 
 namespace OLTCommands
 {
-	class GPONServiceProfile;
-	class GPONServiceProfile;
-	class ServiceProfilesBase;
-	class ServiceProfilesList;
-}
-
 struct ServiceProfilesBase
 {
 	int id;
@@ -104,5 +98,5 @@ protected:
 public:
 	GPONServiceProfile(const QString &label, const QString &command, const QString &rawData);
 };
-
+} // End namespace
 #endif // GPONSERVICEPROFILE_H

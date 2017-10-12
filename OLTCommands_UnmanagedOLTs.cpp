@@ -1,5 +1,7 @@
 #include "OLTCommands_UnmanagedOLTs.h"
 
+namespace OLTCommands
+{
 UnmanagedONTs::UnmanagedONTs(const QString &tag, const QString &command, const QString &rawData) :
 	OLTCommandReply(tag, command, rawData)
 {
@@ -35,4 +37,5 @@ QStringList UnmanagedONTs::toStringInfoData() const
 		rtn += m_unmanagedOnts[ont].toStringInfoData();
 	}
 	return rtn;
+}
 }

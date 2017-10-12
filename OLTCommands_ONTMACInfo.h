@@ -5,9 +5,6 @@
 
 namespace OLTCommands
 {
-	class ONTMACInfo;
-}
-
 class ONTMACInfo : public OLTCommandReply
 {
 protected:
@@ -79,5 +76,5 @@ protected:
 				<< m_wanInfo.toStringInfoData();
 	}
 };
-
+} // End namespace
 #endif // ONTMACINFO_H

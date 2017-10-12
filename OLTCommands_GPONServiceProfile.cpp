@@ -1,5 +1,7 @@
 #include "OLTCommands_GPONServiceProfile.h"
 
+namespace OLTCommands
+{
 GPONServiceProfiles::GPONServiceProfiles(const QString &label, const QString &command, const QString &rawData) :
 	OLTCommandReply(label, command, rawData)
 {
@@ -100,4 +102,5 @@ GPONServiceProfile::GPONServiceProfile(const QString &label, const QString &comm
 		if( lines[i].startsWith("  Binding times :") )
 			m_srvProfile.bindedTimes = lines[i].mid(18).trimmed().toInt();
 	}
+}
 }

@@ -14,7 +14,7 @@ class QFrontend : public QMainWindow
 {
 Q_OBJECT
 	Ui::QFrontend *ui;
-	QOLTCommands huaweiOLT;
+	OLTCommands::QOLTCommands huaweiOLT;
 
 	enum CommandIndex
 	{
@@ -51,17 +51,17 @@ private slots:
 
 	void on_btLogin_clicked();
 
-	void boardInfoReceived(const BoardInfo &boardInfo);
-	void unmanagedReceived(const UnmanagedONTs &unmanaged);
-	void ontsWANInfoReceived(const ONTWANInfo &ontWANInfo);
-	void ontsMACInfoReceived(const ONTMACInfo &ontMACInfo);
-	void ontVersionReceived(const ONTVersion &ontVersion);
+	void boardInfoReceived(const OLTCommands::BoardInfo &boardInfo);
+	void unmanagedReceived(const OLTCommands::UnmanagedONTs &unmanaged);
+	void ontsWANInfoReceived(const OLTCommands::ONTWANInfo &ontWANInfo);
+	void ontsMACInfoReceived(const OLTCommands::ONTMACInfo &ontMACInfo);
+	void ontVersionReceived(const OLTCommands::ONTVersion &ontVersion);
 
-	void gponSrvPrfsReceived(const GPONServiceProfiles &gponSrvProfiles);
-	void gponSrvPrfReceived(const GPONServiceProfile &gponSrvProfile);
+	void gponSrvPrfsReceived(const OLTCommands::GPONServiceProfiles &gponSrvProfiles);
+	void gponSrvPrfReceived(const OLTCommands::GPONServiceProfile &gponSrvProfile);
 
-	void trafficTableIPsReceived(const TrafficTableIPs &trafficTableIPs);
-	void trafficTableIPReceived(const TrafficTableIP &trafficTableIP);
+	void trafficTableIPsReceived(const OLTCommands::TrafficTableIPs &trafficTableIPs);
+	void trafficTableIPReceived(const OLTCommands::TrafficTableIP &trafficTableIP);
 
 	void on_command_currentIndexChanged(int index);
 	void on_sendCMD_clicked();

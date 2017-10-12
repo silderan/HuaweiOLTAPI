@@ -5,9 +5,6 @@
 
 namespace OLTCommands
 {
-	class TrafficTableIP;
-}
-
 struct TrafficTableBasicInfo
 {
 	int id;
@@ -18,6 +15,11 @@ struct TrafficTableBasicInfo
 	int priority;
 	QString copyPolicy;
 	QString priorityPolicy;
+	TrafficTableBasicInfo()
+	{
+		clear();
+	}
+
 	void clear()
 	{
 		id = 0;
@@ -58,6 +60,11 @@ struct TrafficTableIPInfo : public TrafficTableBasicInfo
 	QString colorMode;//           : color-blind
 	QString colorPolicy;//         : dei
 	QString referencedStatus;//    : used
+	TrafficTableIPInfo() : TrafficTableBasicInfo()
+	{
+		clear();
+	}
+
 	void clear()
 	{
 		TrafficTableIPInfo::clear();
@@ -129,5 +136,5 @@ protected:
 public:
 	TrafficTableIPs(const QString &label,const QString &command, const QString &rawData);
 };
-
+}
 #endif // TRAFFICTABLEIP_H

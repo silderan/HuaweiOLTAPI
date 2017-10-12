@@ -1,5 +1,7 @@
 #include "OLTCommands_ONTWANInfo.h"
 
+namespace OLTCommands
+{
 ONTWANInfo::ONTWANInfo(const QString &tag, const QString &command, const QString &rawData) :
 	OLTCommandReply(tag, command, rawData)
 {
@@ -84,4 +86,5 @@ QStringList ONTWANInfo::toStringInfoData() const
 			<< QObject::tr("Modo DS-Lite")						<< m_ontInfo.wanInfoList[wan].dsLiteMode
 			<< QObject::tr("Dirección peer DS-Lite")			<< m_ontInfo.wanInfoList[wan].dsLitePeerAddress;
 	return rtn;
+}
 }

@@ -28,7 +28,10 @@ SOURCES += main.cpp\
     OLTCommands_ONTMACInfo.cpp \
     OLTCommands_GPONServiceProfile.cpp \
     OLTCommands_ONTVersion.cpp \
-    OLTCommands_TrafficTableIP.cpp
+    OLTCommands_TrafficTableIP.cpp \
+    OLTCommands_DBAProfile.cpp \
+    OLTCommands_ServicePort.cpp \
+    OLTCommands_LineProfile.cpp
 
 HEADERS  += QFrontend.h \
     ../QTelnet/QTelnet.h \
@@ -45,7 +48,10 @@ HEADERS  += QFrontend.h \
     OLTCommands_ONTMACInfo.h \
     OLTCommands_GPONServiceProfile.h \
     OLTCommands_ONTVersion.h \
-    OLTCommands_TrafficTableIP.h
+    OLTCommands_TrafficTableIP.h \
+    OLTCommands_DBAProfile.h \
+    OLTCommands_ServicePort.h \
+    OLTCommands_LineProfile.h
 
 FORMS    += QFrontend.ui \
     QInfoDialog.ui

@@ -3,8 +3,8 @@
 
 #include "OLTCommands_BaseInfo.h"
 
-namespace OLTCOMMANDS { class ONTWANInfo; }
-
+namespace OLTCommands
+{
 class ONTWANInfo : public OLTCommandReply
 {
 protected:
@@ -97,5 +97,5 @@ public:
 protected:
 	virtual QStringList toStringInfoData() const;
 };
-
+} // End namespace
 #endif // OLTCOMMANDS_ONTWANINFO_H

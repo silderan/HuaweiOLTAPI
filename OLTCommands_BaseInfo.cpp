@@ -2,6 +2,8 @@
 
 #include <QRegExp>
 
+namespace OLTCommands
+{
 QStringList OLTCommandReply::OntBasicInfo::fromString(const QString &txt, int framePos, int slotPos, int portPos, int idPos, int serialPos)
 {
 	QStringList bits = txt.split(QRegExp("[\\s\\/]+"), QString::SkipEmptyParts);
@@ -117,4 +119,5 @@ QString OLTCommandReply::toString() const
 	if( classInfo.count() == 0 )
 		rtn += QString( "%1\n%2").arg(centeredText("- ", "RAW DATA", keyLength + valueLength + 3), m_raw );
 	return rtn;
+}
 }

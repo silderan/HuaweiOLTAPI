@@ -1,5 +1,7 @@
 #include "OLTCommands_BoardInfo.h"
 
+namespace OLTCommands
+{
 BoardInfo::BoardInfo(const QString &tag, const QString &command, const QString &rawData)
 	: OLTCommandReply(tag, command, rawData)
 {
@@ -102,4 +104,5 @@ QStringList BoardInfo::toStringInfoData() const
 					.arg(m_ontInfoList[i].descript) );
 	}
 	return rtn;
+}
 }

@@ -1,5 +1,7 @@
 #include "OLTCommands_ONTVersion.h"
 
+namespace OLTCommands
+{
 ONTVersion::ONTVersion(const QString &label, const QString &command, const QString &rawData) :
 	OLTCommandReply(label, command, rawData)
 {
@@ -24,4 +26,5 @@ ONTVersion::ONTVersion(const QString &label, const QString &command, const QStri
 			}
 		}
 	}
+}
 }

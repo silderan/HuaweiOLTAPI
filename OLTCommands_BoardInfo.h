@@ -3,8 +3,8 @@
 
 #include "OLTCommands_BaseInfo.h"
 
-namespace OLTCommands { class BoardInfo; }
-
+namespace OLTCommands
+{
 class BoardInfo : public OLTCommandReply
 {
 public:
@@ -68,5 +68,5 @@ public:
 protected:
 	virtual QStringList toStringInfoData() const;
 };
-
+} // End namespace
 #endif // OLTCOMMAND_BOARDINFO_H

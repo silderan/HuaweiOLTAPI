@@ -3,8 +3,8 @@
 
 #include "OLTCommands_BaseInfo.h"
 
-namespace OLTCommands { class UnmanagedOLTs; }
-
+namespace OLTCommands
+{
 class UnmanagedONTs : public OLTCommandReply
 {
 protected:
@@ -58,5 +58,5 @@ public:
 protected:
 	virtual QStringList toStringInfoData() const;
 };
-
+} // End namespace
 #endif // OLTCOMMANDS_UNMANAGEDOLTS_H
