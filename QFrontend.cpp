@@ -16,15 +16,12 @@ QFrontend::QFrontend(QWidget *parent) :
 	// All the widgets inside this list will be enabled/disabled
 	// up to the command combo-box current index selected.
 	m_paramWidgets.append( QList<QWidget*>()
-						   << ui->serial
-						   << ui->frame
-						   << ui->slot
-						   << ui->port
-						   << ui->value
-						   << ui->cir
-						   << ui->pir
-						   << ui->priority
-						   << ui->name);
+						   << ui->serial << ui->frame << ui->slot << ui->port << ui->ontID
+						   << ui->value << ui->name
+						   << ui->cir << ui->pir << ui->priority
+						   << ui->dwTrafficTable << ui->upTrafficTable
+						   << ui->ontVLAN << ui->oltVLAN << ui->gemPort
+						   << ui->dbaType << ui->dbaSpeeds );
 
 	// This string list order must match with the enum CommanIndex
 	// to the command combo box and send button works fine and easy
@@ -42,11 +39,30 @@ QFrontend::QFrontend(QWidget *parent) :
 	ui->command->addItem( "get GPON service profiles", QStringList() );
 	ui->command->addItem( "get GPON service profile info", QStringList() << "value" );
 	ui->command->addItem( "enter GPON service profile", QStringList() << "value" );
-	ui->command->addItem( "get all Traffic Table IPs ", QStringList() );
+
+	ui->command->addItem( "get all Traffic Table IPs", QStringList() );
 	ui->command->addItem( "get Traffic Table IP", QStringList() << "value" );
 	ui->command->addItem( "add Traffic Table IP", QStringList() << "cir" << "pir" << "priority" << "name" );
 	ui->command->addItem( "modify Traffic Table IP", QStringList() << "value" << "cir" << "pir" << "priority" << "name" );
 	ui->command->addItem( "delete Traffic Table IP", QStringList() << "value" );
+
+	ui->command->addItem( "get all DBA Profiles", QStringList() );
+	ui->command->addItem( "get DBA Profile", QStringList() << "value" );
+	ui->command->addItem( "add DBA Profile", QStringList() << "name" << "dbaType" << "dbaSpeeds" );
+	ui->command->addItem( "modify DBA Profile", QStringList() << "value"  << "name" << "dbaType" << "dbaSpeeds" );
+	ui->command->addItem( "delete DBA Profile", QStringList() << "value" );
+
+	ui->command->addItem( "get all Line Profiles", QStringList() << "port" );
+	ui->command->addItem( "get Line Profile", QStringList() << "port" << "value" << "name" );
+	ui->command->addItem( "add Line Profile", QStringList() << "port" << "name" );
+	ui->command->addItem( "modify Line Profile", QStringList() << "port" "value" << "name"  );
+	ui->command->addItem( "delete Line Profile", QStringList() << "port" << "value" );
+
+	ui->command->addItem( "get all Service Ports", QStringList() << "frame" << "slot" << "port" << "ontID" );
+	ui->command->addItem( "get Service Port", QStringList() << "frame" << "slot" << "port" << "ontID" << "value" );
+	ui->command->addItem( "add Service Port", QStringList() << "frame" << "slot" << "port" << "ontID" << "oltVLAN" << "ontVLAN" << "gemPort" << "dwTrafficTable" << "upTrafficTable" );
+	ui->command->addItem( "modify Service Port", QStringList() << "frame" << "slot" << "port" << "ontID" << "value" << "oltVLAN" << "ontVLAN" << "gemPort" << "dwTrafficTable" << "upTrafficTable" );
+	ui->command->addItem( "delete Service Port", QStringList() << "frame" << "slot" << "port" << "ontID" << "value" );
 
 	globalConfig.load();
 	ui->leFQDN->setText( globalConfig.hostName() );
@@ -55,17 +71,31 @@ QFrontend::QFrontend(QWidget *parent) :
 	ui->leUPass->setText( globalConfig.oltUPpass() );
 	ui->name->setText( globalConfig.valueName() );
 
-	ui->cmd->setText( globalConfig.customCmd() );
-	ui->command->setCurrentIndex( ui->command->findText(globalConfig.command()) );
-	ui->serial->setText( globalConfig.serialNumber() );
 	ui->value->setValue( globalConfig.valueNumber() );
+	ui->cmd->setText( globalConfig.customCmd() );
+
+	ui->serial->setText( globalConfig.serialNumber() );
 	ui->frame->setValue( globalConfig.frameNumber() );
 	ui->slot->setValue( globalConfig.slotNumber() );
 	ui->port->setValue( globalConfig.portNumber() );
+	ui->ontID->setValue( globalConfig.ontID() );
 
 	ui->cir->setValue( globalConfig.cirNumber() );
 	ui->pir->setValue( globalConfig.pirNumber() );
 	ui->priority->setValue( globalConfig.priorityNumber() );
+
+	ui->dwTrafficTable->setValue( globalConfig.dwTrafficTable() );
+	ui->upTrafficTable->setValue( globalConfig.upTrafficTable() );
+
+	ui->gemPort->setValue( globalConfig.gemPort() );
+
+	ui->oltVLAN->setValue( globalConfig.oltVLAN() );
+	ui->ontVLAN->setValue( globalConfig.ontVLAN() );
+
+	ui->dbaSpeeds->setText( globalConfig.dbaSpeeds() );
+	ui->dbaType->setText( globalConfig.dbaType() );
+
+	ui->command->setCurrentIndex( ui->command->findText(globalConfig.command()) );
 
 	// Connect all telnet comming data to the main text viewer.
 	connect( &huaweiOLT, SIGNAL(newData(const char*,int)), this, SLOT(oltTelnetIncommings(const char*,int)) );
@@ -98,16 +128,29 @@ QFrontend::~QFrontend()
 
 	globalConfig.setCustomCmd( ui->cmd->text() );
 	globalConfig.setCommand( ui->command->currentText() );
+
 	globalConfig.setSerialNumber( ui->serial->text() );
 	globalConfig.setValueNumber( ui->value->value() );
 	globalConfig.setFrameNumber( ui->frame->value() );
 	globalConfig.setSlotNumber( ui->slot->value() );
 	globalConfig.setPortNumber( ui->port->value() );
+	globalConfig.setONTID( ui->ontID->value() );
 
 	globalConfig.setValueName( ui->name->text() );
 	globalConfig.setCIRNumber( ui->cir->value() );
 	globalConfig.setPIRNumber( ui->cir->value() );
 	globalConfig.setPriorityNumber( ui->priority->value() );
+
+	globalConfig.setDwTrafficTable( ui->dwTrafficTable->value() );
+	globalConfig.setUpTrafficTable( ui->upTrafficTable->value() );
+
+	globalConfig.setDBASpeeds( ui->dbaSpeeds->text() );
+	globalConfig.setDBAType( ui->dbaType->text() );
+
+	globalConfig.setONTVLAN( ui->ontVLAN->value() );
+	globalConfig.setOLTVLAN( ui->oltVLAN->value() );
+
+	globalConfig.setGEMPort( ui->gemPort->value() );
 
 	globalConfig.save();
 	delete ui;
@@ -247,13 +290,13 @@ void QFrontend::on_sendCMD_clicked()
 	case QFrontend::CmdONTInfo:
 		break;
 	case QFrontend::CmdONTWANInfo:
-		huaweiOLT.getONTWANInfo( ui->frame->value(), ui->slot->value(), ui->port->value(), ui->value->value() );
+		huaweiOLT.getONTWANInfo( ui->frame->value(), ui->slot->value(), ui->port->value(), ui->ontID->value() );
 		break;
 	case QFrontend::CmdONTMACInfo:
-		huaweiOLT.getONTMACInfo( ui->frame->value(), ui->slot->value(), ui->port->value(), ui->value->value() );
+		huaweiOLT.getONTMACInfo( ui->frame->value(), ui->slot->value(), ui->port->value(), ui->ontID->value() );
 		break;
 	case QFrontend::CmdONTVersion:
-		huaweiOLT.getONTVersion( ui->frame->value(), ui->slot->value(), ui->port->value(), ui->value->value() );
+		huaweiOLT.getONTVersion( ui->frame->value(), ui->slot->value(), ui->port->value(), ui->ontID->value() );
 		break;
 	case QFrontend::CmdGPONServiceProfiles:
 		huaweiOLT.getGPONServiceProfiles();
@@ -278,6 +321,54 @@ void QFrontend::on_sendCMD_clicked()
 		break;
 	case QFrontend::CmdDelTrafficTableIP:
 		huaweiOLT.delTrafficTableIP( ui->value->value() );
+		break;
+
+	case QFrontend::CmdGetDBAProfiles:
+		huaweiOLT.getDBAProfiles();
+		break;
+	case QFrontend::CmdGetDBAProfile:
+		huaweiOLT.getDBAProfile(ui->value->value());
+		break;
+	case QFrontend::CmdAddDBAProfile:
+		huaweiOLT.addDBAProfile(ui->name->text(), ui->dbaType->text(), ui->dbaSpeeds->text());
+		break;
+	case QFrontend::CmdModDBAProfile:
+//		huaweiOLT.modDBAProfile(ui->value->value(), ui->name->text(), ui->dbaType.text(), ui->dbaSpeeds.text());
+		break;
+	case QFrontend::CmdDelDBAProfile:
+		huaweiOLT.delDBAProfile(ui->value->value());
+		break;
+
+	case QFrontend::CmdGetLineProfiles:
+		huaweiOLT.getLineProfiles(ui->port->value());
+		break;
+	case QFrontend::CmdGetLineProfile:
+		huaweiOLT.getLineProfile(ui->port->value(), ui->value->value(), ui->name->text());
+		break;
+	case QFrontend::CmdAddLineProfile:
+		huaweiOLT.addLineProfile(ui->value->value(), ui->name->text());
+		break;
+	case QFrontend::CmdModLineProfile:
+//		huaweiOLT.modLinePProfile(ui->value->value(), ui->name->text(), ui->dbaType.text(), ui->dbaSpeeds.text());
+		break;
+	case QFrontend::CmdDelLineProfile:
+		huaweiOLT.delLineProfile(ui->port->value(), ui->value->value());
+		break;
+
+	case QFrontend::CmdGetServicePorts:
+		huaweiOLT.getServicePorts( ui->frame->value(), ui->slot->value(), ui->port->value(), ui->ontID->value() );
+		break;
+	case QFrontend::CmdGetServicePort:
+		huaweiOLT.getServicePort( ui->frame->value(), ui->slot->value(), ui->port->value(), ui->ontID->value(), ui->value->value() );
+		break;
+	case QFrontend::CmdAddServicePort:
+		huaweiOLT.addServicePort( ui->frame->value(), ui->slot->value(), ui->port->value(), ui->ontID->value(), ui->oltVLAN->value(), ui->ontVLAN->value(), ui->gemPort->value(), ui->dwTrafficTable->value(), ui->upTrafficTable->value() );
+		break;
+	case QFrontend::CmdModServicePort:
+//		huaweiOLT.modServicePort(  );
+		break;
+	case QFrontend::CmdDelServicePort:
+//		huaweiOLT.delServicePort(  );
 		break;
 	}
 }
@@ -325,6 +416,36 @@ void QFrontend::trafficTableIPsReceived(const OLTCommands::TrafficTableIPs &traf
 void QFrontend::trafficTableIPReceived(const OLTCommands::TrafficTableIP &trafficTableIP)
 {
 	QInfoDialog( tr("Traffic table IP info"), trafficTableIP.toString() ).exec();
+}
+
+void QFrontend::dbaProfilesReceived(const OLTCommands::DBAProfiles &dbaProfiles)
+{
+	QInfoDialog( tr("All DBA Profiles"), dbaProfiles.toString() ).exec();
+}
+
+void QFrontend::dbaProfileReceived(const OLTCommands::DBAProfile &dbaProfile)
+{
+	QInfoDialog( tr("DBA Profile"), dbaProfile.toString() ).exec();
+}
+
+void QFrontend::lineProfilesReceived(const OLTCommands::LineProfiles &lineProfiles)
+{
+	QInfoDialog( tr("All Line Profiles"), lineProfiles.toString() ).exec();
+}
+
+void QFrontend::lineProfileReceived(const OLTCommands::LineProfile &lineProfile)
+{
+	QInfoDialog( tr("Line Profile"), lineProfile.toString() ).exec();
+}
+
+void QFrontend::servicePortsReceived(const OLTCommands::ServicePorts &servicePorts)
+{
+	QInfoDialog( tr("All Service Ports"), servicePorts.toString() ).exec();
+}
+
+void QFrontend::servicePortReceived(const OLTCommands::ServicePort &servicePort)
+{
+	QInfoDialog( tr("Service Port"), servicePort.toString() ).exec();
 }
 
 void QFrontend::on_btCmd_clicked()

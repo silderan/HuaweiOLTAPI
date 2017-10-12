@@ -1,13 +1,11 @@
 #include "QOLTCommands.h"
 
-namespace OLTCommands
-{
-OLTCommands::QOLTCommands::QOLTCommands()
+QOLTCommands::QOLTCommands()
 {
 	connect(this, SIGNAL(newResponse(QString,QString,QString)), this, SLOT(onCommandReceived(QString,QString,QString)));
 }
 
-void OLTCommands::QOLTCommands::setAdminMode()
+void QOLTCommands::setAdminMode()
 {
 	if( oltState() < QTelnetInterface::OltAdminMode )
 		addCommand( "EnablingAdmin", oltConstants.commandEnableAdmin(), OltAdminMode );
@@ -97,22 +95,22 @@ void QOLTCommands::delTrafficTableIP(int index)
 	addCommand( "DelTrafficTableIP", oltConstants.delTrafficTableIP(index) );
 }
 
-void QOLTCommands::getDBAPProfiles()
+void QOLTCommands::getDBAProfiles()
 {
 	addCommand( "GetDBAProfiles", oltConstants.getDBAProfiles() );
 }
 
-void QOLTCommands::getDBAPProfile(int index)
+void QOLTCommands::getDBAProfile(int index)
 {
 	addCommand( "GetDBAProfile", oltConstants.getDBAProfile(index) );
 }
 
-void QOLTCommands::addDBAPProfile(const QString &name, const QString &type, const QString &speeds)
+void QOLTCommands::addDBAProfile(const QString &name, const QString &type, const QString &speeds)
 {
 	addCommand( "AddDBAProfile", oltConstants.addDBAProfile(name, type, speeds) );
 }
 
-void QOLTCommands::delDBAPProfile(int index)
+void QOLTCommands::delDBAProfile(int index)
 {
 	addCommand( "DelDBAProfile", oltConstants.delDBAProfile(index) );
 }
@@ -162,24 +160,35 @@ void QOLTCommands::delLineProfile(int gepon, int index)
 
 void QOLTCommands::onCommandReceived(const QString &label, const QString &cmd, const QString data)
 {
-	if( label == "GetBoardInfo" )				emit boardInfo( BoardInfo(label, cmd, data) );
-	else if( label == "GetUnmanaged" )			emit unmanagedOnts( UnmanagedONTs(label, cmd, data) );
-	else if( label == "GetONTWANInfo" )			emit ontWANInfo( ONTWANInfo(label, cmd, data) );
-	else if( label == "GetONTMACInfo" )			emit ontMACInfo( ONTMACInfo(label, cmd, data) );
-	else if( label == "GetONTVersion" )			emit ontVersionInfo( ONTVersion(label, cmd, data) );
-	else if( label == "GetGPONServiceProfiles" )emit gponServiceProfiles( GPONServiceProfiles(label, cmd, data) );
-	else if( label == "GetGPONServiceProfile" )	emit gponServiceProfile( GPONServiceProfile(label, cmd, data) );
+	if( label == "GetBoardInfo" )				emit boardInfo( OLTCommands::BoardInfo(label, cmd, data) );
+	else if( label == "GetUnmanaged" )			emit unmanagedOnts( OLTCommands::UnmanagedONTs(label, cmd, data) );
+	else if( label == "GetONTWANInfo" )			emit ontWANInfo( OLTCommands::ONTWANInfo(label, cmd, data) );
+	else if( label == "GetONTMACInfo" )			emit ontMACInfo( OLTCommands::ONTMACInfo(label, cmd, data) );
+	else if( label == "GetONTVersion" )			emit ontVersionInfo( OLTCommands::ONTVersion(label, cmd, data) );
+	else if( label == "GetGPONServiceProfiles" )emit gponServiceProfiles( OLTCommands::GPONServiceProfiles(label, cmd, data) );
+	else if( label == "GetGPONServiceProfile" )	emit gponServiceProfile( OLTCommands::GPONServiceProfile(label, cmd, data) );
 
-	else if( label == "GetTrafficTableIPs" )	emit trafficTableIPs( TrafficTableIPs(label, cmd, data) );
-	else if( label == "GetTrafficTableIP" )		emit trafficTableIP( TrafficTableIP(label, cmd, data) );
-	else if( label == "AddTrafficTableIP" )		emit trafficTableIP( TrafficTableIP(label, cmd, data) );
-	else if( label == "ModTrafficTableIP" )		emit trafficTableIP( TrafficTableIP(label, cmd, data) );
-	else if( label == "DelTrafficTableIP" )		emit trafficTableIP( TrafficTableIP(label, cmd, data) );
+	else if( label == "GetTrafficTableIPs" )	emit trafficTableIPs( OLTCommands::TrafficTableIPs(label, cmd, data) );
+	else if( label == "GetTrafficTableIP" )		emit trafficTableIP( OLTCommands::TrafficTableIP(label, cmd, data) );
+	else if( label == "AddTrafficTableIP" )		emit trafficTableIP( OLTCommands::TrafficTableIP(label, cmd, data) );
+	else if( label == "ModTrafficTableIP" )		emit trafficTableIP( OLTCommands::TrafficTableIP(label, cmd, data) );
+	else if( label == "DelTrafficTableIP" )		emit trafficTableIP( OLTCommands::TrafficTableIP(label, cmd, data) );
 
-	else if( label == "GetDBAProfiles" )	emit trafficTableIPs( TrafficTableIPs(label, cmd, data) );
-	else if( label == "GetTrafficTableIP" )		emit trafficTableIP( TrafficTableIP(label, cmd, data) );
-	else if( label == "AddTrafficTableIP" )		emit trafficTableIP( TrafficTableIP(label, cmd, data) );
-	else if( label == "ModTrafficTableIP" )		emit trafficTableIP( TrafficTableIP(label, cmd, data) );
-	else if( label == "DelTrafficTableIP" )		emit trafficTableIP( TrafficTableIP(label, cmd, data) );
-}
+	else if( label == "GetDBAProfiles" )		emit dbaProfiles( OLTCommands::DBAProfiles(label, cmd, data) );
+	else if( label == "GetDBAProfile" )			emit dbaProfile( OLTCommands::DBAProfile(label, cmd, data) );
+	else if( label == "AddDBAProfile" )			emit dbaProfile( OLTCommands::DBAProfile(label, cmd, data) );
+	else if( label == "ModDBAProfile" )			emit dbaProfile( OLTCommands::DBAProfile(label, cmd, data) );
+	else if( label == "DelDBAProfile" )			emit dbaProfile( OLTCommands::DBAProfile(label, cmd, data) );
+
+	else if( label == "GetLineProfiles" )		emit lineProfiles( OLTCommands::LineProfiles(label, cmd, data) );
+	else if( label == "GetLineProfile" )		emit lineProfile( OLTCommands::LineProfile(label, cmd, data) );
+	else if( label == "AddLineProfile" )		emit lineProfile( OLTCommands::LineProfile(label, cmd, data) );
+	else if( label == "ModLineProfile" )		emit lineProfile( OLTCommands::LineProfile(label, cmd, data) );
+	else if( label == "DelLineProfile" )		emit lineProfile( OLTCommands::LineProfile(label, cmd, data) );
+
+	else if( label == "GetServicePorts" )		emit servicePorts( OLTCommands::ServicePorts(label, cmd, data) );
+	else if( label == "GetServicePort" )		emit servicePort( OLTCommands::ServicePort(label, cmd, data) );
+	else if( label == "AddServicePort" )		emit servicePort( OLTCommands::ServicePort(label, cmd, data) );
+	else if( label == "ModServicePort" )		emit servicePort( OLTCommands::ServicePort(label, cmd, data) );
+	else if( label == "DelServicePort" )		emit servicePort( OLTCommands::ServicePort(label, cmd, data) );
 }

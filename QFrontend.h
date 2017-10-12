@@ -14,7 +14,7 @@ class QFrontend : public QMainWindow
 {
 Q_OBJECT
 	Ui::QFrontend *ui;
-	OLTCommands::QOLTCommands huaweiOLT;
+	QOLTCommands huaweiOLT;
 
 	enum CommandIndex
 	{
@@ -32,7 +32,25 @@ Q_OBJECT
 		CmdTrafficTableIP,
 		CmdAddTrafficTableIP,
 		CmdModTrafficTableIP,
-		CmdDelTrafficTableIP
+		CmdDelTrafficTableIP,
+
+		CmdGetDBAProfiles,
+		CmdGetDBAProfile,
+		CmdAddDBAProfile,
+		CmdModDBAProfile,
+		CmdDelDBAProfile,
+
+		CmdGetLineProfiles,
+		CmdGetLineProfile,
+		CmdAddLineProfile,
+		CmdModLineProfile,
+		CmdDelLineProfile,
+
+		CmdGetServicePorts,
+		CmdGetServicePort,
+		CmdAddServicePort,
+		CmdModServicePort,
+		CmdDelServicePort
 	};
 	QList<QWidget*> m_paramWidgets;
 
@@ -62,6 +80,15 @@ private slots:
 
 	void trafficTableIPsReceived(const OLTCommands::TrafficTableIPs &trafficTableIPs);
 	void trafficTableIPReceived(const OLTCommands::TrafficTableIP &trafficTableIP);
+
+	void dbaProfilesReceived(const OLTCommands::DBAProfiles &dbaProfiles);
+	void dbaProfileReceived(const OLTCommands::DBAProfile &dbaProfile);
+
+	void lineProfilesReceived(const OLTCommands::LineProfiles &lineProfiles);
+	void lineProfileReceived(const OLTCommands::LineProfile &lineProfile);
+
+	void servicePortsReceived(const OLTCommands::ServicePorts &servicePorts);
+	void servicePortReceived(const OLTCommands::ServicePort &servicePort);
 
 	void on_command_currentIndexChanged(int index);
 	void on_sendCMD_clicked();

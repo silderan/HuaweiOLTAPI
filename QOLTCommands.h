@@ -13,8 +13,6 @@
 #include "OLTCommands_LineProfile.h"
 #include "OLTCommands_ServicePort.h"
 
-namespace OLTCommands
-{
 class QOLTCommands : public QTelnetInterface
 {
 Q_OBJECT
@@ -41,11 +39,11 @@ public:
 	void modTrafficTableIP(int index, const QString &name, int cir, int pir, int priority);
 	void delTrafficTableIP(int index);
 
-	void getDBAPProfiles();
-	void getDBAPProfile(int index);
-	void addDBAPProfile(const QString &name, const QString &type, const QString &speeds);
+	void getDBAProfiles();
+	void getDBAProfile(int index);
+	void addDBAProfile(const QString &name, const QString &type, const QString &speeds);
 //	void modDBAPProfile(int index, const QString &name, const QString &type, const QString &speeds);
-	void delDBAPProfile(int index);
+	void delDBAProfile(int index);
 
 	void getServicePorts(int frame, int slot, int port, int ontid);
 	void getServicePort(int frame, int slot, int port, int ontid, int index);
@@ -84,6 +82,5 @@ signals:
 	void lineProfiles(const OLTCommands::LineProfiles &);
 	void lineProfile(const OLTCommands::LineProfile &);
 };
-}// End namespace.
 
 #endif // OLTCOMMANDS_H

@@ -19,6 +19,9 @@ public:
 	void setHostPort(quint16 port) { QIniData::insert("hostPort", QString::number(port)); }
 	quint16 hostPort() const { return QIniData::value("hostPort").toInt(); }
 
+	void setONTID(int v) { QIniData::insert("ontID", QString::number(v)); }
+	int ontID() const { return QIniData::value("ontID").toInt(); }
+
 	void setCommand(const QString &cmd ) { QIniData::insert("command", cmd); }
 	QString command() const { return QIniData::value("command"); }
 
@@ -51,6 +54,27 @@ public:
 
 	void setCustomCmd(const QString &cmd) { QIniData::insert("customCmd", cmd); }
 	QString customCmd() const { return QIniData::value("customCmd"); }
+
+	void setONTVLAN(int v) { QIniData::insert("ontVLAN", QString::number(v)); }
+	int ontVLAN() const { return QIniData::value("ontVLAN").toInt(); }
+
+	void setOLTVLAN(int v) { QIniData::insert("oltVLAN", QString::number(v)); }
+	int oltVLAN() const { return QIniData::value("oltVLAN").toInt(); }
+
+	void setGEMPort(int v) { QIniData::insert("GEMPort", QString::number(v)); }
+	int gemPort() const { return QIniData::value("GEMPort").toInt(); }
+
+	void setDwTrafficTable(int v) { QIniData::insert("DwTrafficTable", QString::number(v)); }
+	int dwTrafficTable() const { return QIniData::value("DwTrafficTable").toInt(); }
+
+	void setUpTrafficTable(int v) { QIniData::insert("UpTrafficTable", QString::number(v)); }
+	int upTrafficTable() const { return QIniData::value("UpTrafficTable").toInt(); }
+
+	void setDBASpeeds(const QString &speeds) { QIniData::insert("DBASpeeds", speeds); }
+	QString dbaSpeeds() const { return QIniData::value("DBASpeeds"); }
+
+	void setDBAType(const QString &type) { QIniData::insert("DBAType", type); }
+	QString dbaType() const { return QIniData::value("DBAType"); }
 };
 
 class GlobalConfig : public QIniFile, public GlobalConfigData
