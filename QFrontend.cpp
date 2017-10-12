@@ -73,18 +73,18 @@ QFrontend::QFrontend(QWidget *parent) :
 	connect( &huaweiOLT, SIGNAL(stateChanged(QAbstractSocket::SocketState)), SLOT(oltTelnetStatusChanged(QAbstractSocket::SocketState)) );
 	connect( &huaweiOLT, SIGNAL(oltStateChanged(QTelnetInterface::OLTState)), this, SLOT(oltStatusChanged(QTelnetInterface::OLTState)) );
 	connect( &huaweiOLT, SIGNAL(errorResponse(QString,QString,QString)), this, SLOT(oltErrorResponse(QString,QString,QString)) );
-	connect( &huaweiOLT, SIGNAL(boardInfo(BoardInfo)), this, SLOT(boardInfoReceived(BoardInfo)) );
-	connect( &huaweiOLT, SIGNAL(unmanagedOnts(UnmanagedONTs)), this, SLOT(unmanagedReceived(UnmanagedONTs)) );
+	connect( &huaweiOLT, SIGNAL(boardInfo(OLTCommands::BoardInfo)), this, SLOT(boardInfoReceived(OLTCommands::BoardInfo)) );
+	connect( &huaweiOLT, SIGNAL(unmanagedOnts(OLTCommands::UnmanagedONTs)), this, SLOT(unmanagedReceived(OLTCommands::UnmanagedONTs)) );
 
-	connect( &huaweiOLT, SIGNAL(ontWANInfo(ONTWANInfo)), this, SLOT(ontsWANInfoReceived(ONTWANInfo)) );
-	connect( &huaweiOLT, SIGNAL(ontMACInfo(ONTMACInfo)), this, SLOT(ontsMACInfoReceived(ONTMACInfo)) );
-	connect( &huaweiOLT, SIGNAL(ontVersionInfo(ONTVersion)), this, SLOT(ontVersionReceived(ONTVersion)) );
+	connect( &huaweiOLT, SIGNAL(ontWANInfo(OLTCommands::ONTWANInfo)), this, SLOT(ontsWANInfoReceived(OLTCommands::ONTWANInfo)) );
+	connect( &huaweiOLT, SIGNAL(ontMACInfo(OLTCommands::ONTMACInfo)), this, SLOT(ontsMACInfoReceived(OLTCommands::ONTMACInfo)) );
+	connect( &huaweiOLT, SIGNAL(ontVersionInfo(OLTCommands::ONTVersion)), this, SLOT(ontVersionReceived(OLTCommands::ONTVersion)) );
 
-	connect( &huaweiOLT, SIGNAL(gponServiceProfiles(GPONServiceProfiles)), this, SLOT(gponSrvPrfsReceived(GPONServiceProfiles)) );
-	connect( &huaweiOLT, SIGNAL(gponServiceProfile(GPONServiceProfile)), this, SLOT(gponSrvPrfReceived(GPONServiceProfile)) );
+	connect( &huaweiOLT, SIGNAL(gponServiceProfiles(OLTCommands::GPONServiceProfiles)), this, SLOT(gponSrvPrfsReceived(OLTCommands::GPONServiceProfiles)) );
+	connect( &huaweiOLT, SIGNAL(gponServiceProfile(OLTCommands::GPONServiceProfile)), this, SLOT(gponSrvPrfReceived(OLTCommands::GPONServiceProfile)) );
 
-	connect( &huaweiOLT, SIGNAL(trafficTableIPs(TrafficTableIPs)), this, SLOT(trafficTableIPsReceived(TrafficTableIPs)) );
-	connect( &huaweiOLT, SIGNAL(trafficTableIP(TrafficTableIP)), this, SLOT(trafficTableIPReceived(TrafficTableIP)) );
+	connect( &huaweiOLT, SIGNAL(trafficTableIPs(OLTCommands::TrafficTableIPs)), this, SLOT(trafficTableIPsReceived(OLTCommands::TrafficTableIPs)) );
+	connect( &huaweiOLT, SIGNAL(trafficTableIP(OLTCommands::TrafficTableIP)), this, SLOT(trafficTableIPReceived(OLTCommands::TrafficTableIP)) );
 }
 
 QFrontend::~QFrontend()

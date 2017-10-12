@@ -63,26 +63,26 @@ private slots:
 	void onCommandReceived(const QString &tag, const QString &cmd, const QString data);
 
 signals:
-	void boardInfo(const BoardInfo &);
-	void unmanagedOnts(const UnmanagedONTs &);
-	void ontWANInfo(const ONTWANInfo &);
-	void ontMACInfo(const ONTMACInfo &);
-	void ontVersionInfo(const ONTVersion &);
+	void boardInfo(const OLTCommands::BoardInfo &);
+	void unmanagedOnts(const OLTCommands::UnmanagedONTs &);
+	void ontWANInfo(const OLTCommands::ONTWANInfo &);
+	void ontMACInfo(const OLTCommands::ONTMACInfo &);
+	void ontVersionInfo(const OLTCommands::ONTVersion &);
 
-	void gponServiceProfiles(const GPONServiceProfiles &);
-	void gponServiceProfile(const GPONServiceProfile &);
+	void gponServiceProfiles(const OLTCommands::GPONServiceProfiles &);
+	void gponServiceProfile(const OLTCommands::GPONServiceProfile &);
 
-	void trafficTableIPs(const TrafficTableIPs &);
-	void trafficTableIP(const TrafficTableIP &);
+	void trafficTableIPs(const OLTCommands::TrafficTableIPs &);
+	void trafficTableIP(const OLTCommands::TrafficTableIP &);
 
-	void dbaProfiles(const DBAProfiles &);
-	void dbaProfile(const DBAProfile &);
+	void dbaProfiles(const OLTCommands::DBAProfiles &);
+	void dbaProfile(const OLTCommands::DBAProfile &);
 
-	void servicePorts(const ServicePorts &);
-	void servicePort(const ServicePort &);
+	void servicePorts(const OLTCommands::ServicePorts &);
+	void servicePort(const OLTCommands::ServicePort &);
 
-	void lineProfiles(const LineProfiles &);
-	void lineProfile(const LineProfile &);
+	void lineProfiles(const OLTCommands::LineProfiles &);
+	void lineProfile(const OLTCommands::LineProfile &);
 };
 }// End namespace.
 

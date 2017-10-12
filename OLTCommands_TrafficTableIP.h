@@ -67,7 +67,7 @@ struct TrafficTableIPInfo : public TrafficTableBasicInfo
 
 	void clear()
 	{
-		TrafficTableIPInfo::clear();
+		TrafficTableBasicInfo::clear();
 		name.clear();
 		mappingIndex.clear();
 		ctagMappingPriority.clear();
