@@ -4,7 +4,7 @@
 
 namespace OLTCommands
 {
-QStringList OLTCommandReply::OntBasicInfo::fromString(const QString &txt, int framePos, int slotPos, int portPos, int idPos, int serialPos)
+QStringList OntBasicInfo::fromString(const QString &txt, int framePos, int slotPos, int portPos, int idPos, int serialPos)
 {
 	QStringList bits = txt.split(QRegExp("[\\s\\/]+"), QString::SkipEmptyParts);
 	int i = 0;

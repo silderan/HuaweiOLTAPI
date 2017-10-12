@@ -60,15 +60,20 @@ RESOURCES += \
     resources.qrc
 
 DISTFILES += \
-    BoardInfo0.txt \
     GetUnmanaged0.txt \
-    ONTMACInfo0.txt \
-    ONTWANInfo0.txt \
-    GPONServiceProfiles0.txt \
     AddingCommand.txt \
-    GPONServiceProfile0.txt \
-    ONTVersion0.txt \
-    TrafficTableIP0.txt \
-    TrafficTableIPs0.txt \
     AddTrafficTableIP0.txt \
-    AddTrafficTableIP1.txt
+    AddTrafficTableIP1.txt \
+    GetDBAProfiles0.txt \
+    GetBoardInfo0.txt \
+    GetGPONServiceProfile0.txt \
+    GetGPONServiceProfiles0.txt \
+    GetONTMACInfo0.txt \
+    GetONTVersion0.txt \
+    GetONTWANInfo0.txt \
+    GetTrafficTableIP0.txt \
+    GetTrafficTableIPs0.txt \
+    GetLineProfiles0.txt \
+    GetServicePorts0.txt \
+    GetServicePort0.txt \
+    GetONTServicePort0.txt

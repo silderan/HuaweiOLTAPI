@@ -114,9 +114,9 @@ public:
 							  << "{index}" << QString::number(index) ); }
 
 	QString getDBAProfiles() const { return m_oltCommands.value("GetDBAProfiles"); }
-	QString getDBAProfile(int index) const
+	QString getDBAProfile(int id) const
 		{ return parseCommand(m_oltCommands.value("GetDBAProfile"), QStringList()
-							  << "{index}" << QString::number(index) ); }
+							  << "{id}" << QString::number(id) ); }
 	QString addDBAProfile(const QString &name, const QString &type, const QString &speeds) const
 		{ return parseCommand(m_oltCommands.value("AddDBAProfile"), QStringList()
 							  << "{name}" << name
@@ -166,8 +166,13 @@ public:
 							  << "{slot}" << QString::number(slot) ); }
 	QString exitGPONContext() const { return m_oltCommands.value("QuitGPONContext"); }
 
-	QString getServicePorts(int frame, int slot, int port, int ontid) const
-		{ return parseCommand(m_oltCommands.value("GetONTServicePorts"), QStringList()
+	QString getServicePorts() const
+		{ return m_oltCommands.value("GetServicePorts"); }
+	QString getServicePort(int index)
+		{ return parseCommand(m_oltCommands.value("GetServicePort"), QStringList()
+							  << "{index}" << QString::number(index) ); }
+	QString getONTServicePort(int frame, int slot, int port, int ontid)
+		{ return parseCommand(m_oltCommands.value("GetONTServicePort"), QStringList()
 							  << "{frame}" << QString::number(frame)
 							  << "{slot}" << QString::number(slot)
 							  << "{port}" << QString::number(port)
@@ -205,27 +210,27 @@ public:
 							  << "{port}" << QString::number(port)
 							  << "{ontid}" << QString::number(ontID)
 							  << "{gracetime}" << QString::number(gracetime) ); }
-	QString getLineProfiles(int port) const
+
+	QString getGPONLineProfiles() const
 		{ return parseCommand(m_oltCommands.value("GetLineProfiles"), QStringList()
-							  << "{port}" << QString::number(port) ); }
-	QString getLineProfile(int port, int profileID, const QString &profileName) const
+							  << "{gepon}" << "gpon" ); }
+	QString getGPONLineProfile(int id) const
 		{ return parseCommand(m_oltCommands.value("GetLineProfile"), QStringList()
-							  << "{port}" << QString::number(port)
-							  << "{profile}" << QString::number(profileID)
-							  << "{name}" << profileName ); }
-	QString addLineProfile(int port, const QString &profileName) const
+							  << "{gepon}" << "gpon"
+							  << "{id}" << QString::number(id) ); }
+	QString addGPONLineProfile(const QString &name) const
 		{ return parseCommand(m_oltCommands.value("AddLineProfile"), QStringList()
-							  << "{port}" << QString::number(port)
-							  << "{name}" << profileName ); }
-	QString delLineProfile(int port, int profileID) const
+							  << "{gepon}" << "gpon"
+							  << "{name}" << name ); }
+	QString delGPONLineProfile(int id) const
 		{ return parseCommand(m_oltCommands.value("DelLineProfile"), QStringList()
-							  << "{port}" << QString::number(port)
-							  << "{profile}" << QString::number(profileID) ); }
-	QString modLineProfile(int port, int profileID, const QString &profileName) const
+							  << "{gepon}" << "gpon"
+							  << "{id}" << QString::number(id) ); }
+	QString modGPONLineProfile(int id, const QString &name) const
 		{ return parseCommand(m_oltCommands.value("GetLineProfile"), QStringList()
-							  << "{port}" << QString::number(port)
-							  << "{profile}" << QString::number(profileID)
-							  << "{name}" << profileName ); }
+							  << "{gepon}" << "gpon"
+							  << "{profile}" << QString::number(id)
+							  << "{name}" << name ); }
 };
 
 extern OLTConstants oltConstants;

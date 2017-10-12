@@ -85,7 +85,9 @@ COMMAND: EnterGPONContext = interface gpon {frame}/{slot}
 COMMAND: QuitGPONContext = quit
 
 # Para crear/borrar/mostrar los service-port
-COMMAND: GetServicePorts = display service-port port {frame}/{slot}/{port} ont {ontid}\n
+COMMAND: GetServicePorts = display service-port all\n
+COMMAND: GetServicePort = display service-port {index}\n
+COMMAND: GetONTServicePort = display service-port port {frame}/{slot}/{port} ont {ontid}\n
 COMMAND: AddServicePortLimited = service-port vlan {olt_vlan} gpon {frame}/{slot}/{port} ont {ontid} gemport {gem} multi-service user-vlan {ont_vlan} tag-transform translate inbound traffic-table index {up_traffic_index} outbound traffic-table index {dw_traffic_index}
 COMMAND: AddServicePortUnlimited = service-port vlan {olt_vlan} gpon {frame}/{slot}/{port} ont {ontid} gemport {gem} multi-service user-vlan {ont_vlan} tag-transform translate\n
 COMMAND: DelServicePort = undo service-port {index}
@@ -102,6 +104,7 @@ COMMAND: GetLineProfile = display ont-lineprofile {gepon} profile-id {profile} p
 COMMAND: AddLineProfile = ont-lineprofile {gepon} profile-name "{name}"
 COMMAND: DelLineProfile = undo ont-lineprofile {gepon} profile-id {profile}
 COMMAND: ModLineProfile = ont-lineprofile {gepon} profile-id "{index}"
+
 COMMAND: LineProfileTR069 = tr069-management {enable_disable}
 COMMAND: LineProfileTCONTDBA = tcont {tcont_index} dba-profile-id {dba_profile_id}
 COMMAND: LineProfileAddGEM = gem add {gemport} eth tcont {tcont_index}

@@ -1,0 +1,183 @@
+display service-port all
+{ <cr>|sort-by<K>||<K> }:
+
+  Command:
+		  display service-port all
+  Switch-Oriented Flow List
+  -----------------------------------------------------------------------------
+   INDEX VLAN VLAN     PORT F/ S/ P VPI  VCI   FLOW  FLOW       RX   TX   STATE
+		 ID   ATTR     TYPE                    TYPE  PARA
+  -----------------------------------------------------------------------------
+	 283 3333 common   gpon 0/0 /1  8    0     vlan  3333       19   16   up
+	 284  110 common   gpon 0/0 /1  8    1     vlan  110        36   35   up
+	 285  120 common   gpon 0/0 /1  8    2     vlan  120        28   27   up
+	 325 3333 common   gpon 0/0 /1  6    0     vlan  3333       19   16   up
+	 326  110 common   gpon 0/0 /1  6    1     vlan  110        30   29   up
+	 327  120 common   gpon 0/0 /1  6    2     vlan  120        28   27   up
+	 331 3333 common   gpon 0/0 /1  16   0     vlan  3333       19   16   up
+	 332  110 common   gpon 0/0 /1  16   1     vlan  110        36   35   up
+	 333  120 common   gpon 0/0 /1  16   2     vlan  120        28   27   up
+	 334 3333 common   gpon 0/0 /1  17   0     vlan  3333       19   16   up
+	 335  110 common   gpon 0/0 /1  17   1     vlan  110        36   35   up
+	 336  120 common   gpon 0/0 /1  17   2     vlan  120        28   27   up
+	 381 3333 common   gpon 0/0 /1  10   0     vlan  3333       19   16   up
+	 382  110 common   gpon 0/0 /1  10   1     vlan  110        36   35   up
+	 383  120 common   gpon 0/0 /1  10   2     vlan  120        28   27   up
+	 387 3333 common   gpon 0/0 /1  15   0     vlan  3333       19   16   up
+	 388  110 common   gpon 0/0 /1  15   1     vlan  110        36   35   up
+	 389  120 common   gpon 0/0 /1  15   2     vlan  120        28   27   up
+[37D                                     [37D     390 3333 common   gpon 0/0 /1  19   0     vlan  3333       19   16   up
+	 391  110 common   gpon 0/0 /1  19   1     vlan  110        36   35   up
+	 392  120 common   gpon 0/0 /1  19   2     vlan  120        28   27   up
+	 396 3333 common   gpon 0/0 /1  14   0     vlan  3333       19   16   up
+	 397  110 common   gpon 0/0 /1  14   1     vlan  110        36   35   up
+	 398  120 common   gpon 0/0 /1  14   2     vlan  120        28   27   up
+	 399 3333 common   gpon 0/0 /3  1    0     vlan  3333       19   16   up
+	 400  110 common   gpon 0/0 /3  1    1     vlan  110        36   35   up
+	 401  120 common   gpon 0/0 /3  1    2     vlan  120        28   27   up
+	 402 3333 common   gpon 0/0 /1  13   0     vlan  3333       19   16   up
+	 403  110 common   gpon 0/0 /1  13   1     vlan  110        36   35   up
+	 404  120 common   gpon 0/0 /1  13   2     vlan  120        28   27   up
+	 405 3333 common   gpon 0/0 /1  0    0     vlan  3333       19   16   down
+	 406  110 common   gpon 0/0 /1  0    1     vlan  110        36   35   down
+	 407  120 common   gpon 0/0 /1  0    2     vlan  120        28   27   down
+	 408 3333 common   gpon 0/0 /3  2    0     vlan  3333       19   16   up
+	 409  110 common   gpon 0/0 /3  2    1     vlan  110        36   35   up
+	 410  120 common   gpon 0/0 /3  2    2     vlan  120        28   27   up
+	 416 3333 common   gpon 0/0 /1  1    0     vlan  3333       19   16   up
+	 417  110 common   gpon 0/0 /1  1    1     vlan  110        36   35   up
+	 418  120 common   gpon 0/0 /1  1    2     vlan  120        28   27   up
+	 419 3333 common   gpon 0/0 /1  2    0     vlan  3333       19   16   up
+	 420  110 common   gpon 0/0 /1  2    1     vlan  110        36   35   up
+	 421  120 common   gpon 0/0 /1  2    2     vlan  120        28   27   up
+[37D                                     [37D     422 3333 common   gpon 0/0 /1  5    0     vlan  3333       19   16   up
+	 423  110 common   gpon 0/0 /1  5    1     vlan  110        36   35   up
+	 424  120 common   gpon 0/0 /1  5    2     vlan  120        28   27   up
+	 425 3333 common   gpon 0/0 /1  11   0     vlan  3333       19   16   up
+	 426  110 common   gpon 0/0 /1  11   1     vlan  110        36   35   up
+	 427  120 common   gpon 0/0 /1  11   2     vlan  120        28   27   up
+	 428 3333 common   gpon 0/0 /3  3    0     vlan  3333       19   16   up
+	 429  110 common   gpon 0/0 /3  3    1     vlan  110        36   35   up
+	 430  120 common   gpon 0/0 /3  3    2     vlan  120        28   27   up
+	 431 3333 common   gpon 0/0 /1  9    0     vlan  3333       19   16   up
+	 432  110 common   gpon 0/0 /1  9    1     vlan  110        36   35   up
+	 433  120 common   gpon 0/0 /1  9    2     vlan  120        28   27   up
+	 437 3333 common   gpon 0/0 /3  0    0     vlan  3333       19   16   down
+	 438  110 common   gpon 0/0 /3  0    1     vlan  110        36   35   down
+	 439  120 common   gpon 0/0 /3  0    2     vlan  120        28   27   down
+	 459 3333 common   gpon 0/0 /1  7    0     vlan  3333       19   16   up
+	 460  110 common   gpon 0/0 /1  7    1     vlan  110        36   35   up
+	 463 3333 common   gpon 0/0 /1  20   0     vlan  3333       19   16   up
+	 464  110 common   gpon 0/0 /1  20   1     vlan  110        36   35   up
+	 465 3333 common   gpon 0/0 /2  0    0     vlan  3333       19   16   up
+	 466  110 common   gpon 0/0 /2  0    1     vlan  110        32   31   up
+	 467 3333 common   gpon 0/0 /1  21   0     vlan  3333       19   16   down
+	 468  110 common   gpon 0/0 /1  21   1     vlan  110        36   35   down
+	 490 3333 common   gpon 0/0 /1  3    0     vlan  3333       19   16   up
+[37D                                     [37D     491  110 common   gpon 0/0 /1  3    1     vlan  110        36   35   up
+	 492 3333 common   gpon 0/0 /3  4    0     vlan  3333       19   16   up
+	 493  110 common   gpon 0/0 /3  4    1     vlan  110        36   35   up
+	 494 3333 common   gpon 0/0 /3  5    0     vlan  3333       19   16   up
+	 495  110 common   gpon 0/0 /3  5    1     vlan  110        30   29   up
+	 496 3333 common   gpon 0/0 /3  6    0     vlan  3333       19   16   up
+	 497  110 common   gpon 0/0 /3  6    1     vlan  110        36   35   up
+	 524 3333 common   gpon 0/0 /1  22   0     vlan  3333       19   16   up
+	 525  110 common   gpon 0/0 /1  22   1     vlan  110        36   35   up
+	 526 3333 common   gpon 0/0 /1  23   0     vlan  3333       19   16   up
+	 527  110 common   gpon 0/0 /1  23   1     vlan  110        36   35   up
+	 528 3333 common   gpon 0/0 /1  24   0     vlan  3333       19   16   up
+	 529  110 common   gpon 0/0 /1  24   1     vlan  110        36   35   up
+	 530 3333 common   gpon 0/0 /1  25   0     vlan  3333       19   16   up
+	 531  110 common   gpon 0/0 /1  25   1     vlan  110        36   35   up
+	 532 3333 common   gpon 0/0 /1  26   0     vlan  3333       19   16   up
+	 533  110 common   gpon 0/0 /1  26   1     vlan  110        36   35   up
+	 534 3333 common   gpon 0/0 /1  27   0     vlan  3333       19   16   up
+	 535  110 common   gpon 0/0 /1  27   1     vlan  110        36   35   up
+	 536 3333 common   gpon 0/0 /0  0    0     vlan  3333       19   16   up
+	 537  110 common   gpon 0/0 /0  0    1     vlan  110        36   35   up
+	 539 3333 common   gpon 0/0 /1  28   0     vlan  3333       19   16   down
+	 540  110 common   gpon 0/0 /1  28   1     vlan  110        36   35   down
+	 541 3333 common   gpon 0/0 /1  29   0     vlan  3333       19   16   down
+[37D                                     [37D     542  110 common   gpon 0/0 /1  29   1     vlan  110        36   35   down
+	 543 3333 common   gpon 0/0 /0  1    0     vlan  3333       19   16   up
+	 544  110 common   gpon 0/0 /0  1    1     vlan  110        30   29   up
+	 555 3333 common   gpon 0/0 /0  2    0     vlan  3333       19   16   up
+	 556  110 common   gpon 0/0 /0  2    1     vlan  110        36   35   up
+	 557 3333 common   gpon 0/0 /0  3    0     vlan  3333       19   16   up
+	 558  110 common   gpon 0/0 /0  3    1     vlan  110        36   35   up
+	 563 3333 common   gpon 0/0 /0  4    0     vlan  3333       19   16   up
+	 564  110 common   gpon 0/0 /0  4    1     vlan  110        36   35   up
+	 567 3333 common   gpon 0/0 /0  5    0     vlan  3333       19   16   down
+	 568  110 common   gpon 0/0 /0  5    1     vlan  110        32   31   down
+	 569 3333 common   gpon 0/0 /0  6    0     vlan  3333       19   16   down
+	 570  110 common   gpon 0/0 /0  6    1     vlan  110        36   35   down
+	 571 3333 common   gpon 0/0 /0  7    0     vlan  3333       19   16   up
+	 572  110 common   gpon 0/0 /0  7    1     vlan  110        36   35   up
+	 573 3333 common   gpon 0/0 /1  30   0     vlan  3333       19   16   up
+	 574  110 common   gpon 0/0 /1  30   1     vlan  110        32   31   up
+	 575 3333 common   gpon 0/0 /1  31   0     vlan  3333       19   16   up
+	 576  110 common   gpon 0/0 /1  31   1     vlan  110        36   35   up
+	 579 3333 common   gpon 0/0 /0  9    0     vlan  3333       19   16   up
+	 580  110 common   gpon 0/0 /0  9    1     vlan  110        36   35   up
+	 581 3333 common   gpon 0/0 /1  32   0     vlan  3333       19   16   up
+	 582  110 common   gpon 0/0 /1  32   1     vlan  110        36   35   up
+	 583 3333 common   gpon 0/0 /0  10   0     vlan  3333       19   16   down
+[37D                                     [37D     584  110 common   gpon 0/0 /0  10   1     vlan  110        36   35   down
+	 585 3333 common   gpon 0/0 /0  8    0     vlan  3333       19   16   up
+	 586  110 common   gpon 0/0 /0  8    1     vlan  110        36   35   up
+	 589 3333 common   gpon 0/0 /1  33   0     vlan  3333       19   16   up
+	 590  110 common   gpon 0/0 /1  33   1     vlan  110        36   35   up
+	 591 3333 common   gpon 0/0 /3  7    0     vlan  3333       19   16   up
+	 592  110 common   gpon 0/0 /3  7    1     vlan  110        36   35   up
+	 593 3333 common   gpon 0/0 /4  1    0     vlan  3333       19   16   up
+	 594  110 common   gpon 0/0 /4  1    1     vlan  110        36   35   up
+	 595 3333 common   gpon 0/0 /4  0    0     vlan  3333       19   16   up
+	 596  110 common   gpon 0/0 /4  0    1     vlan  110        32   31   up
+	 597 3333 common   gpon 0/0 /0  11   0     vlan  3333       19   16   up
+	 598  110 common   gpon 0/0 /0  11   1     vlan  110        36   35   up
+	 599 3333 common   gpon 0/0 /0  12   0     vlan  3333       19   16   up
+	 600  110 common   gpon 0/0 /0  12   1     vlan  110        36   35   up
+	 601 3333 common   gpon 0/0 /0  13   0     vlan  3333       19   16   down
+	 602  110 common   gpon 0/0 /0  13   1     vlan  110        36   35   down
+	 603 3333 common   gpon 0/0 /0  14   0     vlan  3333       19   16   up
+	 604  110 common   gpon 0/0 /0  14   1     vlan  110        36   35   up
+	 605 3333 common   gpon 0/0 /0  15   0     vlan  3333       19   16   down
+	 606  110 common   gpon 0/0 /0  15   1     vlan  110        36   35   down
+	 607 3333 common   gpon 0/0 /4  2    0     vlan  3333       19   16   down
+	 608  110 common   gpon 0/0 /4  2    1     vlan  110        36   35   down
+	 611 3333 common   gpon 0/0 /1  4    0     vlan  3333       19   16   up
+[37D                                     [37D     612  110 common   gpon 0/0 /1  4    1     vlan  110        36   35   up
+	 613 3333 common   gpon 0/0 /3  8    0     vlan  3333       19   16   up
+	 614  110 common   gpon 0/0 /3  8    1     vlan  110        36   35   up
+	 615 3333 common   gpon 0/0 /3  9    0     vlan  3333       19   16   up
+	 616  110 common   gpon 0/0 /3  9    1     vlan  110        30   29   up
+	 621 3333 common   gpon 0/0 /1  12   0     vlan  3333       19   16   up
+	 622  110 common   gpon 0/0 /1  12   1     vlan  110        30   29   up
+	 623 3333 common   gpon 0/0 /0  16   0     vlan  3333       19   16   up
+	 624  110 common   gpon 0/0 /0  16   1     vlan  110        36   35   up
+	 625 3333 common   gpon 0/0 /3  10   0     vlan  3333       19   16   up
+	 626  110 common   gpon 0/0 /3  10   1     vlan  110        32   31   up
+	 627 3333 common   gpon 0/0 /3  11   0     vlan  3333       19   16   up
+	 628  110 common   gpon 0/0 /3  11   1     vlan  110        32   31   up
+	 629 3333 common   gpon 0/0 /3  12   0     vlan  3333       19   16   up
+	 630  110 common   gpon 0/0 /3  12   1     vlan  110        36   35   up
+	 631 3333 common   gpon 0/0 /4  3    0     vlan  3333       19   16   up
+	 632  110 common   gpon 0/0 /4  3    1     vlan  110        36   35   up
+	 633 3333 common   gpon 0/0 /3  13   0     vlan  3333       19   16   up
+	 634  110 common   gpon 0/0 /3  13   1     vlan  110        36   35   up
+	 635 3333 common   gpon 0/0 /4  4    0     vlan  3333       19   16   up
+	 636  110 common   gpon 0/0 /4  4    1     vlan  110        30   29   up
+	 637 3333 common   gpon 0/0 /3  14   0     vlan  3333       19   16   up
+	 638  110 common   gpon 0/0 /3  14   1     vlan  110        36   35   up
+	 639 3333 common   gpon 0/0 /3  15   0     vlan  3333       19   16   up
+[37D                                     [37D     640  110 common   gpon 0/0 /3  15   1     vlan  110        36   35   up
+	 641 3333 common   gpon 0/0 /3  16   0     vlan  3333       19   16   up
+	 642  110 common   gpon 0/0 /3  16   1     vlan  110        36   35   up
+  -----------------------------------------------------------------------------
+   Total : 165  (Up/Down :  141/24)
+   Note : F--Frame, S--Slot, P--Port,
+		  VPI indicates ONT ID for PON, VCI indicates GEM index for GPON,
+		  v/e--vlan/encap, pritag--priority-tagged,
+		  ppp--pppoe, ip--ipoe, ip4--ipv4oe, ip6--ipv6oe
+
+MA5683T(config)#

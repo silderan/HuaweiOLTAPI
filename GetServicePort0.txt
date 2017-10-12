@@ -1,0 +1,42 @@
+	TAG : GetServicePort
+Command : display service-port 432
+
+- - - - - -  RAW DATA - - - - - -
+display service-port 432
+  -------------------------------------------------------------
+  Index               : 432
+  VLAN ID             : 110
+  VLAN attr           : common
+  Port type           : gpon
+  F/S/P               : 0/0/1
+  ONT ID              : 9
+  GEM port index      : 1
+  Flow type           : vlan
+  Flow para           : 110
+  TX                  : 35
+  Inbound table name  : TX_3030
+  RX                  : 36
+  Outbound table name : RX_3030
+  Admin status        : enable
+  State               : up
+  Label               : -
+  Priority            : -
+  PVC bundle          : no
+  Max MAC count       : 1023
+  Tag transform       : translate
+  Description         :
+  Remote description  :
+[37D                                     [37D  Service-port bundle : -
+[37D                                     [37D  Cos                 : -
+  Car-Group           : -
+  Static MAC          :
+  IP address          :
+  Stat. performance   : disable
+  -------------------------------------------------------------
+  Note: F--Frame, S--Slot, P--Port
+		v/e--vlan/encap
+		Dvlan--double vlan
+		pritag--priority-tagged,
+		ppp--pppoe, ip--ipoe, ip4--ipv4oe, ip6--ipv6oe
+
+MA5683T(config)#

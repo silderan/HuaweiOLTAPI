@@ -58,11 +58,12 @@ QFrontend::QFrontend(QWidget *parent) :
 	ui->command->addItem( "modify Line Profile", QStringList() << "port" "value" << "name"  );
 	ui->command->addItem( "delete Line Profile", QStringList() << "port" << "value" );
 
-	ui->command->addItem( "get all Service Ports", QStringList() << "frame" << "slot" << "port" << "ontID" );
-	ui->command->addItem( "get Service Port", QStringList() << "frame" << "slot" << "port" << "ontID" << "value" );
+	ui->command->addItem( "get all Service Ports", QStringList() );
+	ui->command->addItem( "get Service Port", QStringList() << "value" );
+	ui->command->addItem( "get ONT Service Port", QStringList() << "frame" << "slot" << "port" << "ontID" );
 	ui->command->addItem( "add Service Port", QStringList() << "frame" << "slot" << "port" << "ontID" << "oltVLAN" << "ontVLAN" << "gemPort" << "dwTrafficTable" << "upTrafficTable" );
 	ui->command->addItem( "modify Service Port", QStringList() << "frame" << "slot" << "port" << "ontID" << "value" << "oltVLAN" << "ontVLAN" << "gemPort" << "dwTrafficTable" << "upTrafficTable" );
-	ui->command->addItem( "delete Service Port", QStringList() << "frame" << "slot" << "port" << "ontID" << "value" );
+	ui->command->addItem( "delete Service Port", QStringList() << "value" );
 
 	globalConfig.load();
 	ui->leFQDN->setText( globalConfig.hostName() );
@@ -115,6 +116,15 @@ QFrontend::QFrontend(QWidget *parent) :
 
 	connect( &huaweiOLT, SIGNAL(trafficTableIPs(OLTCommands::TrafficTableIPs)), this, SLOT(trafficTableIPsReceived(OLTCommands::TrafficTableIPs)) );
 	connect( &huaweiOLT, SIGNAL(trafficTableIP(OLTCommands::TrafficTableIP)), this, SLOT(trafficTableIPReceived(OLTCommands::TrafficTableIP)) );
+
+	connect( &huaweiOLT, SIGNAL(dbaProfiles(OLTCommands::DBAProfiles)), this, SLOT(dbaProfilesReceived(OLTCommands::DBAProfiles)) );
+	connect( &huaweiOLT, SIGNAL(dbaProfile(OLTCommands::DBAProfile)), this, SLOT(dbaProfileReceived(OLTCommands::DBAProfile)) );
+
+	connect( &huaweiOLT, SIGNAL(lineProfiles(OLTCommands::LineProfiles)), this, SLOT(lineProfilesReceived(OLTCommands::LineProfiles)) );
+	connect( &huaweiOLT, SIGNAL(lineProfile(OLTCommands::LineProfile)), this, SLOT(lineProfileReceived(OLTCommands::LineProfile)) );
+
+	connect( &huaweiOLT, SIGNAL(servicePorts(OLTCommands::ServicePorts)), this, SLOT(servicePortsReceived(OLTCommands::ServicePorts)) );
+	connect( &huaweiOLT, SIGNAL(servicePort(OLTCommands::ServicePort)), this, SLOT(servicePortReceived(OLTCommands::ServicePort)) );
 }
 
 QFrontend::~QFrontend()
@@ -340,26 +350,29 @@ void QFrontend::on_sendCMD_clicked()
 		break;
 
 	case QFrontend::CmdGetLineProfiles:
-		huaweiOLT.getLineProfiles(ui->port->value());
+		huaweiOLT.getGPONLineProfiles();
 		break;
 	case QFrontend::CmdGetLineProfile:
-		huaweiOLT.getLineProfile(ui->port->value(), ui->value->value(), ui->name->text());
+		huaweiOLT.getGPONLineProfile(ui->value->value());
 		break;
 	case QFrontend::CmdAddLineProfile:
-		huaweiOLT.addLineProfile(ui->value->value(), ui->name->text());
+		huaweiOLT.addGPONLineProfile(ui->name->text());
 		break;
 	case QFrontend::CmdModLineProfile:
 //		huaweiOLT.modLinePProfile(ui->value->value(), ui->name->text(), ui->dbaType.text(), ui->dbaSpeeds.text());
 		break;
 	case QFrontend::CmdDelLineProfile:
-		huaweiOLT.delLineProfile(ui->port->value(), ui->value->value());
+		huaweiOLT.delGPONLineProfile(ui->value->value());
 		break;
 
 	case QFrontend::CmdGetServicePorts:
-		huaweiOLT.getServicePorts( ui->frame->value(), ui->slot->value(), ui->port->value(), ui->ontID->value() );
+		huaweiOLT.getServicePorts( );
 		break;
 	case QFrontend::CmdGetServicePort:
-		huaweiOLT.getServicePort( ui->frame->value(), ui->slot->value(), ui->port->value(), ui->ontID->value(), ui->value->value() );
+		huaweiOLT.getServicePort( ui->value->value() );
+		break;
+	case QFrontend::CmdGetONTServicePort:
+		huaweiOLT.getONTServicePort( ui->frame->value(), ui->slot->value(), ui->port->value(), ui->ontID->value() );
 		break;
 	case QFrontend::CmdAddServicePort:
 		huaweiOLT.addServicePort( ui->frame->value(), ui->slot->value(), ui->port->value(), ui->ontID->value(), ui->oltVLAN->value(), ui->ontVLAN->value(), ui->gemPort->value(), ui->dwTrafficTable->value(), ui->upTrafficTable->value() );

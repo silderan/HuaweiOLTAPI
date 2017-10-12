@@ -1,0 +1,13 @@
+display ont-lineprofile gpon all
+  -----------------------------------------------------------------------------
+  Profile-ID  Profile-name                                Binding times
+  -----------------------------------------------------------------------------
+  0           line-profile_default_0                      0
+  5           line-profile_5                              73
+  6           TlvTContsGemIndex0                          0
+  20          TContSeparados                              0
+  21          TlvTContGemX                                0
+  -----------------------------------------------------------------------------
+  Total: 5
+
+MA5683T(config)#

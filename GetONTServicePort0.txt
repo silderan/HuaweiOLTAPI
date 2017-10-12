@@ -1,0 +1,18 @@
+
+  Command:
+		  display service-port port 0/0/0 ont 0
+  Switch-Oriented Flow List
+  -----------------------------------------------------------------------------
+   INDEX VLAN VLAN     PORT F/ S/ P VPI  VCI   FLOW  FLOW       RX   TX   STATE
+		 ID   ATTR     TYPE                    TYPE  PARA
+  -----------------------------------------------------------------------------
+	 536 3333 common   gpon 0/0 /0  0    0     vlan  3333       19   16   up
+	 537  110 common   gpon 0/0 /0  0    1     vlan  110        36   35   up
+  -----------------------------------------------------------------------------
+   Total : 2  (Up/Down :    2/0)
+   Note : F--Frame, S--Slot, P--Port,
+		  VPI indicates ONT ID for PON, VCI indicates GEM index for GPON,
+		  v/e--vlan/encap, pritag--priority-tagged,
+		  ppp--pppoe, ip--ipoe, ip4--ipv4oe, ip6--ipv6oe
+
+MA5683T(config)#

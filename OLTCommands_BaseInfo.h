@@ -5,6 +5,52 @@
 
 namespace OLTCommands
 {
+struct OntBasicInfo
+{
+	quint8 frame;
+	quint8 slot;
+	quint8 port;
+	quint8 id;
+	QString serial;
+	QStringList fromString(const QString &txt, int framePos, int slotPos, int portPos, int idPos, int serialPos);
+	QStringList toStringInfoData() const
+	{
+		return QStringList() << "ONT Basic Info" << QString("%1/%2/%3-%4 %5").arg(frame).arg(slot).arg(port).arg(id).arg(serial);
+	}
+	void clear()
+	{
+		frame = 0;
+		slot = 0;
+		id = 0;
+		port = 0;
+		serial.clear();
+	}
+};
+
+class PortType
+{
+	bool m_isGPON;
+public:
+	bool isGPON()const {return m_isGPON; }
+	bool isEPON()const {return !m_isGPON; }
+	void setGPON(bool gpon=true) { m_isGPON = gpon; }
+	void fromString(const QString &s)
+		{ setGPON(s.contains("gpon", Qt::CaseInsensitive)); }
+	QString toString()const { return isGPON() ? "GPON" : "EPON"; }
+
+	void clear()
+	{ m_isGPON = true; }
+
+	PortType() : m_isGPON(true)
+	{	}
+	PortType(const PortType &p) : m_isGPON(p.m_isGPON)
+	{	}
+	PortType(const QString &s)
+	{
+		fromString(s);
+	}
+};
+
 class OLTCommandReply
 {
 	QString m_tag;
@@ -37,28 +83,6 @@ public:
 protected:
 	virtual QStringList toStringInfoData() const
 	{	return QStringList(); }
-
-	struct OntBasicInfo
-	{
-		quint8 frame;
-		quint8 slot;
-		quint8 port;
-		quint8 id;
-		QString serial;
-		QStringList fromString(const QString &txt, int framePos, int slotPos, int portPos, int idPos, int serialPos);
-		QStringList toStringInfoData() const
-		{
-			return QStringList() << "ONT Basic Info" << QString("%1/%2/%3-%4 %5").arg(frame).arg(slot).arg(port).arg(id).arg(serial);
-		}
-		void clear()
-		{
-			frame = 0;
-			slot = 0;
-			id = 0;
-			port = 0;
-			serial.clear();
-		}
-	};
 
 public:
 	QString toString() const;

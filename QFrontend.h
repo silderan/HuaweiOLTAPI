@@ -48,6 +48,7 @@ Q_OBJECT
 
 		CmdGetServicePorts,
 		CmdGetServicePort,
+		CmdGetONTServicePort,
 		CmdAddServicePort,
 		CmdModServicePort,
 		CmdDelServicePort

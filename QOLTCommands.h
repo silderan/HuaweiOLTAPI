@@ -45,17 +45,18 @@ public:
 //	void modDBAPProfile(int index, const QString &name, const QString &type, const QString &speeds);
 	void delDBAProfile(int index);
 
-	void getServicePorts(int frame, int slot, int port, int ontid);
-	void getServicePort(int frame, int slot, int port, int ontid, int index);
+	void getServicePorts();
+	void getServicePort(int index);
+	void getONTServicePort(int frame, int slot, int port, int ontid);
 	void addServicePort(int frame, int slot, int port, int ontid, int oltVLAN, int ontVLAN, int gemport, int upTrafficIndex = -1, int dwTrafficIndex = -1);
 //	void modServicePort(int frame, int slot, int port, int ontid, int oltVLAN, int ontVLAN, int gemport, int upTrafficIndex = -1, int dwTrafficIndex = -1);
 	void delServicePort(int index);
 
-	void getLineProfiles(int gepon);
-	void getLineProfile(int gepon, int index, const QString &name);
-	void addLineProfile(int gepon, const QString &name);
-//	void modLineProfile(int index, const QString &name, const QString &type, const QString &speeds);
-	void delLineProfile(int gepon, int index);
+	void getGPONLineProfiles();
+	void getGPONLineProfile(int id);
+	void addGPONLineProfile(const QString &name);
+//	void modLineProfile(const QString &name, const QString &type, const QString &speeds);
+	void delGPONLineProfile(int id);
 
 private slots:
 	void onCommandReceived(const QString &tag, const QString &cmd, const QString data);

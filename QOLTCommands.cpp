@@ -115,16 +115,18 @@ void QOLTCommands::delDBAProfile(int index)
 	addCommand( "DelDBAProfile", oltConstants.delDBAProfile(index) );
 }
 
-void QOLTCommands::getServicePorts(int frame, int slot, int port, int ontid)
+void QOLTCommands::getServicePorts()
 {
-	addCommand( "GetServicePorts", oltConstants.getServicePorts(frame, slot, port, ontid) );
+	addCommand( "GetServicePorts", oltConstants.getServicePorts() );
 }
-
-void QOLTCommands::getServicePort(int frame, int slot, int port, int ontid, int index)
+void QOLTCommands::getServicePort(int index)
 {
-//	addCommand( "GetServicePorts", oltConstants.getServicePort(frame, slot, port, ontid, index) );
+	addCommand( "GetServicePort", oltConstants.getServicePort(index) );
 }
-
+void QOLTCommands::getONTServicePort(int frame, int slot, int port, int ontid)
+{
+	addCommand( "GetONTServicePort", oltConstants.getONTServicePort(frame, slot, port, ontid) );
+}
 void QOLTCommands::addServicePort(int frame, int slot, int port, int ontid, int oltVLAN, int ontVLAN, int gemport, int upTrafficIndex, int dwTrafficIndex)
 {
 	if( (upTrafficIndex != -1) && (dwTrafficIndex != -1) )
@@ -132,30 +134,26 @@ void QOLTCommands::addServicePort(int frame, int slot, int port, int ontid, int 
 	else
 		addCommand( "AddServicePort", oltConstants.addServicePortUnlimited(oltVLAN, frame, slot, port, ontid, gemport, ontVLAN) );
 }
-
 void QOLTCommands::delServicePort(int index)
 {
 	addCommand( "DelServicePort", oltConstants.delServicePort(index) );
 }
 
-void QOLTCommands::getLineProfiles(int gepon)
+void QOLTCommands::getGPONLineProfiles()
 {
-	addCommand( "GetLineProfiles", oltConstants.getLineProfiles(gepon) );
+	addCommand( "GetGPONLineProfiles", oltConstants.getGPONLineProfiles() );
 }
-
-void QOLTCommands::getLineProfile(int gepon, int index, const QString &name)
+void QOLTCommands::getGPONLineProfile(int id)
 {
-	addCommand( "GetLineProfile", oltConstants.getLineProfile(gepon, index, name) );
+	addCommand( "GetGPONLineProfile", oltConstants.getGPONLineProfile(id) );
 }
-
-void QOLTCommands::addLineProfile(int gepon, const QString &name)
+void QOLTCommands::addGPONLineProfile(const QString &name)
 {
-	addCommand( "AddLineProfile", oltConstants.addLineProfile(gepon, name) );
+	addCommand( "AddGPONLineProfile", oltConstants.addGPONLineProfile(name) );
 }
-
-void QOLTCommands::delLineProfile(int gepon, int index)
+void QOLTCommands::delGPONLineProfile(int id)
 {
-	addCommand( "DelLineProfile", oltConstants.delLineProfile(gepon, index) );
+	addCommand( "DelGPONLineProfile", oltConstants.delGPONLineProfile(id) );
 }
 
 void QOLTCommands::onCommandReceived(const QString &label, const QString &cmd, const QString data)
@@ -180,14 +178,15 @@ void QOLTCommands::onCommandReceived(const QString &label, const QString &cmd, c
 	else if( label == "ModDBAProfile" )			emit dbaProfile( OLTCommands::DBAProfile(label, cmd, data) );
 	else if( label == "DelDBAProfile" )			emit dbaProfile( OLTCommands::DBAProfile(label, cmd, data) );
 
-	else if( label == "GetLineProfiles" )		emit lineProfiles( OLTCommands::LineProfiles(label, cmd, data) );
-	else if( label == "GetLineProfile" )		emit lineProfile( OLTCommands::LineProfile(label, cmd, data) );
-	else if( label == "AddLineProfile" )		emit lineProfile( OLTCommands::LineProfile(label, cmd, data) );
-	else if( label == "ModLineProfile" )		emit lineProfile( OLTCommands::LineProfile(label, cmd, data) );
-	else if( label == "DelLineProfile" )		emit lineProfile( OLTCommands::LineProfile(label, cmd, data) );
+	else if( label == "GetGPONLineProfiles" )	emit lineProfiles( OLTCommands::LineProfiles(label, cmd, data) );
+	else if( label == "GetGPONLineProfile" )	emit lineProfile( OLTCommands::LineProfile(label, cmd, data) );
+	else if( label == "AddGPONLineProfile" )	emit lineProfile( OLTCommands::LineProfile(label, cmd, data) );
+	else if( label == "ModGPONLineProfile" )	emit lineProfile( OLTCommands::LineProfile(label, cmd, data) );
+	else if( label == "DelGPONLineProfile" )	emit lineProfile( OLTCommands::LineProfile(label, cmd, data) );
 
 	else if( label == "GetServicePorts" )		emit servicePorts( OLTCommands::ServicePorts(label, cmd, data) );
 	else if( label == "GetServicePort" )		emit servicePort( OLTCommands::ServicePort(label, cmd, data) );
+	else if( label == "GetONTServicePort" )		emit servicePort( OLTCommands::ServicePort(label, cmd, data) );
 	else if( label == "AddServicePort" )		emit servicePort( OLTCommands::ServicePort(label, cmd, data) );
 	else if( label == "ModServicePort" )		emit servicePort( OLTCommands::ServicePort(label, cmd, data) );
 	else if( label == "DelServicePort" )		emit servicePort( OLTCommands::ServicePort(label, cmd, data) );
