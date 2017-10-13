@@ -7,16 +7,17 @@ namespace OLTCommands
 {
 struct ServicePortFlow
 {
-	QString type;
-	QString parameter;
+	OLTStringValue type;
+	OLTStringValue parameter;
 public:
 	void clear()
 	{
 		type.clear();
 		parameter.clear();
 	}
-	QString toString()const { return QObject::tr("Type='%1' Parameter='%2'").arg(type, parameter); }
+	QString toString()const { return QObject::tr("Type='%1' Parameter='%2'").arg(type.toString(), parameter.toString()); }
 };
+
 class ServicePortState
 {
 	enum
@@ -60,43 +61,75 @@ public:
 	ServicePortState(const QString &s)
 	{	fromString(s);	}
 };
+class ServicePortAdminStatus
+{
+	enum
+	{
+		Undefined,
+		Unknown,
+		Enabled,
+		Disabled
+	}m_state;
+	QString m_data;
+public:
+	ServicePortAdminStatus() : m_state(Undefined)
+	{	}
+	ServicePortAdminStatus(const QString &s)
+	{ fromString(s); }
+	ServicePortAdminStatus(const ServicePortAdminStatus &s) : m_state(s.m_state), m_data(s.m_data)
+	{	}
+	void fromString(const QString &s)
+	{
+		if( s == "enable" )		{ m_data = "enable";	m_state = Enabled; }
+		else
+		if( s == "disable" )	{ m_data = "disable";	m_state = Enabled; }
+		else
+		if( s == "-" )			{ m_data = "-";			m_state = Undefined;}
+		else
+		{
+			m_data = s;
+			m_state = Unknown;
+		}
+	}
+	QString toString() const
+	{
+		return m_data;
+	}
+};
 
 struct ServicePortInfoBase : public OntBasicInfo
 {
-	int index;
-	int vlan;
-	QString vlanAttrib;
+	OLTIntValue index;
+	OLTIntValue vlan;
+	OLTStringValue vlanAttrib;
 	PortType portType;
-	int vpi;
-	int vci;
+	OLTIntValue gemportIndex;
 	ServicePortFlow flow;
-	int rxTrafficTableIndex;
-	int txTrafficTableIndex;
+	OLTIntValue rxTrafficTableIndex;
+	OLTIntValue txTrafficTableIndex;
 	ServicePortState state;
 	void clear()
 	{
-		index = -1;
-		vlan = -1;
+		index.clear();
+		vlan.clear();
 		vlanAttrib.clear();
-		vpi = -1;
-		vci = -1;
+		gemportIndex.clear();
 		flow.clear();
-		rxTrafficTableIndex = -1;
-		txTrafficTableIndex = -1;
+		rxTrafficTableIndex.clear();
+		txTrafficTableIndex.clear();
 		state.clear();
 	}
 	virtual QStringList toStringInfoData() const
 	{
-		return QStringList()
-				<< QObject::tr("Index") << QString::number(index)
-				<< QObject::tr("VLAN ID") << QString::number(vlan)
-				<< QObject::tr("VLAN ATTRIB") << vlanAttrib
+		return OntBasicInfo::toStringInfoData()
+				<< QObject::tr("Index") << index.toString()
+				<< QObject::tr("VLAN ID") << vlan.toString()
+				<< QObject::tr("VLAN ATTRIB") << vlanAttrib.toString()
 				<< QObject::tr("Port type") << portType.toString()
-				<< QObject::tr("VPI (ONT ID for PON)") << QString::number(vpi)
-				<< QObject::tr("VCI (GEM index for GPON)") << QString::number(vci)
+				<< QObject::tr("VCI (GEM index for GPON)") << gemportIndex.toString()
 				<< QObject::tr("Flow") << flow.toString()
-				<< QObject::tr("Rx traffic table IP index") << QString::number(rxTrafficTableIndex)
-				<< QObject::tr("Tx traffic table IP index") << QString::number(txTrafficTableIndex)
+				<< QObject::tr("Rx traffic table IP index") << rxTrafficTableIndex.toString()
+				<< QObject::tr("Tx traffic table IP index") << txTrafficTableIndex.toString()
 				<< QObject::tr("State") << state.toString();
 	}
 	virtual ~ServicePortInfoBase()
@@ -105,7 +138,44 @@ struct ServicePortInfoBase : public OntBasicInfo
 
 struct ServicePortInfo : ServicePortInfoBase
 {
-
+	OLTStringValue txTrafficTableName;
+	OLTStringValue rxTrafficTableName;
+	ServicePortAdminStatus adminStatus;
+	OLTStringValue label;
+	Priority priority;
+	OLTStringValue pvcBundle; // Grupo "private virtual circuit"
+	OLTIntValue maxMACCount;
+	OLTStringValue tagTransform;
+	OLTStringValue descrip;
+	OLTStringValue remoteDescrip;
+	OLTStringValue srvPortBundle;
+	OLTStringValue cos;
+	OLTIntValue carGroup;
+	OLTStringValue staticMAC;
+	OLTStringValue ipAddress;
+	OLTStringValue statPerformance;
+	virtual QStringList toStringInfoData() const
+	{
+		return ServicePortInfoBase::toStringInfoData()
+				<< QObject::tr("Tx Traffic Table Name") << txTrafficTableName.toString()
+				<< QObject::tr("Rx Traffic Table Name") << rxTrafficTableName.toString()
+				<< QObject::tr("Admin status") << adminStatus.toString()
+				<< QObject::tr("Etiqueta") << label.toString()
+				<< QObject::tr("Prioridad") << priority.toString()
+				<< QObject::tr("Grupo PVC") << pvcBundle.toString()
+				<< QObject::tr("Máxima cantidad MACs") << maxMACCount.toString()
+				<< QObject::tr("Tag transform") << tagTransform.toString()
+				<< QObject::tr("Descripción") << descrip.toString()
+				<< QObject::tr("Descripción remota") << remoteDescrip.toString()
+				<< QObject::tr("Grupo service-port") << srvPortBundle.toString()
+				<< QObject::tr("Cos") << cos.toString()
+				<< QObject::tr("car-group") << carGroup.toString()
+				<< QObject::tr("MAC estática") << staticMAC.toString()
+				<< QObject::tr("Dirección IP") << ipAddress .toString()
+				<< QObject::tr("stat performance") << statPerformance.toString();
+	}
+	virtual ~ServicePortInfo()
+	{	}
 };
 
 class ServicePortInfoList : public QList<ServicePortInfoBase>
@@ -124,10 +194,14 @@ public:
 
 class ServicePort : public OLTCommandReply
 {
-	ServicePortInfo m_servicePort;
+	ServicePortInfo m_srvPort;
 
 public:
 	ServicePort(const QString &label,const QString &command, const QString &rawData);
+	virtual QStringList toStringInfoData() const
+	{
+		return m_srvPort.toStringInfoData();
+	}
 };
 
 class ServicePorts : public OLTCommandReply

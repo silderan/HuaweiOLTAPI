@@ -5,6 +5,99 @@
 
 namespace OLTCommands
 {
+class OLTIntValue
+{
+	int m_value;
+	enum State
+	{
+		Unknown,
+		Undefined,
+		Defined
+	}m_state;
+
+public:
+	OLTIntValue() : m_value(0), m_state(Undefined)
+	{	}
+	OLTIntValue(const OLTIntValue &v) : m_value(v.m_value), m_state(v.m_state)
+	{	}
+	OLTIntValue(const QString &v)
+	{
+		fromString(v);
+	}
+	void fromString(const QString &v)
+	{
+		if( v == "-" )
+			m_value = Undefined;
+		else
+		{
+			bool converted;
+			m_value = v.toInt(&converted);
+			m_state = converted ? Defined : Unknown;
+		}
+	}
+	QString toString()const
+	{
+		switch( m_state )
+		{
+		case Unknown:	return "?";
+		case Undefined:	return "-";
+		case Defined:
+			break;
+		}
+		return QString::number(m_value);
+	}
+	void clear()
+	{
+		m_state = Undefined;
+	}
+};
+
+struct OLTStringValue
+{
+	QString m_value;
+	enum State
+	{
+		Unknown,
+		Undefined,
+		Defined
+	}m_state;
+
+public:
+	OLTStringValue() : m_state(Undefined)
+	{	}
+	OLTStringValue(const OLTStringValue &v) : m_value(v.m_value), m_state(v.m_state)
+	{	}
+	OLTStringValue(const QString &v)
+	{
+		fromString(v);
+	}
+	void fromString(const QString &v)
+	{
+		if( v == "-" )
+			m_value = Undefined;
+		else
+		{
+			m_value = v;
+			m_state = (v == "?") ? Unknown : Defined;
+		}
+	}
+	QString toString()const
+	{
+		switch( m_state )
+		{
+		case Unknown:	return "?";
+		case Undefined:	return "-";
+		case Defined:
+			break;
+		}
+		return m_value;
+	}
+	void clear()
+	{
+		m_state = Undefined;
+	}
+};
+
 struct OntBasicInfo
 {
 	quint8 frame;
@@ -48,6 +141,61 @@ public:
 	PortType(const QString &s)
 	{
 		fromString(s);
+	}
+};
+
+class Priority
+{
+	enum
+	{
+		Undefined = -2,
+		Unknown = -1,
+		P0 = 0,
+		P1,
+		P2,
+		P3,
+		P4,
+		P5,
+		P6,
+		P7
+	}m_value;
+public:
+	Priority() : m_value(Undefined)
+	{	}
+	Priority(const QString &s)
+	{	fromString(s);	}
+	Priority(const Priority &p) : m_value(p.m_value)
+	{	}
+	void fromString(const QString &p)
+	{
+		if( p == "-" )			m_value = Undefined;
+		else if( p == "0" )		m_value = P0;
+		else if( p == "1" )		m_value = P1;
+		else if( p == "2" )		m_value = P2;
+		else if( p == "3" )		m_value = P3;
+		else if( p == "4" )		m_value = P4;
+		else if( p == "5" )		m_value = P5;
+		else if( p == "6" )		m_value = P6;
+		else if( p == "7" )		m_value = P7;
+		else
+			m_value = Unknown;
+	}
+	QString toString() const
+	{
+		switch( m_value )
+		{
+		case Undefined:	return "-";
+		case Unknown:	return "?";
+		case P0:		return "0";
+		case P1:		return "1";
+		case P2:		return "2";
+		case P3:		return "3";
+		case P4:		return "4";
+		case P5:		return "5";
+		case P6:		return "6";
+		case P7:		return "7";
+		}
+		return "!?";
 	}
 };
 
