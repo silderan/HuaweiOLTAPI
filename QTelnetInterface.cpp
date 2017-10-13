@@ -86,6 +86,30 @@ void QTelnetInterface::playQueue()
 void QTelnetInterface::onDataFromOLT(const char *data, int length)
 {
 	m_dataBuffer.append( QByteArray(data, length) );
+	// Let's strip out the text between \033[37D escape codes.
+	while( m_dataBuffer.contains('\033') )
+	{
+		int ini = m_dataBuffer.indexOf("\033[37D");
+		int end = m_dataBuffer.indexOf("\033[37D", ini+6);
+		if( end != -1 )
+		{
+			int i;
+			// Check if the text between this escape codes are somehing else but blank spaces.
+			for( i = ini+6; i < end; i++  )
+			{
+				if( m_dataBuffer.at(i) != ' ')
+				{
+					qWarning( QString("Escape text strip error:\n%1").arg(m_dataBuffer.mid(ini, end-ini)).toLatin1().data() );
+					m_dataBuffer = m_dataBuffer.left(ini) + m_dataBuffer.mid(ini+5);
+					// Beware, the end value must not be the original to compensate that the m_dataBuffer has been altered above
+					m_dataBuffer = m_dataBuffer.left(end-5) + m_dataBuffer.mid(end);
+					break;
+				}
+			}
+			if( i == end )
+				m_dataBuffer = m_dataBuffer.left(ini) + m_dataBuffer.mid(end+5);
+		}
+	}
 	if( m_dataBuffer.contains(oltConstants.constantMoreText()) )
 	{
 		m_dataBuffer.replace(oltConstants.constantMoreText(), "");
