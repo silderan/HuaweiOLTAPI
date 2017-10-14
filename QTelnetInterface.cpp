@@ -87,9 +87,9 @@ void QTelnetInterface::onDataFromOLT(const char *data, int length)
 {
 	m_dataBuffer.append( QByteArray(data, length) );
 	// Let's strip out the text between \033[37D escape codes.
-	while( m_dataBuffer.contains('\033') )
+	int ini;
+	while( (ini = m_dataBuffer.indexOf("\033[37D")) != -1 )
 	{
-		int ini = m_dataBuffer.indexOf("\033[37D");
 		int end = m_dataBuffer.indexOf("\033[37D", ini+6);
 		if( end != -1 )
 		{

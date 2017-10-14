@@ -1,0 +1,51 @@
+  -----------------------------------------------------------------------------
+  Profile-ID          :5
+  Profile-name        :line-profile_5
+  Access-type         :GPON
+  -----------------------------------------------------------------------------
+  FEC upstream switch :Disable
+  OMCC encrypt switch :Off
+  Qos mode            :PQ
+  Mapping mode        :VLAN
+  TR069 management    :Enable
+  TR069 IP index      :0
+  -----------------------------------------------------------------------------
+  <T-CONT   0>          DBA Profile-ID:1
+  <T-CONT   1>          DBA Profile-ID:12
+   <Gem Index 0>
+   --------------------------------------------------------------------
+   |Serv-Type:ETH |Encrypt:off |Cascade:off |GEM-CAR:-            |
+   |Upstream-priority-queue:0  |Downstream-priority-queue:-       |
+   --------------------------------------------------------------------
+	Mapping VLAN  Priority Port    Port  Bundle  Flow  Transparent
+	index                  type    ID    ID      CAR
+   --------------------------------------------------------------------
+	0       3333  -        -       -     -       -     -
+---- More ( Press 'Q' to break ) ----[37D                                     [37D   --------------------------------------------------------------------
+   <Gem Index 1>
+   --------------------------------------------------------------------
+   |Serv-Type:ETH |Encrypt:off |Cascade:off |GEM-CAR:-            |
+   |Upstream-priority-queue:0  |Downstream-priority-queue:-       |
+   --------------------------------------------------------------------
+	Mapping VLAN  Priority Port    Port  Bundle  Flow  Transparent
+	index                  type    ID    ID      CAR
+   --------------------------------------------------------------------
+	1       110   -        -       -     -       -     -
+   --------------------------------------------------------------------
+   <Gem Index 2>
+   --------------------------------------------------------------------
+   |Serv-Type:ETH |Encrypt:off |Cascade:off |GEM-CAR:-            |
+   |Upstream-priority-queue:0  |Downstream-priority-queue:-       |
+   --------------------------------------------------------------------
+	Mapping VLAN  Priority Port    Port  Bundle  Flow  Transparent
+	index                  type    ID    ID      CAR
+   --------------------------------------------------------------------
+	2       120   -        -       -     -       -     -
+   --------------------------------------------------------------------
+  -----------------------------------------------------------------------------
+  Notes: Run the display traffic table ip command to query
+		 traffic table configuration
+---- More ( Press 'Q' to break ) ----[37D                                     [37D  -----------------------------------------------------------------------------
+  Binding times       :73
+  -----------------------------------------------------------------------------
+MA5683T(config)#

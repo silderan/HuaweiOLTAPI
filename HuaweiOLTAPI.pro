@@ -73,7 +73,10 @@ DISTFILES += \
     GetONTWANInfo0.txt \
     GetTrafficTableIP0.txt \
     GetTrafficTableIPs0.txt \
-    GetLineProfiles0.txt \
     GetServicePorts0.txt \
     GetServicePort0.txt \
-    GetONTServicePort0.txt
+    GetONTServicePort0.txt \
+    GetGPONLineProfile0.txt \
+    GetGPONLineProfiles0.txt \
+    GetGPONLineProfile1.txt \
+    GetDBAProfile0.txt

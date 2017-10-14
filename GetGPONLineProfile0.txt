@@ -1,0 +1,20 @@
+display ont-lineprofile gpon profile-id 0
+  -----------------------------------------------------------------------------
+  Profile-ID          :0
+  Profile-name        :line-profile_default_0
+  Access-type         :GPON
+  -----------------------------------------------------------------------------
+  FEC upstream switch :Disable
+  OMCC encrypt switch :Off
+  Qos mode            :GEM-CAR
+  Mapping mode        :VLAN
+  TR069 management    :Disable
+  TR069 IP index      :0
+  -----------------------------------------------------------------------------
+  <T-CONT   0>          DBA Profile-ID:2
+  <T-CONT   1>          DBA Profile-ID:0
+  -----------------------------------------------------------------------------
+  Binding times       :0
+  -----------------------------------------------------------------------------
+
+MA5683T(config)#

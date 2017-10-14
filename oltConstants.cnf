@@ -100,7 +100,7 @@ COMMAND: RebootONT = ont reset graceful {port} {ontid} {gracetime}\ny
 # Para crear/borrar/mostrar los lineprofile de gpon/epon
 # TODO: Completarlo.
 COMMAND: GetLineProfiles = display ont-lineprofile {gepon} all
-COMMAND: GetLineProfile = display ont-lineprofile {gepon} profile-id {profile} profile-name "{name}"
+COMMAND: GetLineProfile = display ont-lineprofile {gepon} profile-id {id}
 COMMAND: AddLineProfile = ont-lineprofile {gepon} profile-name "{name}"
 COMMAND: DelLineProfile = undo ont-lineprofile {gepon} profile-id {profile}
 COMMAND: ModLineProfile = ont-lineprofile {gepon} profile-id "{index}"

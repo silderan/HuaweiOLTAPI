@@ -1,0 +1,13 @@
+display dba-profile profile-id 0
+  -----------------------------------------------------------------
+  Profile-name :            dba-profile_0[Default&Reserve]
+  Profile-ID:               0
+  type:                     3
+  Bandwidth compensation:   No
+  Fix(kbps):                0
+  Assure(kbps):             8192
+  Max(kbps):                20480
+  bind-times:               1
+  -----------------------------------------------------------------
+
+MA5683T(config)#

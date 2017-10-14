@@ -52,11 +52,11 @@ QFrontend::QFrontend(QWidget *parent) :
 	ui->command->addItem( "modify DBA Profile", QStringList() << "value"  << "name" << "dbaType" << "dbaSpeeds" );
 	ui->command->addItem( "delete DBA Profile", QStringList() << "value" );
 
-	ui->command->addItem( "get all Line Profiles", QStringList() << "port" );
-	ui->command->addItem( "get Line Profile", QStringList() << "port" << "value" << "name" );
-	ui->command->addItem( "add Line Profile", QStringList() << "port" << "name" );
-	ui->command->addItem( "modify Line Profile", QStringList() << "port" "value" << "name"  );
-	ui->command->addItem( "delete Line Profile", QStringList() << "port" << "value" );
+	ui->command->addItem( "get all Line Profiles", QStringList() );
+	ui->command->addItem( "get Line Profile", QStringList() << "value" );
+	ui->command->addItem( "add Line Profile", QStringList() << "name" );
+	ui->command->addItem( "modify Line Profile", QStringList() << "value" << "name"  );
+	ui->command->addItem( "delete Line Profile", QStringList() << "value" );
 
 	ui->command->addItem( "get all Service Ports", QStringList() );
 	ui->command->addItem( "get Service Port", QStringList() << "value" );
