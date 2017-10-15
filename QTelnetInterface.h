@@ -47,13 +47,44 @@ private:
 			return label.isEmpty();
 		}
 	};
+	struct AutoResponse
+	{
+		QRegExp m_pattern;
+		QString m_cmd;
+		AutoResponse(const QString &pattern, const QString &cmd) :
+			m_pattern(pattern), m_cmd(cmd)
+		{
+
+		}
+	};
+	class AutoResponseList : public QList<AutoResponse>
+	{
+	public:
+		void addAutoResponce(const QString &pattern, const QString &cmd)
+		{
+			append( AutoResponse(pattern, cmd) );
+		}
+
+		QString takeAutoResponse(const QString &s)
+		{
+			for( int i = 0; i < count(); i++ )
+			{
+				QString tmp = at(i).m_pattern.pattern();
+				if( s.contains(at(i).m_pattern) )
+					return takeAt(i).m_cmd;
+			}
+			return QString();
+		}
+	};
 
 	OLTState m_OLTState;
 	QString m_dataBuffer;
 	QString m_uname;
 	QString m_upass;
 	CommandControl m_currentCommand;
+
 	QQueue<CommandControl> m_commandsQueue;
+	AutoResponseList m_autoResponseList;
 
 	void setOltState(OLTState newState);
 	void playQueue();
@@ -61,6 +92,9 @@ private:
 	void addCommand(const QString &label, const QString &cmd, const OLTConstants::ErrorStrings &errors, OLTState okState = OltUnknownSate );
 
 protected:
+	void addAutoResponce(const QString &pattern, const QString &cmd)
+		{ m_autoResponseList.addAutoResponce(pattern, cmd);	}
+
 	void addCommand( const QString &label, const QString &cmd, OLTState okState = OltUnknownSate )
 		{ addCommand(label, cmd, oltConstants.commandErrors(), okState ); }
 

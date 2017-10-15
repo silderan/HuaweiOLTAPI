@@ -3,7 +3,7 @@
 
 ## Algunos textos literales útiles que muestra la OLT.
 # Cuando no cabe en pantalla el texto que envía la OLT.
-CONSTANT: More Text = ---- More ( Press 'Q' to break ) ----
+CONSTANT: MoreText = ---- More ( Press 'Q' to break ) ----
 
 ## Los prompts son los textos que envía la OLT cuando espera que el usuario
 ## introduzca algún comando o información. Usaremos expresiones regulares
@@ -65,7 +65,13 @@ COMMAND: DelTrafficTableIP = undo traffic table ip index {index}
 # Para manipular los dba-profiles
 COMMAND: GetDBAProfiles = display dba-profile all
 COMMAND: GetDBAProfile = display dba-profile profile-id {id}
-COMMAND: AddDBAProfile = dba-profile add profile-name "{name}" {type} {speeds}
+COMMAND: AddDBAProfile = dba-profile add profile-name "{name}" type{type} {speed_text}
+COMMAND: ModDBAProfile = dba-profile modify profile-id {id}
+CONSTANT: ModDBAProfile_NewType = >  The type of the DBA-profile \(1~5\) \[\d\]:
+CONSTANT: ModDBAProfile_NewFix = >  The fixed bandwidth of the DBA-profile\(128~10000000kbps\) \[\d+\] :
+CONSTANT: ModDBAProfile_NewAssure = >  The assured bandwidth of the DBA-profile\(128~10000000kbps\) \[\d+\] :
+CONSTANT: ModDBAProfile_NewMax = >  The maximum bandwidth of the DBA-profile\(128~10000000kbps\) \[\d+\] :
+CONSTANT: ModDBAProfile_NewCompensation = >  The bandwidth compensation of the DBA-profile\(0: No 1: Yes\) \[\S+\] :
 COMMAND: DelDBAProfile = dba-profile delete profile-id {id}
 
 # Para activar/desactivar la gestion del ACS tr069 en las ONT:

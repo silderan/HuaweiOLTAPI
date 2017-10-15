@@ -11,6 +11,7 @@ QFrontend::QFrontend(QWidget *parent) :
 	ui(new Ui::QFrontend)
 {
 	ui->setupUi(this);
+	ui->type->setSpeedWidgets(ui->fix, ui->assured, ui->max, ui->bandwitdh_compensation);
 
 	// List of widgets that has the param values.
 	// All the widgets inside this list will be enabled/disabled
@@ -21,7 +22,7 @@ QFrontend::QFrontend(QWidget *parent) :
 						   << ui->cir << ui->pir << ui->priority
 						   << ui->dwTrafficTable << ui->upTrafficTable
 						   << ui->ontVLAN << ui->oltVLAN << ui->gemPort
-						   << ui->dbaType << ui->dbaSpeeds );
+						   << ui->type );
 
 	// This string list order must match with the enum CommanIndex
 	// to the command combo box and send button works fine and easy
@@ -48,8 +49,8 @@ QFrontend::QFrontend(QWidget *parent) :
 
 	ui->command->addItem( "get all DBA Profiles", QStringList() );
 	ui->command->addItem( "get DBA Profile", QStringList() << "value" );
-	ui->command->addItem( "add DBA Profile", QStringList() << "name" << "dbaType" << "dbaSpeeds" );
-	ui->command->addItem( "modify DBA Profile", QStringList() << "value"  << "name" << "dbaType" << "dbaSpeeds" );
+	ui->command->addItem( "add DBA Profile", QStringList() << "name" << "type" );
+	ui->command->addItem( "modify DBA Profile", QStringList() << "value"  << "name" << "type" );
 	ui->command->addItem( "delete DBA Profile", QStringList() << "value" );
 
 	ui->command->addItem( "get all Line Profiles", QStringList() );
@@ -93,8 +94,10 @@ QFrontend::QFrontend(QWidget *parent) :
 	ui->oltVLAN->setValue( globalConfig.oltVLAN() );
 	ui->ontVLAN->setValue( globalConfig.ontVLAN() );
 
-	ui->dbaSpeeds->setText( globalConfig.dbaSpeeds() );
-	ui->dbaType->setText( globalConfig.dbaType() );
+	ui->type->setValue( globalConfig.type() );
+	ui->fix->setValue( globalConfig.fix() );
+	ui->assured->setValue( globalConfig.assured() );
+	ui->max->setValue( globalConfig.max() );
 
 	ui->command->setCurrentIndex( ui->command->findText(globalConfig.command()) );
 
@@ -154,8 +157,10 @@ QFrontend::~QFrontend()
 	globalConfig.setDwTrafficTable( ui->dwTrafficTable->value() );
 	globalConfig.setUpTrafficTable( ui->upTrafficTable->value() );
 
-	globalConfig.setDBASpeeds( ui->dbaSpeeds->text() );
-	globalConfig.setDBAType( ui->dbaType->text() );
+	globalConfig.setType( ui->type->value() );
+	globalConfig.setFix( ui->fix->value() );
+	globalConfig.setAssured( ui->assured->value() );
+	globalConfig.setMax( ui->max->value() );
 
 	globalConfig.setONTVLAN( ui->ontVLAN->value() );
 	globalConfig.setOLTVLAN( ui->oltVLAN->value() );
@@ -340,10 +345,18 @@ void QFrontend::on_sendCMD_clicked()
 		huaweiOLT.getDBAProfile(ui->value->value());
 		break;
 	case QFrontend::CmdAddDBAProfile:
-		huaweiOLT.addDBAProfile(ui->name->text(), ui->dbaType->text(), ui->dbaSpeeds->text());
+		huaweiOLT.addDBAProfile(ui->name->text(), ui->type->value(),
+								ui->fix->isEnabled() ? ui->fix->value() : -1,
+								ui->assured->isEnabled() ? ui->assured->value() : -1,
+								ui->max->isEnabled() ? ui->max->value() : -1,
+								ui->bandwitdh_compensation->isChecked());
 		break;
 	case QFrontend::CmdModDBAProfile:
-//		huaweiOLT.modDBAProfile(ui->value->value(), ui->name->text(), ui->dbaType.text(), ui->dbaSpeeds.text());
+		huaweiOLT.modDBAProfile(ui->value->value(), ui->name->text(), ui->type->value(),
+								ui->fix->isEnabled() ? ui->fix->value() : -1,
+								ui->assured->isEnabled() ? ui->assured->value() : -1,
+								ui->max->isEnabled() ? ui->max->value() : -1,
+								ui->bandwitdh_compensation->isChecked());
 		break;
 	case QFrontend::CmdDelDBAProfile:
 		huaweiOLT.delDBAProfile(ui->value->value());
@@ -464,7 +477,7 @@ void QFrontend::servicePortReceived(const OLTCommands::ServicePort &servicePort)
 void QFrontend::on_btCmd_clicked()
 {
 	if( ui->cmd->text().isEmpty() )
-		huaweiOLT.sendData("\n");
+		huaweiOLT.sendData( "\n" );
 	else
 	{
 		huaweiOLT.sendData( ui->cmd->text().toLatin1() );

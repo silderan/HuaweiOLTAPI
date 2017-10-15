@@ -14,7 +14,7 @@
 void QTelnetInterface::addCommand(const QString &label, const QString &cmd, const OLTConstants::ErrorStrings &errors, OLTState okState)
 {
 	Q_ASSERT_X( !label.isEmpty(), "addCommand", "Label is empty" );
-	Q_ASSERT_X( (label == "InitialWelcome") || !cmd.isEmpty(), "addCommand", "Command is empty" );
+	Q_ASSERT_X( (label == "InitialWelcome") || !cmd.isEmpty(), "addCommand", (QObject::tr("Command with label '%1' is empty").arg(label)).toLatin1().data() );
 
 #ifndef QT_NO_DEBUG
 	if( !isConnected() )
@@ -88,6 +88,7 @@ void QTelnetInterface::onDataFromOLT(const char *data, int length)
 	m_dataBuffer.append( QByteArray(data, length) );
 	// Let's strip out the text between \033[37D escape codes.
 	int ini;
+	QString txt;
 	while( (ini = m_dataBuffer.indexOf("\033[37D")) != -1 )
 	{
 		int end = m_dataBuffer.indexOf("\033[37D", ini+6);
@@ -110,10 +111,14 @@ void QTelnetInterface::onDataFromOLT(const char *data, int length)
 				m_dataBuffer = m_dataBuffer.left(ini) + m_dataBuffer.mid(end+5);
 		}
 	}
-	if( m_dataBuffer.contains(oltConstants.constantMoreText()) )
+	if( m_dataBuffer.contains(oltConstants.constant_MoreText()) )
 	{
-		m_dataBuffer.replace(oltConstants.constantMoreText(), "");
+		m_dataBuffer.replace(oltConstants.constant_MoreText(), "");
 		sendData( " " );
+	}
+	else if( !(txt = m_autoResponseList.takeAutoResponse(m_dataBuffer)).isEmpty() )
+	{
+		sendData( txt.toLatin1() );
 	}
 	else if( m_dataBuffer.contains(oltConstants.cmdPrompt()) ||
 			 m_dataBuffer.contains(oltConstants.loginPrompt()) )
@@ -124,6 +129,7 @@ void QTelnetInterface::onDataFromOLT(const char *data, int length)
 			emit errorResponse(m_currentCommand.label, m_currentCommand.cmd, err);
 			m_dataBuffer.clear();
 			m_currentCommand.clear();
+			m_autoResponseList.clear();
 		}
 		else
 		{
@@ -132,6 +138,7 @@ void QTelnetInterface::onDataFromOLT(const char *data, int length)
 			emit newResponse(m_currentCommand.label, m_currentCommand.cmd, m_dataBuffer);
 			m_dataBuffer.clear();
 			m_currentCommand.clear();
+			m_autoResponseList.clear();
 		}
 		playQueue();
 	}
@@ -143,6 +150,9 @@ void QTelnetInterface::onTelnetStateChange(QAbstractSocket::SocketState st)
 	{
 	case QAbstractSocket::UnconnectedState:
 		m_OLTState = OltUnconnected;
+		m_commandsQueue.clear();
+		m_autoResponseList.clear();
+		m_currentCommand.clear();
 		break;
 	case QAbstractSocket::HostLookupState:
 		m_OLTState = OltUnconnected;

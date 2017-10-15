@@ -2,11 +2,6 @@
 
 #include <QFile>
 
-QString OLTConstants::Constants::moreText() const
-{
-	return value("More Text");
-}
-
 void OLTConstants::ConstantsBase::fromFileLine(const QByteArray &line)
 {
 	int pos = line.indexOf('=');

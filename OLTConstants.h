@@ -17,8 +17,6 @@ public:
 
 	class Constants : public ConstantsBase
 	{
-	public:
-		QString moreText() const;
 	};
 
 	class Commands : public ConstantsBase
@@ -45,7 +43,12 @@ public:
 	OLTConstants();
 
 	// Constants:
-	QString constantMoreText() const { return m_constants.moreText();	}
+	QString constant_MoreText() const { return m_constants["MoreText"];	}
+	QString constant_ModDBAProfile_NewType() const { return m_constants["ModDBAProfile_NewType"]; }
+	QString constant_ModDBAProfile_NewFix() const { return m_constants["ModDBAProfile_NewFix"]; }
+	QString constant_ModDBAProfile_NewAssure() const { return m_constants["ModDBAProfile_NewAssure"]; }
+	QString constant_ModDBAProfile_NewMax() const { return m_constants["ModDBAProfile_NewMax"]; }
+	QString constant_ModDBAProfile_NewCompensation() const { return m_constants["ModDBAProfile_NewCompensation"]; }
 
 	// Prompts
 	const QRegExp &loginPrompt() const { return m_loginPrompt; }
@@ -117,14 +120,48 @@ public:
 	QString getDBAProfile(int id) const
 		{ return parseCommand(m_oltCommands.value("GetDBAProfile"), QStringList()
 							  << "{id}" << QString::number(id) ); }
-	QString addDBAProfile(const QString &name, const QString &type, const QString &speeds) const
-		{ return parseCommand(m_oltCommands.value("AddDBAProfile"), QStringList()
-							  << "{name}" << name
-							  << "{type}" << type
-							  << "{speeds}" << speeds ); }
-	QString delDBAProfile(int index) const
+
+private:
+	static QString createDBASpeedsCommandText(int type, int fix, int assured, int max, bool compensate)
+	{
+		/*
+		 * The actual speed text is up to type:
+		 * type1                 Fixed bandwidth
+		 * type2                 Assured bandwidth
+		 * type3                 Assured bandwidth, Maximum bandwidth
+		 * type4                 Maximum bandwidth
+		 * type5                 Fixed bandwidth, Assured bandwidth, Maximum bandwidth
+		 * Furthermore, the type1 needs bandwidth_compensate additional argument:
+		 * dba-profile add profile-name asas type1 fix 1234 bandwidth_compensate yes
+		 */
+		switch( type )
+		{
+		case 1: return QString("fix %1 bandwidth_compensate %2").arg(fix).arg(compensate ? "yes" : "no");
+		case 2: return QString("assure %1").arg(assured);
+		case 3:	return QString("assure %1 max %2").arg(assured).arg(max);
+		case 4: return QString("max %1").arg(max);
+		case 5:	return QString("fix %1 assure %2 max %3").arg(fix).arg(assured).arg(max);
+		}
+		return "\n";
+	}
+
+public:
+	QString addDBAProfile(const QString &name, int type, int fix, int assured, int max, bool compensate) const
+	{
+		return parseCommand(m_oltCommands.value("AddDBAProfile"), QStringList()
+							<< "{name}" << name
+							<< "{type}" << QString::number(type)
+							<< "{speed_text}" << createDBASpeedsCommandText(type, fix, assured, max, compensate));
+	}
+	QString modDBAProfile(int id, const QString &name) const
+	{
+		Q_UNUSED(name);
+		return parseCommand(m_oltCommands.value("ModDBAProfile"), QStringList()
+							<< "{id}" << QString::number(id) );
+	}
+	QString delDBAProfile(int id) const
 		{ return parseCommand(m_oltCommands.value("DelDBAProfile"), QStringList()
-							  << "{index}" << QString::number(index) ); }
+							  << "{id}" << QString::number(id) ); }
 
 	QString setTR69Server(int port, int ontID, int tr69ID) const
 		{ return parseCommand(m_oltCommands.value("SetTR69Server"), QStringList()

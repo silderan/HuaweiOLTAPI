@@ -3,6 +3,7 @@
 QOLTCommands::QOLTCommands()
 {
 	connect(this, SIGNAL(newResponse(QString,QString,QString)), this, SLOT(onCommandReceived(QString,QString,QString)));
+	connect(this, SIGNAL(disconnected()), this, SLOT(onDisconnected()) );
 }
 
 void QOLTCommands::setAdminMode()
@@ -100,19 +101,47 @@ void QOLTCommands::getDBAProfiles()
 	addCommand( "GetDBAProfiles", oltConstants.getDBAProfiles() );
 }
 
-void QOLTCommands::getDBAProfile(int index)
+void QOLTCommands::getDBAProfile(int id)
 {
-	addCommand( "GetDBAProfile", oltConstants.getDBAProfile(index) );
+	addCommand( "GetDBAProfile", oltConstants.getDBAProfile(id) );
 }
 
-void QOLTCommands::addDBAProfile(const QString &name, const QString &type, const QString &speeds)
+void QOLTCommands::addDBAProfile(const QString &name, int type, int fix, int assured, int max, bool compensate)
 {
-	addCommand( "AddDBAProfile", oltConstants.addDBAProfile(name, type, speeds) );
+	addCommand( "AddDBAProfile", oltConstants.addDBAProfile(name, type, fix, assured, max, compensate) );
 }
 
-void QOLTCommands::delDBAProfile(int index)
+void QOLTCommands::modDBAProfile(int id, const QString &name, int type, int fix, int assured, int max, bool compensate)
 {
-	addCommand( "DelDBAProfile", oltConstants.delDBAProfile(index) );
+	addAutoResponce( oltConstants.constant_ModDBAProfile_NewType(), QString("%1\n").arg(type) );
+	switch( type )
+	{
+	case 1:
+		addAutoResponce( oltConstants.constant_ModDBAProfile_NewFix(), QString("%1\n").arg(fix) );
+		addAutoResponce( oltConstants.constant_ModDBAProfile_NewCompensation(), compensate ? "1\n" : "0\n" );
+		break;
+	case 2:
+		addAutoResponce( oltConstants.constant_ModDBAProfile_NewAssure(), QString("%1\n").arg(assured) );
+		break;
+	case 3:
+		addAutoResponce( oltConstants.constant_ModDBAProfile_NewAssure(), QString("%1\n").arg(assured) );
+		addAutoResponce( oltConstants.constant_ModDBAProfile_NewMax(), QString("%1\n").arg(max) );
+		break;
+	case 4:
+		addAutoResponce( oltConstants.constant_ModDBAProfile_NewMax(), QString("%1\n").arg(max) );
+		break;
+	case 5:
+		addAutoResponce( oltConstants.constant_ModDBAProfile_NewFix(), QString("%1\n").arg(fix) );
+		addAutoResponce( oltConstants.constant_ModDBAProfile_NewAssure(), QString("%1\n").arg(assured) );
+		addAutoResponce( oltConstants.constant_ModDBAProfile_NewMax(), QString("%1\n").arg(max) );
+		break;
+	}
+	addCommand( "ModDBAProfile", oltConstants.modDBAProfile(id, name) );
+}
+
+void QOLTCommands::delDBAProfile(int id)
+{
+	addCommand( "DelDBAProfile", oltConstants.delDBAProfile(id) );
 }
 
 void QOLTCommands::getServicePorts()
@@ -190,4 +219,57 @@ void QOLTCommands::onCommandReceived(const QString &label, const QString &cmd, c
 	else if( label == "AddServicePort" )		emit servicePort( OLTCommands::ServicePort(label, cmd, data) );
 	else if( label == "ModServicePort" )		emit servicePort( OLTCommands::ServicePort(label, cmd, data) );
 	else if( label == "DelServicePort" )		emit servicePort( OLTCommands::ServicePort(label, cmd, data) );
+}
+
+void QOLTCommands::onDisconnected()
+{
+}
+
+bool QSpeedSpinBox::event(QEvent *e)
+{
+	if( e->type() == QEvent::FocusOut )
+	{
+		// Round to 64.
+		setValue(value() & 0xFFFFFFC0);
+	}
+	return QSpinBox::event(e);
+}
+
+
+void QTypeSpinBox::onValueChanged(int type)
+{
+	if( m_fix && m_assured && m_max )
+	{
+		if( isEnabled() )
+		{
+			/*
+			 * type1                 Fixed bandwidth
+			 * type2                 Assured bandwidth
+			 * type3                 Assured bandwidth, Maximum bandwidth
+			 * type4                 Maximum bandwidth
+			 * type5                 Fixed bandwidth, Assured bandwidth, Maximum bandwidth
+			 */
+			switch( type )
+			{
+			case 1: m_fix->setEnabled(true);	m_assured->setEnabled(false);	m_max->setEnabled(false); m_compensate->setEnabled(true);	break;
+			case 2: m_fix->setEnabled(false);	m_assured->setEnabled(true);	m_max->setEnabled(false); m_compensate->setEnabled(false);	break;
+			case 3: m_fix->setEnabled(false);	m_assured->setEnabled(true);	m_max->setEnabled(true); m_compensate->setEnabled(false);	break;
+			case 4: m_fix->setEnabled(false);	m_assured->setEnabled(false);	m_max->setEnabled(true); m_compensate->setEnabled(false);	break;
+			case 5: m_fix->setEnabled(true);	m_assured->setEnabled(true);	m_max->setEnabled(true); m_compensate->setEnabled(false);	break;
+			}
+		}
+		else
+		{
+			m_fix->setEnabled(false);
+			m_assured->setEnabled(false);
+			m_max->setEnabled(false);
+		}
+	}
+}
+
+bool QTypeSpinBox::event(QEvent *e)
+{
+	if( e->type() == QEvent::EnabledChange )
+		onValueChanged(value());
+	return QSpinBox::event(e);
 }

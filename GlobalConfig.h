@@ -70,11 +70,17 @@ public:
 	void setUpTrafficTable(int v) { QIniData::insert("UpTrafficTable", QString::number(v)); }
 	int upTrafficTable() const { return QIniData::value("UpTrafficTable").toInt(); }
 
-	void setDBASpeeds(const QString &speeds) { QIniData::insert("DBASpeeds", speeds); }
-	QString dbaSpeeds() const { return QIniData::value("DBASpeeds"); }
+	void setType(int t) { QIniData::insert("type", QString::number(t)); }
+	int type() const { return QIniData::value("type").toInt(); }
 
-	void setDBAType(const QString &type) { QIniData::insert("DBAType", type); }
-	QString dbaType() const { return QIniData::value("DBAType"); }
+	void setFix(int f) { QIniData::insert("fix", QString::number(f)); }
+	int fix() const { return QIniData::value("fix").toInt(); }
+
+	void setAssured(int a) { QIniData::insert("assured", QString::number(a)); }
+	int assured() const { return QIniData::value("assured").toInt(); }
+
+	void setMax(int m) { QIniData::insert("max", QString::number(m)); }
+	int max() const { return QIniData::value("max").toInt(); }
 };
 
 class GlobalConfig : public QIniFile, public GlobalConfigData
