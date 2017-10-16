@@ -168,6 +168,7 @@ QFrontend::~QFrontend()
 	globalConfig.setGEMPort( ui->gemPort->value() );
 
 	globalConfig.save();
+	huaweiOLT.abort();
 	delete ui;
 	ui = Q_NULLPTR;
 }
